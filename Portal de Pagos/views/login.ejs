@@ -1,0 +1,47 @@
+<%- include('partials/head.ejs') %>
+
+<%- include('partials/header.ejs') %>
+<br>
+<br>
+<div id="flayer">
+    <div id="slayer">
+
+<div class="container" id="content">
+  
+  <div class="row">
+    <div class="col l3 m3 s12"></div>
+    <div class="col l6 m6 s12">
+      <form action="/users/login" method="POST">
+           <div class="card-panel z-depth-6">
+            <img src="/images/via.avif" height="70" class="center-image">
+            <h5 class="center"><strong>Inicia Sesión</strong></h5> <br>
+            <div class="row col l9 m8 s12 offset-l1">
+                <div class="input-field">
+                  <i class="material-icons prefix">email</i>
+                  <input id="icon_prefix" type="text" class="validate">
+                  <label for="icon_prefix">Correo Académico</label>
+                </div>
+            </div>
+            <div class="row col l9 m8 s12 offset-l1">
+                <div class="input-field">
+                  <i class="material-icons prefix">enhanced_encryption</i>
+                  <input id="password" type="password" class="validate">
+                  <label for="password">Contraseña</label>
+                </div>
+            </div>
+            <div class="container">
+                <button class="boton" type="submit" name="submit">
+                    <span class="text">ENTRAR</span>
+                </button>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+      </form>
+    </div>
+      <div class="col l3 m3 s12"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<%- include('partials/footer.ejs') %>

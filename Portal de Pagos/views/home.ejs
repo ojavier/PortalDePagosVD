@@ -1,9 +1,12 @@
-<%- include('partials/header.ejs') %>
-<%- include('partials/navbar.ejs') %>
+<%- include('partials/head.ejs') %>
 
-    <div class="container">
+<%- include('partials/header.ejs') %>
+
+<br>
+
+    <section class="container">
         <h1><%= (typeof pagePrimaryTitle !== 'undefined')? pagePrimaryTitle : '' %></h1>
-    </div>
+    </section>
 
     <div class="container">
         <table class="striped">
