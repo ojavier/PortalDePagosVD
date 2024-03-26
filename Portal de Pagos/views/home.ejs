@@ -12,27 +12,37 @@
         <table class="striped">
             <thead>
               <tr>
-                  <th>Name</th>
-                  <th>Item Name</th>
-                  <th>Item Price</th>
+                  <th>IdSEP</th>
+                  <th>Nombre</th>
+                  <th>Creditos</th>
               </tr>
             </thead>
     
             <tbody>
               <tr>
-                <td>Alvin</td>
-                <td>Eclair</td>
-                <td>$0.87</td>
+                <td>101-2</td>
+                <td>Fundamentos del Diseño</td>
+                <td>6</td>
               </tr>
               <tr>
-                <td>Alan</td>
-                <td>Jellybean</td>
-                <td>$3.76</td>
+                <td>102-3</td>
+                <td>Textiles</td>
+                <td>6</td>
               </tr>
               <tr>
-                <td>Jonathan</td>
-                <td>Lollipop</td>
-                <td>$7.00</td>
+                <td>103-5</td>
+                <td>Ilustración técnica de la Moda I</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>104-5</td>
+                <td>Teoría del Color</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>105-4</td>
+                <td>Trazo Plano de Prendas Básicas</td>
+                <td>6</td>
               </tr>
             </tbody>
           </table>
@@ -46,17 +56,51 @@
     </div>
 <% } %>
 
-<div class="container">
-    <div class="row">
-        <div class="col s6">
-            <a class="waves-effect waves-light btn">Aceptar</a>
+    <div class="container section">
+      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
+
+      <a href="#idrechazar" class="btn modal-trigger red">Rechazar</a>
+
+      <div id="idrechazar" class="modal">
+
+        <div class="modal-content">
+          <h4>¡Ponte en contacto con nosostros!</h4>
+          <p>Si no estas conforme con tu horario actual, comunicate con nosotros:<br>
+            <strong>Correos:</strong> <br>
+            Paco@gmail.com <br>
+            <strong>Dirección</strong>
+            Av. Insurgentes Sur 1234 <br>
+            <strong>Horarios en oficina:</strong> <br>
+            Lunes a Viernes de 9:00 a 18:00 <br>
+            <strong>Teléfonos:</strong> <br>
+            55 1234 5678 <br>
         </div>
-        <div class="col s6">
-            <a class="waves-effect waves-light btn">Rechazar</a>
+        <div class="modal-footer">
+          <a href="" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
         </div>
+      </div>
     </div>
-</div>
+
+
+
+
+
 
 <link rel="icon" href="/assets/img/logo-clear.png" type="image/png"/>
     
 <%- include('partials/footer.ejs') %>
+
+
+
+
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
+
