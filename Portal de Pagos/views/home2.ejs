@@ -1,0 +1,210 @@
+<%- include('partials/head.ejs') %>
+<%- include('partials/header.ejs') %>
+<body>
+<div class="container">
+    <div class="row">
+      <main class="col s9">
+        <div class="container">
+        <table class="striped">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Creditos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>101-2</td>
+                <td>Fundamentos del Diseño</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>102-3</td>
+                <td>Textiles</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>103-5</td>
+                <td>Ilustración técnica de la Moda I</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>104-5</td>
+                <td>Teoría del Color</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>105-4</td>
+                <td>Trazo Plano de Prendas Básicas</td>
+                <td>6</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+
+      <div class="col s3 right-side">
+        <div class="logo-container">
+          <i class="large material-icons">person</i>
+        </div>
+        <div class="person-info">
+          <p>Pablo Perez Castro</p>
+          <p>2º Semestre - #10001</p>
+          <p>Status: Activo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Tabla interactiva de estado de cuenta e historial de pagos -->
+<div class="container">
+    <div class="row">
+      <main class="col s9">
+        <div class="container">
+            <ul class="tabs">
+                <li class="tab col s6"><a href="#estado-cuenta">Estado de cuenta</a></li>
+                <li class="tab col s6"><a href="#historial-pagos">Historial de pagos</a></li>
+            </ul>
+        </div>
+
+        <div id="estado-cuenta" class="container">
+            <!-- Contenido Estado de cuenta  -->
+            <table class="striped">
+                <thead>
+                  <tr>
+                    <th>Fecha Limite</th>
+                    <th>Monto</th>
+                    <th>Concepto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>11/03/2027</td>
+                    <td>$5,472</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>25/04/2027</td>
+                    <td>$2,457</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>1/05/2027</td>
+                    <td>$2,457</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>11/06/2027</td>
+                    <td>$2,457</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>11/07/2027</td>
+                    <td>$2,457</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+
+        <div id="historial-pagos" class="container">
+            <!-- Contenido Historial de pagos  -->
+            <table class="striped">
+                <thead>
+                  <tr>
+                      <th>Forma de pago</th>
+                      <th>Monto</th>
+                      <th>Fecha</th>
+                      <th>Concepto</th>
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td>Tarjeta de crédito</td>
+                    <td>$10</td>
+                    <td>01/08/2020</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>Efectivo</td>
+                    <td>$15</td>
+                    <td>01/06/2020</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                  <tr>
+                    <td>Tarjeta de crédito</td>
+                    <td>$67</td>
+                    <td>01/05/2020</td>
+                    <td>Colegiatura</td>
+
+                  </tr>
+                  <tr>
+                    <td>Tarjeta de crédito</td>
+                    <td>$480</td>
+                    <td>01/04/2020</td>
+                    <td>KARDEX</td>
+                  </tr>
+                  <tr>
+                    <td>Tarjeta de crédito</td>
+                    <td>$90</td>
+                    <td>01/03/2020</td>
+                    <td>Colegiatura</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </main>
+    </div>
+
+
+<div class="row">
+    <main class="col s9">
+      <div class="container">
+          <ul class="tabs">
+              <li class="tab col s12"><a href="#otros-servicios">Otros servicios</a></li>
+            </ul>
+        </div>
+        <div id="estado-cuenta" class="container">
+            <!-- Contenido Estado de cuenta  -->
+            <table class="striped">
+                <thead>
+                  <tr>
+                    <th>Fecha Limite</th>
+                    <th>Monto</th>
+                    <th>Concepto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>11/03/2027</td>
+                    <td>$5,472</td>
+                    <td>Tijeras Papeleria</td>
+                  </tr>
+                  <tr>
+                    <td>25/04/2027</td>
+                    <td>$2,457</td>
+                    <td>DIPLOMADO MDD</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </main>
+</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tabs = document.querySelectorAll('.tabs');
+        M.Tabs.init(tabs);
+    });
+</script>
+    
+<%- include('partials/footer.ejs') %>
+
+ 
