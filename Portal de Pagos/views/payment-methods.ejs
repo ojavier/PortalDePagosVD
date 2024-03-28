@@ -1,0 +1,97 @@
+<%- include('partials/head.ejs') %>
+<%- include('partials/header.ejs') %>
+
+<main class="container" style="margin-top: 2rem;">
+    <div class="row">
+        <!-- Columna para Seleccionar Método de Pago -->
+<div class="col s12 m4">
+    <h5>Selecciona Método de Pago:</h5>
+    <div class="row">
+        <div class="col s6">
+            <p>
+                <label>
+                    <input name="payment_method" type="radio" />
+                    <span><strong><big>Mensual (5 pagos)</big></strong></span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input name="payment_method" type="radio" />
+                    <span><strong><big>Semestral (único pago)</big></strong></span>
+                </label>
+            </p>
+        </div>
+        <!-- Añadir más opciones de pago aquí -->
+    </div>
+</div>
+
+        
+        <!-- Columna para la Tabla de Cursos -->
+        <div class="col s12 m8">
+            <div class="card">
+                <div class="card-content">
+                    <table class="striped">
+                        <tbody>
+                            <tr>
+                                <td>Semestre</td>
+                                <td>Horario</td>
+                                <td>Créditos</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><hr></td> <!-- Línea para indicar los títulos de las columnas -->
+                            </tr>
+                            <tr>
+                                <td>Historia del arte</td>
+                                <td>11:00 a 13:00 Lu/Ma</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>Materiales textiles</td>
+                                <td>7:00 a 9:00 Lu/Ma</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>Ilustraciones Técnica de la Moda II</td>
+                                <td>11:00 a 13:00 Mi/Ju</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
+    <div class="container">
+        <%- content %>
+    </div>
+<% } %>
+
+    <div class="container section">
+      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
+
+      <a href="#idrechazar" class="btn modal-trigger red">Rechazar</a>
+
+      <div id="idrechazar" class="modal">
+
+        <div class="modal-content">
+          <h4>¡Ponte en contacto con nosostros!</h4>
+          <p>Si no estas conforme con tu horario actual, comunicate con nosotros:<br>
+            <strong>Correos:</strong> <br>
+            Paco@gmail.com <br>
+            <strong>Dirección</strong>
+            Av. Insurgentes Sur 1234 <br>
+            <strong>Horarios en oficina:</strong> <br>
+            Lunes a Viernes de 9:00 a 18:00 <br>
+            <strong>Teléfonos:</strong> <br>
+            55 1234 5678 <br>
+        </div>
+        <div class="modal-footer">
+          <a href="" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
+        </div>
+      </div>
+    </div>
+
+<%- include('partials/footer.ejs') %>
