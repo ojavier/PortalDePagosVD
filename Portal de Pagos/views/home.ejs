@@ -2,52 +2,61 @@
 
 <%- include('partials/header.ejs') %>
 
-<br>
+  <div class="container">
+    <div class="eight">
+      <h1>verifica tu plan académico</h1>
+      <p>Ciclo escolar AGO-FEB 2024 </p>
+    </div>
 
-    <section class="grid-container">
-        <h1><%= (typeof pagePrimaryTitle !== 'undefined')? pagePrimaryTitle : '' %></h1>
-    </section>
+    <div class ="row">
     <div class="grid-container">
-      <div class=" grid-item grid-item-1 responsibe-table" >
+      <div class=" grid-item grid-item-1 responsibe-table">
         <table class="striped">
           <thead>
             <tr>
-                <th>IdSEP</th>
                 <th>Nombre</th>
+                <th>Grupo</th>
+                <th>Hora</th>
                 <th>Creditos</th>
             </tr>
           </thead>
   
           <tbody>
             <tr>
-              <td>101-2</td>
               <td>Fundamentos del Diseño</td>
-              <td>6</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
             </tr>
             <tr>
-              <td>102-3</td>
               <td>Textiles</td>
-              <td>6</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
             </tr>
             <tr>
-              <td>103-5</td>
-              <td>Ilustración técnica de la Moda I</td>
-              <td>6</td>
+             <td>Ilustración técnica de la Moda I</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
             </tr>
             <tr>
-              <td>104-5</td>
               <td>Teoría del Color</td>
-              <td>6</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
             </tr>
             <tr>
-              <td>105-4</td>
               <td>Trazo Plano de Prendas Básicas</td>
-              <td>6</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
             </tr>
           </tbody>
          </table>
       </div>
-      <div class s2="grid-item grid-item-2 responsibe-table">
+      
+      <div class="grid-item grid-item-2 responsibe-table">
         <table>
           <thead>
             <tr>
@@ -89,7 +98,7 @@
           </tbody>        
         </table>
         <br>
-        <table class="striped">
+        <table>
           <thead>
             <tr>
                 <th>Total</th>
@@ -112,16 +121,17 @@
     </div>
 <br><br>
 
-<% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
     <div class="container">
-        <%- content %>
-    </div>
-<% } %>
-
-    <div class="container section centrado">
-      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
-
+    <div class="row">
+    <div class="col s5 offset-s1">
       <a href="#idrechazar" class="btn modal-trigger red">Rechazar</a>
+    </div>
+
+    <div class="col s5 offset-s1">
+      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
+    </div>
+    </div>
+  </div>
 
       <div id="idrechazar" class="modal">
 
@@ -143,8 +153,7 @@
       </div>
     </div>
 
-
-      
+</div>
 
 
 
