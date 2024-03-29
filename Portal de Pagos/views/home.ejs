@@ -4,50 +4,112 @@
 
 <br>
 
-    <section class="container">
+    <section class="grid-container">
         <h1><%= (typeof pagePrimaryTitle !== 'undefined')? pagePrimaryTitle : '' %></h1>
     </section>
-
-    <div class="container">
+    <div class="grid-container">
+      <div class=" grid-item grid-item-1 responsibe-table" >
         <table class="striped">
-            <thead>
-              <tr>
-                  <th>IdSEP</th>
-                  <th>Nombre</th>
-                  <th>Creditos</th>
-              </tr>
-            </thead>
-    
-            <tbody>
-              <tr>
-                <td>101-2</td>
-                <td>Fundamentos del Diseño</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>102-3</td>
-                <td>Textiles</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>103-5</td>
-                <td>Ilustración técnica de la Moda I</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>104-5</td>
-                <td>Teoría del Color</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>105-4</td>
-                <td>Trazo Plano de Prendas Básicas</td>
-                <td>6</td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
+          <thead>
+            <tr>
+                <th>IdSEP</th>
+                <th>Nombre</th>
+                <th>Creditos</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>101-2</td>
+              <td>Fundamentos del Diseño</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>102-3</td>
+              <td>Textiles</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>103-5</td>
+              <td>Ilustración técnica de la Moda I</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>104-5</td>
+              <td>Teoría del Color</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>105-4</td>
+              <td>Trazo Plano de Prendas Básicas</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+         </table>
+      </div>
+      <div class s2="grid-item grid-item-2 responsibe-table">
+        <table>
+          <thead>
+            <tr>
+                <th>Plan 5</th>
+                <th></th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>Pago inicial 23%</td>
+              <td>$3,277.5</td>
 
+            </tr>
+            <tr>
+              <td>Pago mensual</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 1</td>
+              <td>$5,472</td>
+            </tr>
+            <tr>
+              <td>Mes 2</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 3</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 4</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 5</td>
+              <td>$2,194.5</td>
+            </tr>
+          </tbody>        
+        </table>
+        <br>
+        <table class="striped">
+          <thead>
+            <tr>
+                <th>Total</th>
+                <th></th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>57x Créditos</td>
+              <td>$250</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>$14,250</td>
+            </tr>
+          </tbody>       
+         </table>
+      </div>
+    </div>
 <br><br>
 
 <% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
@@ -56,7 +118,7 @@
     </div>
 <% } %>
 
-    <div class="container section">
+    <div class="container section centrado">
       <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
 
       <a href="#idrechazar" class="btn modal-trigger red">Rechazar</a>
@@ -82,7 +144,7 @@
     </div>
 
 
-
+      
 
 
 
