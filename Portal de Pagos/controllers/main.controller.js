@@ -9,3 +9,9 @@ exports.get_creditos = (request, response, next) => {
         pagePrimaryTitle: 'Créditos',
     });
 };
+
+exports.get_configuracion = (request, response, next) => {
+    response.render('configuracion', {
+        pagePrimaryTitle: 'Configuración',
+    });
+};
