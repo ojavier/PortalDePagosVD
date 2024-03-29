@@ -9,7 +9,7 @@
             <h4>ASIGNA REFERENCIAS</h4>
             <p style="font-size: large;">Buscar alumno:</p>
         </div>
-</div>
+    </div>
 
 <div class = "col s12">
     <table id="myTable" class="striped">
@@ -22,17 +22,38 @@
         </thead>
         <tbody>
             <tr>
-                <td>Detail 1</td>
-                <td>Detail 2</td>
-                <td>Detail 3</td>
+                <td>Daniel Martinez Campo</td>
+                <td>3</td>
+                <td>1234561</td>
             </tr>
             <tr>
-                <td>daDetail dwada</td>
-                <td>dasDetail ada</td>
-                <td>cDetail dad</td>
+                <td>Oswaldo Lopez Casio</td>
+                <td>8</td>
+                <td>10028311</td>
+            </tr>
+            <tr>
+                <td>Regina Obregon Hernandez</td>
+                <td>2</td>
+                <td>10139311</td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<div class="row">
+    <div class="col s6 input-field" style="left: 25%;">
+        <div class="inputGroup">
+            <input id = "newReferencia" type="number" required="" autocomplete="off" class="validate">
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="col s6">
+        <button id="modifyReferenciaBtn" class="btn waves-effect waves-light carmin" type="button">REGISTRAR</button>
+    </div>
+</div>
+
+
             
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -70,11 +91,38 @@
 </script>
 
 <script>
-//Función para buscar en la tabla
+
 $(document).ready( function () {
-    $('#myTable').DataTable();
-    $('select').formSelect();
-});
+
+    // Initialize the DataTable
+     var table = $('#myTable').DataTable();
+     $('select').formSelect();  
+
+    // Add click event listener to table rows
+    $('#myTable tbody').on('click', 'tr', function(){
+        // Deselect previously selected rows
+        if (!$(this).hasClass('selected')) {
+            table.$('tr.selected').removeClass('selected');
+        }
+        // Highlight selected row
+        $(this).toggleClass('selected');    
+    });
+
+    // Add click event listener to modify button
+    $('#modifyReferenciaBtn').on('click', function(){
+        var selectedRowData = table.row('.selected').data();
+        var newReferencia = $('#newReferencia').val();
+
+        // Check if a row is selected
+        if (selectedRowData) {
+            // Update the content of the "Referencia" column for the selected row
+            selectedRowData[2] = newReferencia;
+            table.row('.selected').data(selectedRowData).draw(false);
+        } else {
+            alert('Selecciona un alumno para modificar su referencia');
+        }
+    });
+    });
 </script>
 
 <%- include('partials/footer.ejs') %>
