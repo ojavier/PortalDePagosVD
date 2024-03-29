@@ -97,6 +97,7 @@
   background-color: rgba(196, 194, 194, 0.564) !important;
   border-radius: 20px !important;
   width: 100% !important;
+  text-align: center; 
 }
 
 .inputGroup label {
@@ -107,6 +108,11 @@
   pointer-events: none !important;
   transition: all 0.3s ease !important;
   color: rgb(100, 100, 100) !important;
+  position: absolute; /* Changed to absolute positioning */
+  left: 50%; /* Moved to the center horizontally */
+  transform: translateX(-50%); /* Adjusted to center the label horizontally */
+  top: 50%; /* Moved to the center vertically */
+  transform: translateY(-50%); /* Adjusted to center the label vertically */
 }
 
 .inputGroup :is(input:focus, input:valid) {

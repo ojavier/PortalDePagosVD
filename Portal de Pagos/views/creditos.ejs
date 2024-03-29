@@ -4,9 +4,9 @@
 
 <br>
 
-<div class="row">
+<div class="row">    
 <div class="container">  
-<div class="col s6">
+<div class="col s6 card">
 <table class="striped centered responsibe-table">
     <thead>
         <tr>
@@ -49,14 +49,19 @@
     </div>
     <br>
     <div class="col s4 offset-s4">
-        <a href="" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
+        <a href="#idvalor" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
+
     </div>
-<!---
-        <div class="input-field col s2 offset-s5">
-            <input id="password" type="password" class="validate rounded">
-            <label for="password">$  </label>
-          </div>
-        -->
+
+        <div id="idvalor" class="modal">
+            <div class="modal-content">
+            <h5>Estas seguro registrar el valor de credito actual para el semestre (AGOSTO - DICIEMBRE) a <span style="color: red;"> $ 80 MXN</span> por credito?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn modal-close red">NO</a>
+                <a href="" class="btn modal-close green">SI</a>
+            </div>
+        </div>
 </div>
 
 
@@ -64,8 +69,11 @@
 
 
 
-
-
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
 
 <%- include('partials/footer.ejs') %>
