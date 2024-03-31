@@ -54,3 +54,19 @@
     display:block;
     margin-bottom: 20px;
 }
+
+.custom-input {
+  border: 2px solid #ccc;
+  border-radius: 5px; 
+  padding: 10px; 
+  font-size: 16px; 
+  width: 100%; 
+  box-sizing: border-box; 
+  transition: border-color 0.3s;
+}
+
+.custom-input:focus {
+  border-color: #2196F3;
+  outline: none;
+}
+
