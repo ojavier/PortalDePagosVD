@@ -173,6 +173,56 @@ tr:nth-child(even) {
   }
 }
 
+
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif !important;
+  margin: 1em 0 1em 0 !important;
+  max-width: 190px !important;
+  position: relative !important;
+}
+
+.inputGroup input {
+  font-size: 100% !important;
+  padding: 0.2em 0.8em !important;
+  outline: none !important;
+  border: 1px solid rgb(31, 30, 30) !important;
+  background-color: rgba(196, 194, 194, 0.564) !important;
+  border-radius: 20px !important;
+  width: 100% !important;
+  text-align: center; 
+}
+
+.inputGroup label {
+  font-size: 100% !important;
+  left: 0 !important;
+  padding: 0.8em !important;
+  margin-left: 0.5em !important;
+  pointer-events: none !important;
+  transition: all 0.3s ease !important;
+  color: rgb(100, 100, 100) !important;
+  position: absolute; /* Changed to absolute positioning */
+  left: 50%; /* Moved to the center horizontally */
+  transform: translateX(-50%); /* Adjusted to center the label horizontally */
+  top: 50%; /* Moved to the center vertically */
+  transform: translateY(-50%); /* Adjusted to center the label vertically */
+}
+
+.inputGroup :is(input:focus, input:valid) {
+  border-color: rgb(50, 121, 213) !important;
+}
+
+.carmin {
+    background-color: rgb(145, 1, 6);
+}
+
+/* Override DataTables selected row styles */
+.dataTables_wrapper tr.selected,
+.dataTables_wrapper tr.selected.odd,
+.dataTables_wrapper tr.selected.even {
+    background-color: #ffd1cc !important; /* Custom background color for selected rows */
+    color: #000000 !important; /* Custom text color for selected rows */
+    /* Add any other necessary styles to visually highlight selected rows */
+}
 .centrado {
   text-align: center;
 }
