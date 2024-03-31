@@ -145,8 +145,6 @@ tr:nth-child(even) {
   /* Add any other styles you want for smaller tables */
 }
 
-
-
 .logo-container {
   padding: 1rem;
   text-align: center;
@@ -175,4 +173,9 @@ tr:nth-child(even) {
 
 .centrado {
   text-align: center;
+}
+
+.logo-img {
+  max-height: 64px!important;
+  padding: 15px 0!important;
 }
