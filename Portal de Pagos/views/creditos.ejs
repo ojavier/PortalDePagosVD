@@ -1,0 +1,79 @@
+<%- include('partials/head.ejs') %>
+
+<%- include('partials/header.ejs') %>
+
+<br>
+
+<div class="row">    
+<div class="container">  
+<div class="col s6 card">
+<table class="striped centered responsibe-table">
+    <thead>
+        <tr>
+            <th style="font-size: 18px;" colspan="2">Historial del Valor de Creditos Pasados</th>
+        </tr>
+
+      <tr>
+          <th>Ciclo Escolar</th>
+          <th>Costo</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Enero - Junio 2024</td>
+        <td>$10</td>
+      </tr>
+      <tr>
+        <td>Agosto - Diciembre 2023</td>
+        <td>$11</td>
+      </tr>
+      <tr>
+        <td>Enero - Junio 2023</td>
+        <td>$14</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="col s6 center-align">
+
+    <p style="font-size: 20px;"><strong>ASIGNA COSTO DE CREDITOS ACTUAL: </strong></p>
+   
+    <div class="col s4 offset-s4">
+    <div class="inputGroup">
+        <input id = "costo" type="number" required="" autocomplete="off">
+        <label for="costo">$</label>
+    </div>
+    </div>
+    <br>
+    <div class="col s4 offset-s4">
+        <a href="#idvalor" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
+
+    </div>
+
+        <div id="idvalor" class="modal">
+            <div class="modal-content">
+            <h5>Estas seguro registrar el valor de credito actual para el semestre (AGOSTO - DICIEMBRE) a <span style="color: red;"> $ 80 MXN</span> por credito?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn modal-close red">NO</a>
+                <a href="" class="btn modal-close green">SI</a>
+            </div>
+        </div>
+</div>
+
+
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
+
+<%- include('partials/footer.ejs') %>
