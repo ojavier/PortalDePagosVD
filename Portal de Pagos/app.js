@@ -1,9 +1,5 @@
 const express = require('express');
-
 const app = express();
-
-app.set('view engine', 'ejs');
-app.set('views', 'views');
 
 app.use(express.static('public'));
 const path = require('path');
@@ -27,6 +23,9 @@ const DataTable = require( 'datatables.net' );
 // "mainRoutes" are going to be attach to the specified route
 app.use('/', mainRoutes);
 app.use('/users', usersRoutes);
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
 app.use((request, response, next) => {
   response.status(404);
