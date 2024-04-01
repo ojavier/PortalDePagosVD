@@ -17,5 +17,8 @@ router.get('/search', mainController.get_search);
 
 router.get('/reportes', mainController.get_reportes);
 
+router.get('/creditos', mainController.get_creditos);
+
+router.get('/configuracion', mainController.get_configuracion);
 
 module.exports = router;

@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const mainRoutes = require('./routes/main.routes.js');
 const usersRoutes = require('./routes/users.routes.js');
 
+const DataTable = require( 'datatables.net' );
 // This is "mounting the route", and it means that all routes defined inside
 // "mainRoutes" are going to be attach to the specified route
 app.use('/', mainRoutes);

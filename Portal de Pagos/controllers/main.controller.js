@@ -41,5 +41,14 @@ exports.get_search = (request, response, next) => {
     });
 };
 
+exports.get_creditos = (request, response, next) => {
+    response.render('creditos', {
+        pagePrimaryTitle: 'Créditos',
+    });
+};
 
-
+exports.get_configuracion = (request, response, next) => {
+    response.render('configuracion', {
+        pagePrimaryTitle: 'Configuración',
+    });
+};
