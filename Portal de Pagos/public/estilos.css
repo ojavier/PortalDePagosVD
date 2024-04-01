@@ -226,3 +226,21 @@ tr:nth-child(even) {
 .centrado {
   text-align: center;
 }
+
+.containerChart {
+  display: flex;
+  justify-content: center;
+}
+
+#chartContainerRight {
+  width: 40%; 
+  height: 40%; 
+  float: right;
+}
+
+#chartContainerLeft {
+  width: 40%; 
+  height: 40%; 
+  float: left;
+
+}
