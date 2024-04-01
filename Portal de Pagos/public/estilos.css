@@ -228,6 +228,7 @@ tr:nth-child(even) {
 .logo-img {
   max-height: 64px!important;
   padding: 15px 0!important;
+}
 
 .containerChart {
   display: flex;
@@ -245,4 +246,9 @@ tr:nth-child(even) {
   height: 40%; 
   float: left;
 
+}
+
+#chartContainer {
+  display: flex;
+  justify-content: center;
 }
