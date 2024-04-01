@@ -6,6 +6,7 @@
     <title>Registrar Pago - Administrador</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <style>
         main.container {
             padding-bottom: 2rem; 
@@ -61,7 +62,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <table class="highlight">
+            <table id="alumnosTable" class="highlight">
                 <thead>
                     <tr>
                         <th>Seleccionar</th>
@@ -116,6 +117,8 @@
 <%- include('partials/footer.ejs') %>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.datepicker');
@@ -124,6 +127,8 @@
             autoClose: true
         };
         var instances = M.Datepicker.init(elems, options);
+
+        $('#alumnosTable').DataTable();
     });
 </script>
 </body>
