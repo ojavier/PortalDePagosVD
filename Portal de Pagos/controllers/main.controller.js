@@ -1,5 +1,5 @@
 exports.get_root = (request, response, next) => {
-    response.render('registrar_pago', {
+    response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
     });
 };
