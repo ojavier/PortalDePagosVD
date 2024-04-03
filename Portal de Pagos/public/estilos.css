@@ -1,3 +1,4 @@
+
 .boton {
   width: 100px;
   height: 40px;
@@ -70,3 +71,199 @@
   outline: none;
 }
 
+.centrado {
+  margin: auto;
+  width: 50%;
+}
+.izquierdo {
+  text-align: left;
+}
+.derecho {
+  width: 45%;
+}
+
+.derecho table {
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+.card {
+  flex-basis: 48%;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.grid-item {
+  border: 0px solid gray;
+  padding: 10px;
+}
+
+.grid-item-1 {
+  grid-column: 1;
+  grid-row: 1;;
+}
+
+.grid-item-2 {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 992px) {
+  .s6 {
+      width: 100% !important;
+  }
+}
+
+.eight h1 {
+  text-align:center;
+ 
+  text-transform:uppercase;
+  font-size:26px; letter-spacing:1px;
+  
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 16px 0;
+  grid-gap: 22px;
+}
+
+.eight h1:after,.eight h1:before {
+  content: " ";
+  display: block;
+  border-bottom: 2px solid #000000;
+}
+
+.smaller-table {
+  width: 50%; /* Adjust the width as needed */
+  /* Add any other styles you want for smaller tables */
+}
+
+.logo-container {
+  padding: 1rem;
+  text-align: center;
+}
+
+.person-info {
+  padding-left: 1rem;
+}
+
+.person-info h3,
+.person-info p {
+  margin-bottom: 0.5rem;
+}
+
+.container {
+  padding: 20px;
+}
+.row {
+  margin: 0;
+}
+@media (max-width: 992px) {
+  .s6 {
+      width: 100% !important;
+  }
+}
+
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif !important;
+  margin: 1em 0 1em 0 !important;
+  max-width: 190px !important;
+  position: relative !important;
+}
+
+.inputGroup input {
+  font-size: 100% !important;
+  padding: 0.2em 0.8em !important;
+  outline: none !important;
+  border: 1px solid rgb(31, 30, 30) !important;
+  background-color: rgba(196, 194, 194, 0.564) !important;
+  border-radius: 20px !important;
+  width: 100% !important;
+  text-align: center; 
+}
+
+.inputGroup label {
+  font-size: 100% !important;
+  left: 0 !important;
+  padding: 0.8em !important;
+  margin-left: 0.5em !important;
+  pointer-events: none !important;
+  transition: all 0.3s ease !important;
+  color: rgb(100, 100, 100) !important;
+  position: absolute; /* Changed to absolute positioning */
+  left: 50%; /* Moved to the center horizontally */
+  transform: translateX(-50%); /* Adjusted to center the label horizontally */
+  top: 50%; /* Moved to the center vertically */
+  transform: translateY(-50%); /* Adjusted to center the label vertically */
+}
+
+.inputGroup :is(input:focus, input:valid) {
+  border-color: rgb(50, 121, 213) !important;
+}
+
+.carmin {
+    background-color: rgb(145, 1, 6);
+}
+
+/* Override DataTables selected row styles */
+.dataTables_wrapper tr.selected,
+.dataTables_wrapper tr.selected.odd,
+.dataTables_wrapper tr.selected.even {
+    background-color: #ffd1cc !important; /* Custom background color for selected rows */
+    color: #000000 !important; /* Custom text color for selected rows */
+    /* Add any other necessary styles to visually highlight selected rows */
+}
+.centrado {
+  text-align: center;
+}
+
+.logo-img {
+  max-height: 64px!important;
+  padding: 15px 0!important;
+}
+
+.containerChart {
+  display: flex;
+  justify-content: center;
+}
+
+#chartContainerRight {
+  width: 40%; 
+  height: 40%; 
+  float: right;
+}
+
+#chartContainerLeft {
+  width: 40%; 
+  height: 40%; 
+  float: left;
+
+}
+
+#chartContainer {
+  display: flex;
+  justify-content: center;
+}

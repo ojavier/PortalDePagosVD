@@ -2,64 +2,136 @@
 
 <%- include('partials/header.ejs') %>
 
-<br>
-
-    <section class="container">
-        <h1><%= (typeof pagePrimaryTitle !== 'undefined')? pagePrimaryTitle : '' %></h1>
-    </section>
-
-    <div class="container">
-        <table class="striped">
-            <thead>
-              <tr>
-                  <th>IdSEP</th>
-                  <th>Nombre</th>
-                  <th>Creditos</th>
-              </tr>
-            </thead>
-    
-            <tbody>
-              <tr>
-                <td>101-2</td>
-                <td>Fundamentos del Diseño</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>102-3</td>
-                <td>Textiles</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>103-5</td>
-                <td>Ilustración técnica de la Moda I</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>104-5</td>
-                <td>Teoría del Color</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>105-4</td>
-                <td>Trazo Plano de Prendas Básicas</td>
-                <td>6</td>
-              </tr>
-            </tbody>
-          </table>
+  <div class="container">
+    <div class="eight">
+      <h1>verifica tu plan académico</h1>
+      <p>Ciclo escolar AGO-FEB 2024 </p>
     </div>
 
+    <div class ="row">
+    <div class="grid-container">
+      <div class=" grid-item grid-item-1 responsibe-table">
+        <table class="striped">
+          <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Grupo</th>
+                <th>Hora</th>
+                <th>Creditos</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>Fundamentos del Diseño</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Textiles</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
+            </tr>
+            <tr>
+             <td>Ilustración técnica de la Moda I</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Teoría del Color</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Trazo Plano de Prendas Básicas</td>
+              <td>221</td>
+              <td>11:30 a 13:00 Lu/Ma</td>
+              <td>8</td>
+            </tr>
+          </tbody>
+         </table>
+      </div>
+      
+      <div class="grid-item grid-item-2 responsibe-table">
+        <table>
+          <thead>
+            <tr>
+                <th>Plan 5</th>
+                <th></th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>Pago inicial 23%</td>
+              <td>$3,277.5</td>
+
+            </tr>
+            <tr>
+              <td>Pago mensual</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 1</td>
+              <td>$5,472</td>
+            </tr>
+            <tr>
+              <td>Mes 2</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 3</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 4</td>
+              <td>$2,194.5</td>
+            </tr>
+            <tr>
+              <td>Mes 5</td>
+              <td>$2,194.5</td>
+            </tr>
+          </tbody>        
+        </table>
+        <br>
+        <table>
+          <thead>
+            <tr>
+                <th>Total</th>
+                <th></th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <tr>
+              <td>57x Créditos</td>
+              <td>$250</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>$14,250</td>
+            </tr>
+          </tbody>       
+         </table>
+      </div>
+    </div>
 <br><br>
 
-<% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
     <div class="container">
-        <%- content %>
-    </div>
-<% } %>
-
-    <div class="container section">
-      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
-
+    <div class="row">
+    <div class="col s5 offset-s1">
       <a href="#idrechazar" class="btn modal-trigger red">Rechazar</a>
+    </div>
+
+    <div class="col s5 offset-s1">
+      <a href="#idaceptar" class="btn modal-trigger red">Aceptar</a>
+    </div>
+    </div>
+  </div>
 
       <div id="idrechazar" class="modal">
 
@@ -69,33 +141,20 @@
             <strong>Correos:</strong> <br>
             Paco@gmail.com <br>
             <strong>Dirección</strong>
-            Av. Insurgentes Sur 1234 <br>
-            <strong>Horarios en oficina:</strong> <br>
-            Lunes a Viernes de 9:00 a 18:00 <br>
-            <strong>Teléfonos:</strong> <br>
-            55 1234 5678 <br>
+              Av. Insurgentes Sur 1234 <br>
+              <strong>Horarios en oficina:</strong> <br>
+              Lunes a Viernes de 9:00 a 18:00 <br>
+              <strong>Teléfonos:</strong> <br>
+              55 1234 5678 <br>
+          </div>
+          <div class="modal-footer">
+            <a href="" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
+          </div>
         </div>
-        <div class="modal-footer">
-          <a href="" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
-        </div>
-      </div>
     </div>
 
-
-
-
-
-
+<!-- Es nececsario tener la imagén aquí?? -->
 <link rel="icon" href="/assets/img/logo-clear.png" type="image/png"/>
-    
-<%- include('partials/footer.ejs') %>
-
-
-
-
-  <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -104,3 +163,4 @@
     });
   </script>
 
+<%- include('partials/footer.ejs') %>

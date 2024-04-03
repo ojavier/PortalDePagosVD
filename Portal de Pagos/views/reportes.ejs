@@ -1,0 +1,79 @@
+<%- include('partials/head.ejs') %>
+<%- include('partials/header.ejs') %>
+
+<h1 class="centrado">Reportes</h1>
+<br><br><br>
+<div class="container">
+<div id="chartContainerRight">
+<canvas id="myChart"></canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: ['Alumnos al corriente de los pagos', 'Alumnos atrasados en los pagos'],
+            datasets: [{
+                label: 'Pagos',
+                data: [68, 32],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<br><br><br>
+<div id="chartContainerLeft">
+    <canvas id="myChart2"></canvas>
+</div>
+<script>
+    var ctx = document.getElementById("myChart2").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['Alumnos con adeudo > $10,000', 'Alumnos con adeudo < $10,000'],
+            datasets: [{
+                label: 'Reporte de Agosto',
+                data: [50, 80],
+                backgroundColor: [
+                    'rgb(60, 60, 60)',                    
+                    'rgb(60, 60, 60)',
+                ],
+                borderColor: [
+                    'rgb(60, 60, 60)',                    
+                    'rgb(60, 60, 60)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+</div>
+<%- include('partials/footer.ejs') %>
