@@ -52,3 +52,9 @@ exports.get_configuracion = (request, response, next) => {
         pagePrimaryTitle: 'Configuración',
     });
 };
+
+exports.get_pagos = (request, response, next) => {
+    response.render('registrar_pago', {
+        pagePrimaryTitle: 'Registrar Pago',
+    });
+}

@@ -21,4 +21,6 @@ router.get('/creditos', mainController.get_creditos);
 
 router.get('/configuracion', mainController.get_configuracion);
 
+router.get('/pagos', mainController.get_pagos);
+
 module.exports = router;

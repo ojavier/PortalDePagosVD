@@ -1,3 +1,7 @@
+label {
+  font-size: .8rem;
+  color: black !important;
+}
 
 .boton {
   width: 100px;
@@ -16,7 +20,6 @@
 .margen{
   margin: 20px;
 }
-
 
 .boton:hover {
   box-shadow: 0 0 20px 0px #2e2e2e3a;
@@ -267,3 +270,6 @@ tr:nth-child(even) {
   display: flex;
   justify-content: center;
 }
+
+
+
