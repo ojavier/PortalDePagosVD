@@ -1,7 +1,10 @@
-label {
-  font-size: .8rem;
-  color: black !important;
+
+.roboto-slab {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
+
 
 .boton {
   width: 100px;
@@ -30,6 +33,10 @@ label {
   transform: translateX(55px);
 }
 
+label {
+  font-size: .8rem;
+  color:black;
+}	
 
 .boton:hover .text {
   transition: all 0.5s;
@@ -92,6 +99,7 @@ label {
 .card {
   flex-basis: 48%;
 }
+
 .grid-container {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -115,28 +123,29 @@ label {
   padding: 10px;
 }
 
-table {
+.Materias table {
   border-collapse: collapse;
   width: 100%;
 }
 
-th,
-td {
+/* Modifica aquí para el diseño de la Tabla */
+.TablaProfesional th,
+.TablaProfesional td {
   text-align: left;
   padding: 5px;
   border: 1px solid black;
 }
 
-th {
+.TablaProfesional th {
   background-color: #f2f2f2;
 }
 
-tr:nth-child(even) {
+.TablaProfesional tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
 @media (max-width: 992px) {
-  .s6 {
+  .TablaProfesional .s6 {
       width: 100% !important;
   }
 }
@@ -271,5 +280,21 @@ tr:nth-child(even) {
   justify-content: center;
 }
 
+.tabs .tab a{
+  color:#000;
+} /*Black color to the text*/
 
+.tabs .tab a:hover {
+  background-color:#ffffff;
+  color:#000000;
+} /*Text color on hover*/
+
+.tabs .tab a.active {
+  background-color:#ffffff !important; 
+  color:rgb(145, 1, 6) !important;
+} /*Background and text color when a tab is active*/
+
+.tabs .indicator {
+  background-color:rgb(145, 1, 6);
+} /*Color of underline*/
 
