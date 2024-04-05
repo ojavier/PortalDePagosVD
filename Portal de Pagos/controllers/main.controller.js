@@ -1,3 +1,5 @@
+const {Alumno, SolPago}= require("../models/main.models");
+
 
 exports.get_root = (request, response, next) => {
     response.render('home', {
@@ -48,7 +50,21 @@ exports.get_configuracion = (request, response, next) => {
 };
 
 exports.get_pagos = (request, response, next) => {
-    response.render('pagos', {
-        pagePrimaryTitle: 'Registrar Pago',
+    Alumno.fetchAll().then(([rows]) => {
+        response.render('pagos', {
+            pagePrimaryTitle: 'Registrar Pago',
+            alumnos: rows,
+        });
     });
 }
+
+exports.post_SolPagos = (request, response, next) => {
+    console.log(request.body);
+    const solicitud = new SolPago(request.body.email, request.body.concepto, request.body.monto);
+    solicitud.save().then(([rows,FieldData]) => {
+        response.redirect('/pagos');
+    }).catch((error) => {
+        console.log('Error al Registrar Solicitud de Pago', error);
+    });
+};
+
