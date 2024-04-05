@@ -5,56 +5,115 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <h4>REGISTRAR PAGO</h4>
+            <h4>REGISTRAR PAGO / COBRO</h4>
             <p style="font-size: large;">Buscar alumno:</p>
         </div>
     </div>
 
-<div class = "col s12">
-    <table id="myTable" class="striped">
-        <thead>
-            <tr>
-                <th>Alumno</th>
-                <th>Semestre</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Daniel Martinez Campo</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>Oswaldo Lopez Casio</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>Regina Obregon Hernandez</td>
-                <td>2</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class = "col s12">
+            <table id="myTable" class="striped">
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>Semestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Daniel Martinez Campo</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Oswaldo Lopez Casio</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>Regina Obregon Hernandez</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <br><br>
+
+    <div>
+        <div class="row">
+            <div class="col s8">
+                <div class="card">
+                    <div class="card-content">
+                            <span class="card-title">Registrar PAGO</span>
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="matricula" type="text" required="" autocomplete="off" class="validate">
+                                <label for="matricula">Matricula</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="concepto" type="text" required="" autocomplete="off" class="validate">
+                                <label for="concepto">Concepto</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="monto" type="number" required="" autocomplete="off" class="validate">
+                                <label for="monto">Monto</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col 8 offset-s4">
+                                <button id="RegistrarPagoBtn" class="btn waves-effect waves-light green" type="button">REGISTRAR PAGO</button>
+                            </div>
+                        </div>
+                    </div>
+                <br>
+                </div>
+            </div>
+
+            <div class="col s4">
+                <div class="card">
+                    <div class="card-content">
+                            <span class="card-title">Asignar COBRO</span>
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="matricula" type="text" required="" autocomplete="off" class="validate">
+                                <label for="matricula">Matricula</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="concepto" type="text" required="" autocomplete="off" class="validate">
+                                <label for="concepto">Concepto</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s10 offset-s1 input-field">
+                                <input id="monto" type="number" required="" autocomplete="off" class="validate">
+                                <label for="monto">Monto</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col 8 offset-s2">
+                                <button id="AsignarCobroBtn" class="btn waves-effect waves-light red" type="button">ASIGNAR COBRO</button>
+                            </div>
+                        </div>
+                    </div>
+                <br>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<br>
-<br>
-<div class="row">
-    <div class="col s4 input-field">
-        <input id="matricula" type="text" required="" autocomplete="off" class="validate">
-        <label for="matricula">Matricula</label>
-    </div>
-    <div class="col s4 input-field">
-        <input id="concepto" type="text" required="" autocomplete="off" class="validate">
-        <label for="concepto">Concepto</label>
-    </div>
-    <div class="col s4 input-field">
-        <input id="monto" type="number" required="" autocomplete="off" class="validate">
-        <label for="monto">Monto</label>
-    </div>
-</div>
-<div class="row">
-    <div class="col s6">
-        <button id="registerPaymentBtn" class="btn waves-effect waves-light carmin" type="button">REGISTRAR PAGO</button>
-    </div>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -105,21 +164,13 @@ $(document).ready( function () {
             table.$('tr.selected').removeClass('selected');
         }
         // Highlight selected row
-        $(this).toggleClass('selected');    
-    });
-
-    // Add click event listener to modify button
-    $('#modifyReferenciaBtn').on('click', function(){
-        var selectedRowData = table.row('.selected').data();
-        var newReferencia = $('#newReferencia').val();
-
-        // Check if a row is selected
-        if (selectedRowData) {
-            // Update the content of the "Referencia" column for the selected row
-            selectedRowData[2] = newReferencia;
-            table.row('.selected').data(selectedRowData).draw(false);
-        } else {
-            alert('Selecciona un alumno para modificar su referencia');
+        $(this).toggleClass('selected');  
+        
+        // Aquí es donde agregas el código para llenar el campo de matrícula
+        var nombre = $(this).data('nombre');
+        if (nombre) {
+            // Suponiendo que el campo de matrícula tiene el id 'matricula'
+            $('#matricula').val(nombre);
         }
     });
     });

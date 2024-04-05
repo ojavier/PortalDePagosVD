@@ -35,12 +35,6 @@ exports.get_reportes = (request, response, next) => {
     });
 };
 
-exports.get_search = (request, response, next) => {
-    response.render('search', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-    });
-};
-
 exports.get_creditos = (request, response, next) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
@@ -54,7 +48,7 @@ exports.get_configuracion = (request, response, next) => {
 };
 
 exports.get_pagos = (request, response, next) => {
-    response.render('registrar_pago', {
+    response.render('pagos', {
         pagePrimaryTitle: 'Registrar Pago',
     });
 }

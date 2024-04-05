@@ -13,8 +13,6 @@ router.get('/payplan', mainController.get_payplan);
 
 router.get('/profile', mainController.get_profile);
 
-router.get('/search', mainController.get_search);
-
 router.get('/reportes', mainController.get_reportes);
 
 router.get('/creditos', mainController.get_creditos);
