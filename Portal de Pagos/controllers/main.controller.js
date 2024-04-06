@@ -1,12 +1,18 @@
 
 exports.get_root = (request, response, next) => {
-    response.render('home', {
+    response.render('login', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
     });
 };
 
+exports.get_login = (request, response, next) => {
+    response.render('home', {
+        pagePrimaryTitle: 'Portal de Gestión de Pagos',
+    });
+}
+
 exports.get_home = (request, response, next) => {
-    response.render('home2', {
+    response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
     });
 };
