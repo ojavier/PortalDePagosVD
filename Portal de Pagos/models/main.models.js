@@ -3,12 +3,12 @@ const db = require('../util/database');
 class Alumno {
     // Fetch all records from 'alumno' table
     static fetchAll() {
-        return db.execute('SELECT * FROM alumno');
+        return db.execute('SELECT * FROM vista_alumno_usuario');
     }
 
     // Fetch a single record from 'alumno' table by id
     static fetchOne(email) {
-        return db.execute('SELECT * FROM alumno WHERE Email = ?', [email]);
+        return db.execute('SELECT * FROM vista_alumno_usuario WHERE Email = ?', [email]);
     }
 
     // Fetch records from 'alumno' table by id if provided, otherwise fetch all records

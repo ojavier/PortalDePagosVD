@@ -15,17 +15,21 @@
           <table id="myTable" class="striped">
             <thead>
               <tr>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
                 <th>Email</th>
-                <th>Beca</th>
                 <th>Matricula</th>
               </tr>
             </thead>
             <tbody>
               <% alumnos.forEach(function(alumno) { %>
                 <tr>
-                  <td><%= alumno.Email %></td> <!-- Replace 'name' and 'semester' with the actual column names in your database -->
-                  <td><%= alumno.Beca %></td>
-                  <td><%= alumno.Matricula %></td>
+                    <td><%= alumno.Nombre %></td>
+                    <td><%= alumno.ApellidoP %></td>
+                    <td><%= alumno.ApellidoM %></td>
+                    <td><%= alumno.Email %></td> <!-- Replace 'name' and 'semester' with the actual column names in your database -->
+                    <td><%= alumno.Matricula %></td>
                 </tr>
               <% }); %>
             </tbody>
@@ -188,7 +192,7 @@ $(document).ready( function () {
         // If the row is selected
         if ($(this).hasClass('selected')) {
             // Assuming the email is in the first cell of the row
-            let email = $(this).find('td').first().text();
+            let email = $(this).find('td').eq(3).text();
             // Set the email value in the Solicitud de Cobro
             $('#email').val(email);
 
