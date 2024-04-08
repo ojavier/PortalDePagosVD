@@ -25,6 +25,7 @@ exports.get_home = (request, response, next) => {
         .catch(err => {
             console.log(err);
         });
+};
 
 exports.get_paymethod = (request, response, next) => {
     response.render('payment-methods', {
