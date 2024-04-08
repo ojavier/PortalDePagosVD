@@ -2,10 +2,16 @@ const {Alumno, SolPago, EstadoCuenta}= require("../models/main.models");
 
 
 exports.get_root = (request, response, next) => {
-    response.render('home', {
+    response.render('login', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
     });
 };
+
+exports.get_login = (request, response, next) => {
+    response.render('home', {
+        pagePrimaryTitle: 'Portal de Gestión de Pagos',
+    });
+}
 
 exports.get_home = (request, response, next) => {
     Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
@@ -19,7 +25,6 @@ exports.get_home = (request, response, next) => {
         .catch(err => {
             console.log(err);
         });
-};
 
 exports.get_paymethod = (request, response, next) => {
     response.render('payment-methods', {
