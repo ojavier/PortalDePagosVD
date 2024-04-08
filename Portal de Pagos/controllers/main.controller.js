@@ -1,3 +1,5 @@
+const {Alumno, SolPago, EstadoCuenta}= require("../models/main.models");
+
 
 exports.get_root = (request, response, next) => {
     response.render('login', {
@@ -12,10 +14,17 @@ exports.get_login = (request, response, next) => {
 }
 
 exports.get_home = (request, response, next) => {
-    response.render('home', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-    });
-};
+    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
+        .then(([estadoCuentaRows, solPagoRows]) => {
+            response.render('home2', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                estadoCuentas: estadoCuentaRows[0],
+                solpagos: solPagoRows[0],
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
 exports.get_paymethod = (request, response, next) => {
     response.render('payment-methods', {
@@ -54,7 +63,32 @@ exports.get_configuracion = (request, response, next) => {
 };
 
 exports.get_pagos = (request, response, next) => {
-    response.render('pagos', {
-        pagePrimaryTitle: 'Registrar Pago',
+    Alumno.fetchAll().then(([rows]) => {
+        response.render('pagos', {
+            pagePrimaryTitle: 'Registrar Pago',
+            alumnos: rows,
+        });
     });
 }
+
+exports.post_SolPagos = (request, response, next) => {
+    console.log(request.body);
+    const solicitud = new SolPago(request.body.email, request.body.concepto, request.body.monto, request.body.fechalimite);
+    solicitud.save().then(([rows,FieldData]) => {
+        response.redirect('/pagos');
+    }).catch((error) => {
+        console.log('Error al Registrar Solicitud de Pago', error);
+    });
+};
+
+exports.post_RegistrarPago = (request, response, next) => {
+    console.log(request.body);
+    const pago = new Pago(request.body.email, request.body.concepto, request.body.monto, request.body.fecha);
+    pago.save().then(([rows,FieldData]) => {
+        response.redirect('/pagos');
+    }).catch((error) => {
+        console.log('Error al Registrar Pago', error);
+    });
+}
+
+
