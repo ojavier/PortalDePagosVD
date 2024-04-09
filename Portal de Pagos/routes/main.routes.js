@@ -21,6 +21,7 @@ router.get('/configuracion', mainController.get_configuracion);
 
 router.get('/pagos', mainController.get_pagos);
 
-router.post('/pagos', mainController.post_SolPagos);
+router.post('/pagos', mainController.post_Forms);
+
 
 module.exports = router;
