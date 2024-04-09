@@ -5,7 +5,9 @@ const mainController = require('../controllers/main.controller');
 
 router.get('/', mainController.get_root);
 
-router.get('/home', mainController.get_home);
+router.get('/home', mainController.get_login);
+
+router.get('/home2', mainController.get_home);
 
 router.get('/paymethod', mainController.get_paymethod);
 
