@@ -1,4 +1,4 @@
-const {Alumno, SolPago, EstadoCuenta}= require("../models/main.models");
+const {Alumno, SolPago, EstadoCuenta, Pago}= require("../models/main.models");
 
 
 exports.get_root = (request, response, next) => {
@@ -84,7 +84,7 @@ exports.post_SolPagos = (request, response, next) => {
 
 exports.post_RegistrarPago = (request, response, next) => {
     console.log(request.body);
-    const pago = new Pago(request.body.email, request.body.concepto, request.body.monto, request.body.fecha);
+    const pago = new Pago(request.body.emailpago, request.body.referencia, request.body.concepto_pago, request.body.monto_pago, request.body.fechapago);
     pago.save().then(([rows,FieldData]) => {
         response.redirect('/pagos');
     }).catch((error) => {
@@ -92,4 +92,14 @@ exports.post_RegistrarPago = (request, response, next) => {
     });
 }
 
+
+exports.post_Forms = (request, response, next) => {
+    if (request.body.formType === 'registrarPago') {
+        // Call post_RegistrarPago if formType is 'registrarPago'
+        exports.post_RegistrarPago(request, response, next);
+    } else if (request.body.formType === 'solPagos') {
+        // Otherwise, call post_SolPagos
+        exports.post_SolPagos(request, response, next);
+    }
+};
 
