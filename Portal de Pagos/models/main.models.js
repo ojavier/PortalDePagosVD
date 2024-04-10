@@ -112,22 +112,21 @@ class Pago {
 }
 
 class cicloescolar {
-
     //Constructor
-    constructor(mi_CostoCreditos, mi_MesIncio, mi_MesFin, mi_Año) {
-        this.mi_CostoCreditos = mi_CostoCreditos;
-        this.mi_MesIncio = mi_MesIncio;
+    constructor(mi_MesInicio, mi_MesFin, mi_Año, mi_CostoCreditos) {
+        if (!mi_MesInicio || !mi_MesFin || !mi_Año || !mi_CostoCreditos) {
+            throw new Error('All properties must be defined');
+        }
+        this.mi_MesInicio = mi_MesInicio;
         this.mi_MesFin = mi_MesFin;
         this.mi_Año = mi_Año;
-    } 
+        this.mi_CostoCreditos = mi_CostoCreditos;
+    }
     //Guardar
     save() {
         return db.execute(
-            'INSERT INTO cicloescolar (MesIncio, MesFin, Año, CostoCreditos) VALUES (?, ?, ?, ?)', 
-            [this.mi_MesIncio]
-            [this.mi_MesFin]
-            [this.mi_Año]
-            [this.mi_CostoCreditos]
+            'INSERT INTO cicloescolar (MesInicio, MesFin, Año, CostoCreditos) VALUES (?, ?, ?, ?)',
+            [this.mi_MesInicio, this.mi_MesFin, this.mi_Año, this.mi_CostoCreditos]
         );
     }
 
@@ -136,7 +135,7 @@ class cicloescolar {
     }
 
     static fetchOne(idCiclo) {
-        return db.execute('SELECT * FROM cicloescolar', [idCiclo]);
+        return db.execute('SELECT * FROM cicloescolar WHERE IdCiclo = ?', [idCiclo]);
     }
 
     static fetch(idCiclo) {

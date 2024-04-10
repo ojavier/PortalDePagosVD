@@ -95,15 +95,17 @@ exports.post_RegistrarPago = (request, response, next) => {
     });
 }
 
-exports.post_creditos = (request, response, next) => {
+exports.post_cicloescolar = (request, response, next) => {
     console.log(request.body);
     const mi_cicloescolar = new cicloescolar(
-        request.body.MesInicio, request.body.MesFin, request.body.Año, request.body.CostoCreditos);
+        request.body.MesInicio, request.body.MesFin, request.body.Año, 
+        request.body.CostoCreditos
+    );
     mi_cicloescolar.save()
     .then(([rows,FieldData]) => {
-        response.redirect('/pagos');
+        response.redirect('/creditos');
     }).catch((error) => {
-        console.log('Error al Registrar Solicitud de Pago', error);
+        console.log('Error al Registrar ciclo escolar', error);
     });
 };
 

@@ -31,63 +31,94 @@
 </div>
 </div>
 
-<div class="card">
+<!---<div class="card">
   <div class="col s3">
+    <form action="/creditos" method="POST">
     <table>
       <thead>
             <p style="font-size: 18px;"><strong>Registrar Nuevo Valor de Creditos</strong> </p>
       </thead>
       <tbody>
       <tr>
-      <label for="MesInicio">Mes Inicio:</label>
-      <input id = "MesInicio" type="text" required="" autocomplete="off">
+      <label>Mes Inicio:</label>
+      <input id = "MesInicio" class="input text" required="" autocomplete="off" class="validate">
       </tr>
       <br>
       <tr>
-      <label for="MesFin">Mes Fin:</label>
-      <input id = "MesFin" type="text" required="" autocomplete="off">
+      <label>Mes Fin:</label>
+      <input id = "MesFin" class="input text" required="" autocomplete="off" class="validate">
       </tr>
       <br>
       <tr>
-      <label for="Año">Año:</label>
-      <input id = "Año" type="number" required="" autocomplete="off">
+      <label>Año:</label>
+      <input id = "Año" type="number" required="" autocomplete="off" class="validate">
       </tr>
       <br>
       <tr>
-      <label for="CostoCreditos">Precio nuevo: $:</label>
-      <input id = "CostoCreditos" type="number" required="" autocomplete="off">
+      <label>Precio nuevo: $:</label>
+      <input id = "CostoCreditos" type="number" required="" autocomplete="off" class="validate">
       </tr>
       <br>
       <tr>
-      <a href="#idvalor" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
+      
+      <button type="submit" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
       </tr>
     </tbody>       
     </table>
+    </form>
   </div>
 </div>
-</div>
-
-        <div id="idvalor" class="modal">
-            <div class="modal-content">
-            <h5>¿Estás seguro de registrar el valor de credito para el nuevo semestre?</h5>
-            </div>
-            <div class="modal-footer">
-                <a href="" class="btn modal-close red">NO</a>
-                  <a type="submit" class="btn modal-close green">SI</a>
-            </div>
-        </div>
+</div>         
 </div>
 
 
+</div> --->
+
+<div class="col s4">
+  <div class="card">
+      <div class="card-content">
+              <span class="card-title">Registrar valor de credito nuevo</span>
+          <form action="/creditos" method="POST">
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="MesInicio" name="MesInicio" type="text" required="" autocomplete="off" class="validate">
+                      <label for="MesInicio">Mes de Inicio</label>
+
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="MesFin" name="MesFin" type="text" required="" autocomplete="off" class="validate">
+                      <label for="MesFin">Mes Final</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="Año" name="Año" type="number" required="" autocomplete="off" class="validate">
+                      <label for="Año">Año</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="CostoCreditos" name="CostoCreditos" type="number" required="" autocomplete="off" class="validate">
+                      <label for="CostoCreditos">Nuevo valor del credito</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col 8 offset-s2">
+                      <button id="CreditoNuevo" class="btn waves-effect waves-light red" type="submit">Registrar nuevo valor de credito</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  <br>
+  </div>
 </div>
 
 
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
-    });
-  </script>
 
 <%- include('partials/footer.ejs') %>
