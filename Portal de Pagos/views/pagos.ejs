@@ -20,6 +20,7 @@
                 <th>Apellido Materno</th>
                 <th>Email</th>
                 <th>Matricula</th>
+                <th>Referencia</th>
               </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@
                     <td><%= alumno.ApellidoM %></td>
                     <td><%= alumno.Email %></td> <!-- Replace 'name' and 'semester' with the actual column names in your database -->
                     <td><%= alumno.Matricula %></td>
+                    <td><%= alumno.Referencia %></td>
                 </tr>
               <% }); %>
             </tbody>
@@ -45,17 +47,18 @@
                 <div class="card">
                     <div class="card-content">
                             <span class="card-title">Registrar PAGO en Efectivo</span>
+                    <form action="/pagos" method="POST">
                         <div class="row">
                             <div class="col s10 offset-s1 input-field">
-                                <p>Email:</p>
-                                <input id="emailpago" name="emailpago" type="text" required="" autocomplete="off" class="validate">
+                                <p>Email</p>
+                                <input id="emailpago" name="emailpago" type="text" required="" autocomplete="off" class="validate" readonly>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col s10 offset-s1 input-field">
-                                <p>Referencia:</p>
-                                <input id="referencia" name="referencia" type="text" required="" autocomplete="off" class="validate">
+                                <p>Referencia</p>
+                                <input id="referencia" name="referencia" type="text" required="" autocomplete="off" class="validate" readonly>
                             </div>
                         </div>
 
@@ -82,9 +85,11 @@
 
                         <div class="row">
                             <div class="col 8 offset-s4">
-                                <button id="RegistrarPagoBtn" class="btn waves-effect waves-light green" type="button">REGISTRAR PAGO</button>
+                                <input type="hidden" name="formType" value="registrarPago">
+                                <button id="RegistrarPagoBtn" class="btn waves-effect waves-light green" type="submit">REGISTRAR PAGO</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                 <br>
                 </div>
@@ -97,8 +102,8 @@
                         <form action="/pagos" method="POST">
                             <div class="row">
                                 <div class="col s10 offset-s1 input-field">
-                                    <p>Email:</p>
-                                    <input id="email" name="email" type="text" required="" autocomplete="off" class="validate">
+                                    <p>Email</p>
+                                    <input id="email" name="email" type="text" required="" autocomplete="off" class="validate" readonly>
                                 </div>
                             </div>
 
@@ -125,6 +130,7 @@
 
                             <div class="row">
                                 <div class="col 8 offset-s2">
+                                    <input type="hidden" name="formType" value="solPagos">
                                     <button id="SolicitarCobroBtn" class="btn waves-effect waves-light red" type="submit">REGISTRAR COBRO</button>
                                 </div>
                             </div>
@@ -193,16 +199,23 @@ $(document).ready( function () {
         if ($(this).hasClass('selected')) {
             // Assuming the email is in the first cell of the row
             let email = $(this).find('td').eq(3).text();
+
+            let referencia = $(this).find('td').eq(5).text();
+
             // Set the email value in the Solicitud de Cobro
             $('#email').val(email);
 
             $('#emailpago').val(email);
+
+            $('#referencia').val(referencia);
 
         } else {
             // If the row is deselected, clear the email value
             $('#email').val('');
 
             $('#emailpago').val('');
+
+            $('#referencia').val('');
         }
     });
 });

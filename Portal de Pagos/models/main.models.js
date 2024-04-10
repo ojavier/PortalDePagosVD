@@ -82,15 +82,15 @@ class Pago {
     constructor(mi_email, mi_referencia, mi_concepto, mi_monto, mi_fechapago) {
         this.emailpago = mi_email;
         this.referencia = mi_referencia;
-        this.concepto = mi_concepto;
-        this.monto = mi_monto;
+        this.concepto_pago = mi_concepto;
+        this.monto_pago = mi_monto;
         this.fechapago = mi_fechapago;
     } 
     //Guardar
     save() {
         return db.execute(
-            'INSERT INTO pago (Referencia, Fecha, Metodo, Concepto, Total, Email) VALUES (?, ?, "Efectivo", ?, ?, ?)', 
-            [this.referencia, this.fechapago, this.concepto, this.monto, this.email]
+            'INSERT INTO pago (Fecha, Metodo, Concepto, Total, Email, Referencia) VALUES (?, "Efectivo", ? , ?, ?, ?)', 
+            [this.fechapago, this.concepto_pago, this.monto_pago, this.emailpago, this.referencia]
         );
     }
 

@@ -14,45 +14,44 @@
 <div class = "col s12">
     <table id="myTable" class="striped">
         <thead>
-            <tr>
-                <th>Alumno</th>
-                <th>Semestre</th>
-                <th>Referencia</th>
-            </tr>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Email</th>
+            <th>Matricula</th>
+            <th>Referencia</th>
+          </tr>
         </thead>
         <tbody>
+          <% alumnos.forEach(function(alumno) { %>
             <tr>
-                <td>Daniel Martinez Campo</td>
-                <td>3</td>
-                <td>1234561</td>
+                <td><%= alumno.Nombre %></td>
+                <td><%= alumno.ApellidoP %></td>
+                <td><%= alumno.ApellidoM %></td>
+                <td><%= alumno.Email %></td> <!-- Replace 'name' and 'semester' with the actual column names in your database -->
+                <td><%= alumno.Matricula %></td>
+                <td><%= alumno.Referencia %></td>
             </tr>
-            <tr>
-                <td>Oswaldo Lopez Casio</td>
-                <td>8</td>
-                <td>10028311</td>
-            </tr>
-            <tr>
-                <td>Regina Obregon Hernandez</td>
-                <td>2</td>
-                <td>10139311</td>
-            </tr>
+          <% }); %>
         </tbody>
-    </table>
+      </table>
 </div>
 
+<form action="/configuracion" method = "POST">
 <div class="row">
     <div class="col s6 input-field" style="left: 25%;">
         <div class="inputGroup">
-            <input id = "newReferencia" type="number" required="" autocomplete="off" class="validate">
+            <input id = "newReferencia" name = "newReferencia" type="number" required="" autocomplete="off" class="validate">
         </div>
     </div>
     <br>
     <br>
     <div class="col s6">
-        <button id="modifyReferenciaBtn" class="btn waves-effect waves-light carmin" type="button">REGISTRAR</button>
+        <button id="modifyReferenciaBtn" class="btn waves-effect waves-light carmin" type="submit">REGISTRAR</button>
     </div>
 </div>
-
+</form>
 
             
 
@@ -91,38 +90,6 @@
 </script>
 
 <script>
-
-$(document).ready( function () {
-
-    // Initialize the DataTable
-     var table = $('#myTable').DataTable();
-     $('select').formSelect();  
-
-    // Add click event listener to table rows
-    $('#myTable tbody').on('click', 'tr', function(){
-        // Deselect previously selected rows
-        if (!$(this).hasClass('selected')) {
-            table.$('tr.selected').removeClass('selected');
-        }
-        // Highlight selected row
-        $(this).toggleClass('selected');    
-    });
-
-    // Add click event listener to modify button
-    $('#modifyReferenciaBtn').on('click', function(){
-        var selectedRowData = table.row('.selected').data();
-        var newReferencia = $('#newReferencia').val();
-
-        // Check if a row is selected
-        if (selectedRowData) {
-            // Update the content of the "Referencia" column for the selected row
-            selectedRowData[2] = newReferencia;
-            table.row('.selected').data(selectedRowData).draw(false);
-        } else {
-            alert('Selecciona un alumno para modificar su referencia');
-        }
-    });
-    });
 </script>
 
 <%- include('partials/footer.ejs') %>
