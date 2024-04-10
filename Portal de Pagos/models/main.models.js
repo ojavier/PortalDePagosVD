@@ -111,4 +111,43 @@ class Pago {
     }
 }
 
-module.exports = { Alumno, SolPago, EstadoCuenta, Pago };
+class cicloescolar {
+
+    //Constructor
+    constructor(mi_CostoCreditos, mi_MesIncio, mi_MesFin, mi_Año) {
+        this.mi_CostoCreditos = mi_CostoCreditos;
+        this.mi_MesIncio = mi_MesIncio;
+        this.mi_MesFin = mi_MesFin;
+        this.mi_Año = mi_Año;
+    } 
+    //Guardar
+    save() {
+        return db.execute(
+            'INSERT INTO cicloescolar (MesIncio, MesFin, Año, CostoCreditos) VALUES (?, ?, ?, ?)', 
+            [this.mi_MesIncio]
+            [this.mi_MesFin]
+            [this.mi_Año]
+            [this.mi_CostoCreditos]
+        );
+    }
+
+    static fetchAll() {
+        return db.execute('SELECT * FROM cicloescolar');
+    }
+
+    static fetchOne(idCiclo) {
+        return db.execute('SELECT * FROM cicloescolar', [idCiclo]);
+    }
+
+    static fetch(idCiclo) {
+        if (idCiclo) {
+            return this.fetchOne(idCiclo);
+        } else {
+            return this.fetchAll();
+        }
+    }
+}
+
+
+
+module.exports = { Alumno, SolPago, EstadoCuenta, Pago, cicloescolar };

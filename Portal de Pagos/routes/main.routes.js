@@ -19,6 +19,8 @@ router.get('/reportes', mainController.get_reportes);
 
 router.get('/creditos', mainController.get_creditos);
 
+router.post('/creditos', mainController.post_creditos);
+
 router.get('/configuracion', mainController.get_configuracion);
 
 router.get('/pagos', mainController.get_pagos);
