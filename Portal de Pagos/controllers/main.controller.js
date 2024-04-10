@@ -61,8 +61,11 @@ exports.get_creditos = (request, response, next) => {
 };
 
 exports.get_configuracion = (request, response, next) => {
-    response.render('configuracion', {
-        pagePrimaryTitle: 'Configuración',
+    Alumno.fetchAll().then(([rows]) => {
+        response.render('configuracion', {
+            pagePrimaryTitle: 'Configuración',
+            alumnos: rows,
+        });
     });
 };
 
