@@ -111,4 +111,19 @@ class Pago {
     }
 }
 
-module.exports = { Alumno, SolPago, EstadoCuenta, Pago };
+class Referencia {
+    constructor(email, referencia) {
+        this.email = email;
+        this.referencia = referencia;
+    }
+
+    // Update 'concepto_pago' in 'referencia' table by id
+    updateByEmail(email, referencia) {
+        return db.execute(
+            'UPDATE alumno SET referencia = ? WHERE email = ?',
+             [referencia, email]
+    );
+}
+}
+
+module.exports = { Alumno, SolPago, EstadoCuenta, Pago, Referencia };

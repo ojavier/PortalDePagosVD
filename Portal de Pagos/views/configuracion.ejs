@@ -38,21 +38,43 @@
       </table>
 </div>
 
-<form action="/configuracion" method = "POST">
-<div class="row">
-    <div class="col s6 input-field" style="left: 25%;">
-        <div class="inputGroup">
-            <input id = "newReferencia" name = "newReferencia" type="number" required="" autocomplete="off" class="validate">
+<br><br>
+
+<div class = "row">
+    <div class = "col s6 offset-s3"> 
+        <div class = "card">
+            <div class = "card-content">
+                <div class = "row">
+                    <div class = "col s6">
+                        <p> Alumno: </p>
+                        <strong><span id="NombreCompleto" name="NombreCompleto" style="font-size: large;"></span></strong>
+                    </div>
+                    <div class = "col s6">
+                        <p> Matricula: </p>
+                        <strong><span id="matricula" name="matricula" style="font-size: large;"></span></strong>
+                    </div>
+                </div>
+
+                <form action="/configuracion" method = "POST">
+                <br>
+                    <div class = "row">
+                        <div class="col s6 input-field" style = "left: 0%;">
+                            <p> Referencia: </p>
+                            <div class="col s12 input-field">
+                                <input type="hidden" id="email" name="email">
+                                <input id="referencia" name="referencia" type="text" required="" autocomplete="off" class="validate">
+                            </div>    
+                        </div>
+                        <div class="col s6">
+                            <br><br><br>
+                            <button id="modifyReferenciaBtn" class="btn waves-effect waves-light carmin" type="submit">REGISTRAR</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <br>
-    <br>
-    <div class="col s6">
-        <button id="modifyReferenciaBtn" class="btn waves-effect waves-light carmin" type="submit">REGISTRAR</button>
-    </div>
 </div>
-</form>
-
             
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -90,6 +112,80 @@
 </script>
 
 <script>
+
+$(document).ready( function () {
+
+// Initialize the DataTable
+ var table = $('#myTable').DataTable();
+ $('select').formSelect();  
+
+// Add click event listener to table rows
+$('#myTable tbody').on('click', 'tr', function(){
+    // Deselect previously selected rows
+    if (!$(this).hasClass('selected')) {
+        table.$('tr.selected').removeClass('selected');
+    }
+    // Toggle row selection
+    $(this).toggleClass('selected');  
+
+    // If the row is selected
+    if ($(this).hasClass('selected')) {
+        // Assuming the email is in the first cell of the row
+        let firstName = $(this).find('td').eq(0).text();
+        let middleName = $(this).find('td').eq(1).text();
+        let lastName = $(this).find('td').eq(2).text();
+
+        let nombreCompleto = firstName + ' ' + middleName + ' ' + lastName;
+
+        let email = $(this).find('td').eq(3).text();
+
+        let matricula = $(this).find('td').eq(4).text();
+
+        $('#NombreCompleto').text(nombreCompleto);
+
+        $('#email').val(email);
+
+        $('#matricula').text(matricula);
+
+
+    } else {
+        // If the row is deselected, clear the email value
+        $('#NombreCompleto').text('');
+
+        $('#email').val('');
+
+        $('#matricula').text('');
+
+    }
+});
+
+// Identifica el botón por su ID
+var boton = $("#modifyReferenciaBtn"); 
+
+// Agrega un evento de clic al botón
+boton.click(function(e) {
+    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+    // Obtén el valor del input
+    let nuevaReferencia = $('#referencia').val();
+
+    // Verifica si la nueva referencia ya existe en la tabla
+    let referenciaExists = $('#myTable tbody tr td:nth-child(6)').filter(function () {
+        let cellText = $(this).text();
+        return cellText !== '0' && cellText === nuevaReferencia;
+    }).length > 0;
+
+    // Si la referencia ya existe, muestra una alerta
+    if (referenciaExists) {
+        alert('La referencia ya existe en la tabla.');
+        return;
+    }
+
+    // Si la referencia no existe, envía el formulario
+    $('form').submit();
+});
+
+});
 </script>
 
 <%- include('partials/footer.ejs') %>
