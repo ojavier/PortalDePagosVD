@@ -1,4 +1,6 @@
-const {Alumno, SolPago, EstadoCuenta, cicloescolar}= require("../models/main.models");
+
+const {Alumno, SolPago, EstadoCuenta, Pago, Referencia}= require("../models/main.models");
+
 
 
 exports.get_root = (request, response, next) => {
@@ -62,12 +64,22 @@ exports.get_creditos = (request, response, next) => {
 
 exports.get_configuracion = (request, response, next) => {
     Alumno.fetchAll().then(([rows]) => {
-        response.render('configuracion', {
-            pagePrimaryTitle: 'Configuración',
-            alumnos: rows,
+    response.render('configuracion', {
+        pagePrimaryTitle: 'Configuración',
+        alumnos: rows,
         });
     });
-};
+}
+
+exports.post_configuracion = (request, response, next) => {
+    console.log(request.body);
+    const NuevaReferencia = new Referencia(request.body.email, request.body.referencia);
+    NuevaReferencia.updateByEmail(request.body.email, request.body.referencia).then(([rows,FieldData]) => {
+        response.redirect('/configuracion');
+    }).catch((error) => {
+        console.log('Error al Actualizar Referencia', error);
+    });
+}
 
 exports.get_pagos = (request, response, next) => {
     Alumno.fetchAll().then(([rows]) => {

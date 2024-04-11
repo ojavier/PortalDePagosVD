@@ -111,6 +111,21 @@ class Pago {
     }
 }
 
+class Referencia {
+    constructor(email, referencia) {
+        this.email = email;
+        this.referencia = referencia;
+    }
+
+    // Update 'concepto_pago' in 'referencia' table by id
+    updateByEmail(email, referencia) {
+        return db.execute(
+            'UPDATE alumno SET referencia = ? WHERE email = ?',
+             [referencia, email]
+    );
+}
+}
+
 class cicloescolar {
     //Constructor
     constructor(mi_MesInicio, mi_MesFin, mi_Año, mi_CostoCreditos) {
@@ -146,7 +161,4 @@ class cicloescolar {
         }
     }
 }
-
-
-
-module.exports = { Alumno, SolPago, EstadoCuenta, Pago, cicloescolar };
+module.exports = { Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar };
