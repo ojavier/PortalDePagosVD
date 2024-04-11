@@ -20,60 +20,62 @@
     </thead>
 
     <tbody>
+      <% cicloescolar.forEach(function(cicloescolar) { %>
       <tr>
-        <td>Enero - Junio 2024</td>
-        <td>$10</td>
+        <td><%= cicloescolar.MesInicio%> - <%= cicloescolar.MesFin%> <%= cicloescolar.Año%></td>
+        <td><%= cicloescolar.CostoCreditos%></td>
       </tr>
-      <tr>
-        <td>Agosto - Diciembre 2023</td>
-        <td>$11</td>
-      </tr>
-      <tr>
-        <td>Enero - Junio 2023</td>
-        <td>$14</td>
-      </tr>
+      <% }); %>
     </tbody>
   </table>
 </div>
 </div>
 
-<div class="col s6 center-align">
+<div class="col s4">
+  <div class="card">
+      <div class="card-content">
+              <span class="card-title">Registrar valor de credito nuevo</span>
+          <form action="/creditos" method="POST">
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="MesInicio" name="MesInicio" type="text" required="" autocomplete="off" class="validate">
+                      <label for="MesInicio">Mes de Inicio</label>
 
-    <p style="font-size: 20px;"><strong>ASIGNA COSTO DE CREDITOS ACTUAL: </strong></p>
-   
-    <div class="col s4 offset-s4">
-    <div class="inputGroup">
-        <input id = "costo" type="number" required="" autocomplete="off">
-        <label for="costo">$</label>
-    </div>
-    </div>
-    <br>
-    <div class="col s4 offset-s4">
-        <a href="#idvalor" class="btn modal-trigger carmin">REGISTRAR VALOR</a>
+                  </div>
+              </div>
 
-    </div>
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="MesFin" name="MesFin" type="text" required="" autocomplete="off" class="validate">
+                      <label for="MesFin">Mes Final</label>
+                  </div>
+              </div>
 
-        <div id="idvalor" class="modal">
-            <div class="modal-content">
-            <h5>Estas seguro registrar el valor de credito actual para el semestre (AGOSTO - DICIEMBRE) a <span style="color: red;"> $ 80 MXN</span> por credito?</h5>
-            </div>
-            <div class="modal-footer">
-                <a href="" class="btn modal-close red">NO</a>
-                <a href="" class="btn modal-close green">SI</a>
-            </div>
-        </div>
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="Año" name="Año" type="number" required="" autocomplete="off" class="validate">
+                      <label for="Año">Año</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col s10 offset-s1 input-field">
+                      <input id="CostoCreditos" name="CostoCreditos" type="number" required="" autocomplete="off" class="validate">
+                      <label for="CostoCreditos">Nuevo valor del credito</label>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col 8 offset-s2">
+                      <button id="CreditoNuevo" class="btn waves-effect waves-light red" type="submit">Registrar nuevo valor de credito</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+  <br>
+  </div>
 </div>
 
 
-</div>
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
-    });
-  </script>
 
 <%- include('partials/footer.ejs') %>

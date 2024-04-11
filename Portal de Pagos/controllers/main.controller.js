@@ -1,4 +1,6 @@
+
 const {Alumno, SolPago, EstadoCuenta, Pago, Referencia}= require("../models/main.models");
+
 
 
 exports.get_root = (request, response, next) => {
@@ -52,8 +54,11 @@ exports.get_reportes = (request, response, next) => {
 };
 
 exports.get_creditos = (request, response, next) => {
+    cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
+        cicloescolar: rows,
+        });
     });
 };
 
@@ -105,6 +110,19 @@ exports.post_RegistrarPago = (request, response, next) => {
     });
 }
 
+exports.post_cicloescolar = (request, response, next) => {
+    console.log(request.body);
+    const mi_cicloescolar = new cicloescolar(
+        request.body.MesInicio, request.body.MesFin, request.body.Año, 
+        request.body.CostoCreditos
+    );
+    mi_cicloescolar.save()
+    .then(([rows,FieldData]) => {
+        response.redirect('/creditos');
+    }).catch((error) => {
+        console.log('Error al Registrar ciclo escolar', error);
+    });
+};
 
 exports.post_Forms = (request, response, next) => {
     if (request.body.formType === 'registrarPago') {
