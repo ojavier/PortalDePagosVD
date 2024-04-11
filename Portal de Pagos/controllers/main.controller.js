@@ -1,5 +1,5 @@
 
-const {Alumno, SolPago, EstadoCuenta, Pago, Referencia}= require("../models/main.models");
+const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require("../models/main.models");
 
 
 
