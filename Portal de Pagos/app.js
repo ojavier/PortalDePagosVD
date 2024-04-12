@@ -33,7 +33,6 @@ app.use(session({
 // the forms' data
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
 const usersRoutes = require('./routes/users.routes.js');
 app.use('/users', usersRoutes);
 
