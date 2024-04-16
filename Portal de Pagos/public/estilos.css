@@ -244,6 +244,11 @@ label {
     background-color: rgb(145, 1, 6);
 }
 
+.dataTables_wrapper {
+  width: 100%;
+  overflow: auto;
+}
+
 /* Override DataTables selected row styles */
 .dataTables_wrapper tr.selected,
 .dataTables_wrapper tr.selected.odd,
@@ -301,4 +306,5 @@ label {
 .tabs .indicator {
   background-color:rgb(145, 1, 6);
 } /*Color of underline*/
+
 

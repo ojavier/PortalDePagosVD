@@ -33,6 +33,39 @@ app.use(session({
 // the forms' data
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const multer = require('multer');
+
+//fileStorage: Es nuestra constante de configuración para manejar el almacenamiento
+const fileStorage = multer.diskStorage({
+    destination: (request, file, callback) => {
+        //'uploads': Es el directorio del servidor donde se subirán los archivos 
+        callback(null, 'uploads');
+    },
+    filename: (request, file, callback) => {
+        //aquí configuramos el nombre que queremos que tenga el archivo en el servidor, 
+        //para que no haya problema si se suben 2 archivos con el mismo nombre concatenamos el timestamp
+        callback(null, file.originalname);
+    },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'text/csv') {
+    cb(null, true); // Accept the file
+  } else {
+    cb(null, false); // Reject the file
+  }
+}
+
+const upload = multer({ storage: fileStorage, fileFilter: fileFilter });
+
+app.use(upload.single('csvFile')); // Put in the above code line
+
+
+
+
+
+
+
 const usersRoutes = require('./routes/users.routes.js');
 app.use('/users', usersRoutes);
 

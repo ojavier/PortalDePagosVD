@@ -1,7 +1,8 @@
+const fs = require('fs');
+const csvParser = require('csv-parser');
+const moment = require('moment');
 
 const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require("../models/main.models");
-
-
 
 exports.get_root = (request, response, next) => {
     response.render('login', {
@@ -109,6 +110,66 @@ exports.post_RegistrarPago = (request, response, next) => {
         console.log('Error al Registrar Pago', error);
     });
 }
+
+exports.get_importar = (request, response, next) => {
+    response.render('importar', {
+        pagePrimaryTitle: 'Importar Transferencias',
+    });
+}
+
+
+exports.post_importar = (request, response, next) => {
+    console.log(request.file);
+    const operations = [];
+    fs.createReadStream(request.file.path)
+        .pipe(csvParser({
+            columns: ['Referencia', 'Descripcion', 'Importe', 'Fecha']
+        }))
+        .on('data', (row) => {
+            // Check if the row is empty
+            const isEmptyRow = Object.values(row).every(val => val === null || val === '');
+
+            if (!isEmptyRow) {
+                const fecha = moment(row.Fecha, 'DDMMYYYY').format('YYYY-MM-DD');
+
+                const operation = Pago.getEmailByReferencia(row.Referencia)
+                    .then(email => {
+                        if (email) {
+                            const importar = new Pago(
+                                email,
+                                row.Referencia,
+                                row.Descripcion,
+                                row.Importe,
+                                fecha
+                            );
+                            return importar.save()
+                                .then(([rows,FieldData]) => {
+                                    console.log('Saved row:', row);
+                                })
+                                .catch((error) => {
+                                    console.log('Error al Importar Transferencia', error);
+                                });
+                        } else {
+                            console.log(`No se encontró un alumno con la referencia ${row.Referencia}`);
+                        }
+                    });
+                operations.push(operation);
+            }
+        })
+        .on('end', () => {
+            Promise.all(operations)
+                .then(() => {
+                    console.log('CSV file successfully processed');
+                    response.redirect('/importar');
+                })
+                .catch(error => {
+                    console.log('Error processing CSV file:', error);
+                    response.status(500).send('Error processing CSV file');
+                });
+        });
+};
+
+
 
 exports.post_cicloescolar = (request, response, next) => {
     console.log(request.body);

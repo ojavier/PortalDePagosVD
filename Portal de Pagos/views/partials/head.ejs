@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!--Import Google Icon Font-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--Import materialize.css-->
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -12,36 +13,46 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-        
-        
-       
+
     <title>Portal de Pagos VD</title>
 </head>
 
 <body style="background: rgb(229, 230, 235); font-family: 'Roboto Slab';">
 
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href="/pagos" class="black-text">REGISTRAR PAGO - SOLICITUD DE COBRO</a></li>
+        <li class="divider"></li>
+        <li><a href="/importar" class="black-text">IMPORTAR TRANSFERENCIAS</a></li>
+    </ul>
     <nav>
         <div class="nav-wrapper" style="background: rgb(145, 1, 6);">
           <a href="https://ivd.edu.mx/" class="logo-img"><img src="/images/via.avif" height="64"></a>
-          <a href="/users/login" class="brand-logo center">Portal de Pagos</a>
+          <a href="/users/login" class="brand-logo left" style="margin-left: 20px;">Portal de Pagos</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="/home">HOME</a></li>
-          <li><a href="/configuracion">CONFIGURACIÓN</a></li>
-          <li><a href="/creditos">CREDITOS</a></li>
-          <li><a href="/pagos">PAGO</a></li>
-          <li><a><i class="material-icons right">account_circle</i>Hola! <strong>Identificarse</strong></li></a>
+            <li><a href="/home">HOME</a></li>
+            <li><a href="/configuracion">CONFIGURACIÓN</a></li>
+            <li><a href="/creditos">CREDITOS</a></li>
+            <li style="width: 135px;"><a class="dropdown-trigger" href="#!" data-target="dropdown1">PAGOS<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a><i class="material-icons right">account_circle</i>Hola! <strong>Identificarse</strong></li></a>
           </ul>
         </div>
     </nav>  
 
 <script type="text/javascript">
+    // Initialize dropdown trigger using jQuery
+    $(document).ready(function() {
+        $(".dropdown-trigger").dropdown();
+    });
+
+    // Load widget script asynchronously
     window.onload = function(){
-    (function(d, script) {
-    script = d.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = 'https://w.app/widget-v1/4KaFIY.js';
-    d.getElementsByTagName('head')[0].appendChild(script);
-    }(document));
+        (function(d, script) {
+            script = d.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = 'https://w.app/widget-v1/4KaFIY.js';
+            d.getElementsByTagName('head')[0].appendChild(script);
+        }(document));
     };
 </script>
+
