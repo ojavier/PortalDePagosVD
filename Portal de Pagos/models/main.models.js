@@ -109,6 +109,16 @@ class Pago {
             return this.fetchAll();
         }
     }
+
+    
+    static async getEmailByReferencia(referencia) {
+        const [alumnos] = await db.execute('SELECT Email FROM alumno WHERE Referencia = ?', [referencia]);
+        if (alumnos.length > 0) {
+            return alumnos[0].Email;
+        } else {
+            return null;
+        }
+    }
 }
 
 class Referencia {

@@ -29,5 +29,9 @@ router.get('/pagos', mainController.get_pagos);
 
 router.post('/pagos', mainController.post_Forms);
 
+router.get('/importar', mainController.get_importar);
+
+router.post('/importar', mainController.post_importar);
+
 
 module.exports = router;

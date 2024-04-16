@@ -1,0 +1,14 @@
+Cuenta,Fecha,Hora,Sucursal,Descripcion,Cargo/Abono,Importe,Saldo,Referencia,Concepto,Banco Participante,Clabe Beneficiario,Nombre Beneficiario,Cta Ordenante,Nombre Ordenante,Codigo Devolucion,Causa Devolucion,RFC Beneficiario,RFC Ordenante,Clave de Rastreo
+'65508892112,'05032024',21:56,'7465',AB TRANSF SPEI                          ,+,4754,,5848773,1005413                                  012180015312001645                               ,BBVA MEXICO                             ,'014680655088921124  ',VIA VESTIRE SC                          ,'012180015312001645  ',MARIA ALONDRA ALVARADO CERVANTES        ,  ,                              ,VVE0506155K5   ,AACA980728QC   ,MBAN01002403050073052922      
+'65508892112,'05032024',22:00,'7465',AB TRANSF SPEI                          ,+,7240.57,,5856775,1005510                                  036680500180597521                               ,INBURSA                                 ,'014680655088921124  ',VIA VESTIRE SC                          ,'036680500180597521  ',CARLA JAVIELA OROZCO MEDINA             ,  ,                              ,VVE0506155K5   ,OOMC68120874   ,'036APPM04032024146834785
+'65508892112,'05032024',01:19,'7465',AB TRANSF SPEI                          ,+,9469.46,,6001626,1006816                                  002180471901165889                               ,BANAMEX                                 ,'014680655088921124  ',VIA VESTIRE SC                          ,'002180471901165889  ',"ALFREDO,BIOSCA/SANTACRUZ                ",  ,                              ,VVE0506155K5   ,BISA720113RH   ,'085900941040306546
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
