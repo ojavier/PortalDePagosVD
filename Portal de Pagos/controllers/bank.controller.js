@@ -5,9 +5,6 @@ const bcrypt = require('bcryptjs');
 // Crear la cadena XML con XML Builder
 var originalString = builder.create('P')
   .ele('business')
-    .ele('repo', {'type': 'git'}, 'git://github.com/oozcitak/xmlbuilder-js.git')
-  .up()
-  .ele('business')
     .ele('id_company', 'SNBX')
     .up()
     .ele('id_branch', '01SNBXBRNCH')
@@ -72,7 +69,7 @@ var originalString = builder.create('P')
     .up()
     .ele('version', 'IntegraWPP')
     .up()
-    .ele('nb_fpago', 'COD')
+  .up()
   .end({ pretty: true });
 
   // Imprimir la cadena XML
@@ -118,3 +115,77 @@ var bcryptCiphertext = bcrypt.hashSync(xmlBuilder, keyBcrypt);
 var decryptedXml = bcrypt.compareSync(xmlBuilder, bcryptCiphertext);
 
 console.log("Decrypted XML: " + decryptedXml);
+
+
+// Notificacion POST
+
+const xml = builder.create('CENTEROFPAYMENTS')
+  .ele('reference', {}, 'PRUEBASCRYPTODEV')
+  .up()
+  .ele('response', {}, 'approved')
+  .up()
+  .ele('folioBpay', {}, '7c105d2d-880b-4f72-a15f-87c6a117949')
+  .up()
+  .ele('auth', {}, '00000')
+  .up()
+  .ele('cd_response', {}, '00')
+  .up()
+  .ele('cd_error')
+  .up()
+  .ele('nb_error')
+  .up()
+  .ele('nb_company', {}, 'CRYPTO')
+  .up()
+  .ele('nb_fpago')
+  .up()
+  .ele('tp_operation')
+  .up()
+  .ele('amount', {}, '28.00')
+  .up()
+  .ele('id_url', {}, 'XB1PT6V6')
+  .up()
+  .ele('email')
+  .up()
+  .ele('datos_adicionales')
+  .up()
+  .ele('nb_fpago', {}, 'BPAY')
+  .end({ pretty: true });
+
+console.log(xml);
+
+
+//Redirect
+
+// Variables
+let nbResponse = "";
+let idLiga = "";
+let referencia = "";
+let importe = "";
+let email = "";
+let nuAut = "";
+
+// Obtenemos los parámetros del request
+if (request.getParameter("nbResponse") != null && request.getParameter("nbResponse") !== "") {
+  nbResponse = request.getParameter("nbResponse");
+}
+
+if (request.getParameter("idLiga") != null && request.getParameter("idLiga") !== "") {
+  idLiga = request.getParameter("idLiga");
+}
+
+if (request.getParameter("referencia") != null && request.getParameter("referencia") !== "") {
+  referencia = request.getParameter("referencia");
+}
+
+if (request.getParameter("importe") != null && request.getParameter("importe") !== "") {
+  importe = request.getParameter("importe");
+}
+
+if (request.getParameter("email") != null && request.getParameter("email") !== "") {
+  email = request.getParameter("email");
+}
+
+if (request.getParameter("nuAut") != null && request.getParameter("nuAut") !== "") {
+  nuAut = request.getParameter("nuAut");
+}
+
