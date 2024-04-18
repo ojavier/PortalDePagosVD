@@ -16,6 +16,8 @@ exports.post_login = (request, response, next) => {
             console.log(usuarios);
             if (usuarios) {
                 const usuario = usuarios[0];
+                // Establecer isLoggedIn en true
+                request.session.isLoggedIn = true;
                 response.redirect('/home');
             } else {
                 request.session.error = "Usuario y/o contraseña incorrectos";
@@ -31,4 +33,3 @@ exports.get_logout = (request, response, next) => {
         response.redirect('/users/login'); //Este código se ejecuta cuando la sesión se elimina.
     });
 };
-
