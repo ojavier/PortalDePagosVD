@@ -79,13 +79,14 @@ class SolPago {
 class Pago {
 
     //Constructor
-    constructor(mi_email, mi_referencia, mi_concepto, mi_monto, mi_fechapago, mi_metodo) {
+    constructor(mi_email, mi_referencia, mi_concepto, mi_monto, mi_fechapago, mi_metodo, mi_fechalimite) {
         this.emailpago = mi_email;
         this.referencia = mi_referencia;
         this.metodo = mi_metodo;
         this.concepto_pago = mi_concepto;
         this.monto_pago = mi_monto;
         this.fechapago = mi_fechapago;
+        this.fechalimite = mi_fechalimite;
     } 
     //Guardar
     save() {
