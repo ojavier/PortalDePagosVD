@@ -1,6 +1,6 @@
 const builder = require('xmlbuilder');
 const bcrypt = require('bcryptjs');
-const xmlbuilder = require('xmlbuilder');
+
  
 // Crear la cadena XML con XML Builder
 var originalString = builder.create('P')
