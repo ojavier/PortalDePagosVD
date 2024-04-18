@@ -17,12 +17,13 @@ exports.get_login = (request, response, next) => {
 }
 
 exports.get_home = (request, response, next) => {
-    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
-        .then(([estadoCuentaRows, solPagoRows]) => {
+    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll(), Pago.fetchAll()])
+        .then(([estadoCuentaRows, solPagoRows, pagoRows]) => {
             response.render('home2', {
                 pagePrimaryTitle: 'Portal de Gestión de Pagos',
                 estadoCuentas: estadoCuentaRows[0],
                 solpagos: solPagoRows[0],
+                pagos: pagoRows[0],
             });
         })
         .catch(err => {

@@ -169,34 +169,103 @@
             <li class="tab col s12"><a href="#historial-de-pagos">Historial de Pagos</a></li>
           </ul>
       <div id="historial-de-pagos">
+        <ul class="tabs">
+          <li class="tab col s4"><a href="#test1">Todo</a></li>
+          <li class="tab col s4"><a href="#test2">Colegiatura</a></li>
+          <li class="tab col s4"><a href="#test3">Otros pagos</a></li>
+        </ul>
           <!-- Contenido Historial De Pagos  -->
-          <table class="striped">
+          <div class="card" id="test1" class="tab col s12 ">
+            <table class="striped">
               <thead>
                 <tr>
-                  <th>Fecha Limite</th>
-                  <th>Monto</th>
                   <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha de pago realizado</th>
                 </tr>
               </thead>
               <tbody>
+              <% pagos.forEach(function(pago) { %>
                 <tr>
-                  <td>11/03/2027</td>
-                  <td>$5,472</td>
-                  <td>Tijeras Papeleria</td>
+                  <td><%= pago.Concepto %></td>
+                  <td><%= pago.Total %></td>
+                  <td><%= pago.Metodo %></td>
+                  <td>      
+                    <% 
+                    let date = new Date(pago.Fecha);
+                    let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                    %>
+                    <%= formattedDate %>
+                  </td>
                 </tr>
-                <tr>
-                  <td>25/04/2027</td>
-                  <td>$2,457</td>
-                  <td>DIPLOMADO MDD</td>
-                </tr>
+                <% }); %>
               </tbody>
             </table>
+          </div>
+          <div class="card" id="test2" class="tab col s12">
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha de pago realizado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pagos.forEach(function(pago) { %>
+                  <% if (pago.Concepto === "Colegiatura") { %>
+                    <tr>
+                      <td><%= pago.Concepto %></td>
+                      <td><%= pago.Total %></td>
+                      <td><%= pago.Metodo %></td>
+                      <td>      
+                        <% 
+                        let date = new Date(pago.Fecha);
+                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                        %>
+                        <%= formattedDate %>
+                      </td>
+                    </tr>
+                  <% } %>
+                <% }); %>
+                </tbody>
+            </table>
+          </div>
+          <div class="card" id="test3" class="tab col s12">
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha de pago realizado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% pagos.forEach(function(pago) { %>
+                  <% if (pago.Concepto !== "Colegiatura") { %>
+                    <tr>
+                      <td><%= pago.Concepto %></td>
+                      <td><%= pago.Total %></td>
+                      <td><%= pago.Metodo %></td>
+                      <td>      
+                        <% 
+                        let date = new Date(pago.Fecha);
+                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                        %>
+                        <%= formattedDate %>
+                      </td>
+                    </tr>
+                  <% } %>
+                <% }); %>
+              </tbody>
+            </table>
+          </div> 
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
 </div>
 
 
@@ -208,7 +277,16 @@
         M.Tabs.init(tabs);
     });
 </script>
-    
+
+<script>
+var instance = M.Tabs.init(el, options);
+
+// Or with jQuery
+
+$(document).ready(function(){
+  $('.tabs').tabs();
+});
+</script>      
 <%- include('partials/footer.ejs') %>
 
  
