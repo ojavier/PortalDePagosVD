@@ -12,7 +12,6 @@ app.use((request, response, next) => {
   next(); 
 });
 
-
 // "body-parser" is a third party midleware that allows you to analyze
 // requests' bodies
 const bodyParser = require('body-parser');
