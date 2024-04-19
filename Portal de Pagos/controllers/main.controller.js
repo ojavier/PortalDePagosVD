@@ -32,9 +32,16 @@ exports.get_home = (request, response, next) => {
 };
 
 exports.get_paymethod = (request, response, next) => {
-    response.render('payment-methods', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-    });
+    const paymentType = request.query.paymentType;
+    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
+        .then(([estadoCuentaRows, solPagoRows]) => {
+            response.render('recipe_paymethod', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                estadoCuentas: estadoCuentaRows[0],
+                solpagos: solPagoRows[0],
+                paymentType: paymentType 
+            });
+        });
 };
 
 exports.get_payplan = (request, response, next) => {
