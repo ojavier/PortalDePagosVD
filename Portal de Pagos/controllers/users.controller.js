@@ -1,11 +1,18 @@
 const Usuario = require('../models/usuario.model');
 
 exports.get_login = (request, response, next) => {
+    // Initialize permisos if it doesn't exist
+    if (!request.session.permisos) {
+        request.session.permisos = {};
+    }
     const error = request.session.error || '';
     request.session.error = '';
     response.render('login', {
         Email: request.session.Email || '',
         error: error,
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos,
+        usuario: request.session.usuario
     });
 };
 
@@ -18,6 +25,7 @@ exports.post_login = (request, response, next) => {
                 if (usuario.Password === request.body.Password) {
                     console.log('Valid Password');
                     request.session.isLoggedIn = true;
+                    request.session.usuario = usuario;
                     Usuario.getPrivilegios(request.body.Email)
                         .then(([permits, fieldData]) => {
                             request.session.permisos = permits.map(permiso => permiso.NombrePrivilegio);
