@@ -10,6 +10,7 @@ exports.get_root = (request, response, next) => {
     });
 };
 
+// TODO: The controller needs a proper name that isn't already used
 exports.get_login = (request, response, next) => {
     response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',

@@ -17,7 +17,7 @@ app.use((request, response, next) => {
 const bodyParser = require('body-parser');
 
 
-
+// TODO: Needs to be changed to something that supports production
 const session = require('express-session');
 app.use(session({
   secret: 'mySecretKey', 
@@ -77,6 +77,7 @@ app.set('views', 'views');
 
 const DataTable = require( 'datatables.net' );
 
+// TODO: Add a proper 404 page
 app.use((request, response, next) => {
   response.status(404);
   response.render('article', {
