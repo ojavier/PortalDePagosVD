@@ -1,4 +1,4 @@
-const Usuario = require('../usuario.model');
+const Usuario = require('../models/usuario.model');
 
 exports.get_login = (request, response, next) => {
     const error = request.session.error || '';
