@@ -37,7 +37,7 @@ module.exports = class Usuario {
         return db.execute(`
             SELECT p.NombrePrivilegio
             FROM usuario u
-            JOIN roldelusuarios ru ON u.Email = ru.Email
+            JOIN roldeusuarios ru ON u.Email = ru.Email
             JOIN permisosrol pr ON ru.IdRol = pr.IdRol
             JOIN permisos p ON pr.IdPermisos = p.IdPermisos
             WHERE u.Email = ?
