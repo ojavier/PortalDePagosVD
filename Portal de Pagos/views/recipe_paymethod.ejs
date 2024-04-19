@@ -1,0 +1,139 @@
+
+<%- include('partials/head.ejs') %>
+
+<main class="container" style="margin-top: 2rem;">
+    <div class="row">
+        <!-- Columna para Seleccionar Método de Pago -->
+    <div class="col s6">
+        <h5>Selecciona metodo de pago:</h5>
+            <div class="row">
+                <div class="col s6 responsibe-table">
+                    <p>
+                        <label>
+                            <input id="payment-card" name="payment_method" type="radio" onclick="redirectToLink()"/>
+                            <span style="font-size: large;">
+                                <strong>Tarjeta</strong>
+                                <img src="https://w7.pngwing.com/pngs/117/675/png-transparent-visa-and-mastercard-ads-mastercard-credit-card-american-express-visa-debit-card-mastercard-text-payment-logo.png" alt="Tarjeta de crédito" style="width: 50px; height: auto;">
+                            </span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input id="payment-transfer" name="payment_method" type="radio" />
+                            <span style="font-size: large;"><strong>Transferencia</strong></span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input id="payment-cash" name="payment_method" type="radio" />
+                            <span style="font-size: large;"><strong>Efectivo</strong></span>
+                        </label>
+                    </p>
+                </div>
+                <!-- Añadir más opciones de pago aquí -->
+            </div>
+        </div>     
+        <!-- Columna para los Datos de Pago -->
+        <div class="col s6">
+            <h5>Resumen de pago:</h5>
+            <div class="card ">
+              <div class="card-content ">
+                <span class="card-title" id="paymentConcept"></span>
+                <div class="row">
+                    <tr>
+                      <thead>
+                            <tr>
+                            <p></p>
+                            <th>Pago mensual:</th>
+                            <th id="paymentAmount"></th>
+                            </tr>
+                      </thead>
+                      <tbody>
+                        <%
+                          let paymentData;
+                          if (paymentType === 'colegiatura') {
+                            paymentData = estadoCuentas;
+                          } else if (paymentType === 'otros') {
+                            paymentData = solpagos;
+                          }
+                          if (paymentData && paymentData.length > 0) {
+                        %>
+                          <tr>
+                            <td><%= paymentData[0].Concepto %></td>
+                            <td><strong>$<%= paymentData[0].Cantidad %></strong></td>
+                          </tr>
+                          <%
+                          }
+                        %>
+                      </tbody>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Botones de aceptar y rechazar -->
+<% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
+    <div class="container">
+        <%- content %>
+    </div>
+<% } %>
+
+    <div class="container section">
+        <div class="row">
+            <div class="col s6">
+                <a href="/home2" class="btn modal-trigger carmin">Regresar</a>
+            </div>
+            <div class="col s6 right-align">
+                <button id="continue-button" class="btn modal-trigger carmin">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <h4 id="modal-title"><strong></strong></h4>
+            <p id="modal-text"></p>
+            <p id="modal-account"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="/home2" class="modal-close waves-effect waves-green btn-flat">Entiendo</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  
+    document.getElementById('continue-button').addEventListener('click', function() {
+        var title = document.getElementById('modal-title');
+        var text = document.getElementById('modal-text');
+        var account = document.getElementById('modal-account');
+
+        if (document.getElementById('payment-transfer').checked) {
+            title.textContent = '¡Te ayudamos a completar tu pago por transferencia!';
+            text.textContent = 'Para completar tu pago por transferencia puedes hacerlo a la siguiente cuenta:';
+            account.textContent = 'BANAMEX: 123456789';
+            instances[0].open();
+        } else if (document.getElementById('payment-cash').checked) {
+            title.textContent = '¡Te ayudamos a completar tu pago en efectivo!';
+            text.textContent = 'Para completar tu pago en efectivo, por favor dirígete a la siguiente dirección:';
+            account.textContent = 'C. Juan Caballero y Osio 398, Calesa 2da Secc, 76020 Santiago de Querétaro, Qro.';
+            instances[0].open();
+        }
+    });
+});
+</script>
+
+<script>
+    function redirectToLink() {
+        window.location.href = "https://sandboxpol.mit.com.mx/i/SNDBX01";
+    }
+</script>
+
+
+<%- include('partials/footer.ejs') %>
+

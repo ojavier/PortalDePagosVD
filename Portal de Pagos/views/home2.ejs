@@ -116,7 +116,7 @@
             </table>
         </div>
       </div>
-      <a href="/paymethod" class="btn modal-trigger carmin">Pagar Colegiatura</a>
+      <a href="/paymethod?paymentType=colegiatura" class="btn modal-trigger carmin">Pagar Colegiatura</a>
 
 
 <br><br><br>
@@ -138,26 +138,31 @@
               </tr>
             </thead>
             <tbody>
-              <% solpagos.forEach(function(solicitudesdepagos) { %>
+              <% solpagos.forEach(function(solicitudesdepagos, index) { %>
                 <tr>
-                  <td><%= solicitudesdepagos.Concepto %></td>
-                  <td>$ <%= solicitudesdepagos.Cantidad %></td>
-                  <td>      
-                    <% 
-                    let date = new Date(solicitudesdepagos.FechaLimite);
-                    let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                    %>
-                    <%= formattedDate %>
-                  </td>
+                    <td>
+                        <label>
+                            <input type="radio" id="paymentOption<%= index %>" name="paymentOption" value="<%= solicitudesdepagos.Concepto %>">
+                            <span><%= solicitudesdepagos.Concepto %></span>
+                        </label>
+                    </td>
+                    <td>$ <%= solicitudesdepagos.Cantidad %></td>
+                    <td>      
+                        <% 
+                        let date = new Date(solicitudesdepagos.FechaLimite);
+                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                        %>
+                        <%= formattedDate %>
+                    </td>
                 </tr>
-              <% }); %>
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+            <% }); %>
+        </tbody>
+    </table>
 </div>
-<a href="/paymethod" class="btn modal-trigger carmin">PAGAR OTROS PAGOS</a>
+</div>
+</div>
+</div>
+<a href="/paymethod?paymentType=otros" button type="submit" class="btn modal-trigger carmin">PAGAR OTROS PAGOS</a>
 
 
 <br><br><br>
