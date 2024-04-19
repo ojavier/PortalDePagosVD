@@ -3,9 +3,9 @@ const router = express.Router();
 const isAuth = require('../util/is-auth');
 
 // Importa los middlewares de permisos
-const { realizarPago, importarRegistroTransferenciasAlumno, modificaValorCreditoAcademico, realizaProcesoAceptacionHorario } = require('../middlewares/permisosAcciones');
-const { registraReferenciaPersonalizadaAlumno, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno } = require('../middlewares/permisosRegistroDeInformacion');
-const { consultaInformacionPersonalAlumno, consultaEstadoCuenta, consultaEstadoCuentaAlumno, consultaHistorialPagos, consultaHistorialPagosAlumno, consultaPlanMaterias, consultaPlanMateriasAlumno, consultaHistorialValorCredito, consultaReporteAlumnos } = require('../middlewares/permisosConsultaDeInformacion');
+const { realizarPago, importarRegistroTransferenciasAlumno, modificaValorCreditoAcademico, realizaProcesoAceptacionHorario } = require('../util/permisosAcciones');
+const { registraReferenciaPersonalizadaAlumno, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno } = require('../util/permisosRegistroDeInformacion');
+const { consultaInformacionPersonalAlumno, consultaEstadoCuenta, consultaEstadoCuentaAlumno, consultaHistorialPagos, consultaHistorialPagosAlumno, consultaPlanMaterias, consultaPlanMateriasAlumno, consultaHistorialValorCredito, consultaReporteAlumnos } = require('../util/permisosConsultaDeInformacion');
 
 const mainController = require('../controllers/main.controller');
 
