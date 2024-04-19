@@ -33,7 +33,7 @@ module.exports = class Usuario {
             });
     }
 
-    static getPermits(Email) {
+    static getPrivilegios(Email) {
         return db.execute(`
             SELECT p.NombrePrivilegio
             FROM usuario u
