@@ -1,15 +1,22 @@
 const Usuario = require('../models/usuario.model');
 
 exports.get_login = (request, response, next) => {
-    const error = request.session.error || '';
-    request.session.error = '';
-    response.render('login', {
-        Email: request.session.Email || '',
-        error: error,
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
+    const isLoggedIn = request.session.isLoggedIn || false;
+    if(!isLoggedIn) {
+        response.render('login', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    } else {
+        response.render('home', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    }
 };
 
 exports.post_login = (request, response, next) => {

@@ -5,14 +5,24 @@ const moment = require('moment');
 const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require("../models/main.models");
 
 exports.get_root = (request, response, next) => {
-
-    response.render('login', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
+    const isLoggedIn = request.session.isLoggedIn || false;
+    if(!isLoggedIn) {
+        response.render('login', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    } else {
+        response.render('home', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    }
 };
+
 
 // TODO: The controller needs a proper name that isn't already used
 exports.get_login = (request, response, next) => {
