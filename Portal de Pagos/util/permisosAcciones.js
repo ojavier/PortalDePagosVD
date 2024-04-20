@@ -1,5 +1,5 @@
 exports.realizaProcesoAceptacionHorario = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'realizaProcesoAceptacionHorario');
+    const tienePermiso = request.session.permisos.includes('realizaProcesoAceptacionHorario');
     if (tienePermiso) {
         next();
     } else {
@@ -8,7 +8,7 @@ exports.realizaProcesoAceptacionHorario = (request, response, next) => {
 };
 
 exports.realizarPago = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'realizarPago');
+    const tienePermiso = request.session.permisos.includes('realizarPago');
     if (tienePermiso) {
         next();
     } else {
@@ -17,7 +17,7 @@ exports.realizarPago = (request, response, next) => {
 };
 
 exports.modificaValorCreditoAcademico = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'modificaValorCreditoAcademico');
+    const tienePermiso = request.session.permisos.includes('modificaValorCreditoAcademico');
     if (tienePermiso) {
         next();
     } else {
@@ -26,7 +26,7 @@ exports.modificaValorCreditoAcademico = (request, response, next) => {
 };
 
 exports.importarRegistroTransferenciasAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'importarRegistroTransferenciasAlumno');
+    const tienePermiso = request.session.permisos.includes('importarRegistroTransferenciasAlumno');
     if (tienePermiso) {
         next();
     } else {

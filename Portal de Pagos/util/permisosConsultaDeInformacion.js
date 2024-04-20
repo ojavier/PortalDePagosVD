@@ -1,5 +1,5 @@
 exports.consultaInformacionPersonalAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaInformacionPersonalAlumno');
+    const tienePermiso = request.session.permisos.includes('consultaInformacionPersonalAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -8,15 +8,16 @@ exports.consultaInformacionPersonalAlumno = (request, response, next) => {
 };
 
 exports.consultaEstadoCuenta = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaEstadoCuenta');
+    const tienePermiso = request.session.permisos.includes('consultaEstadoCuenta');
     if (tienePermiso) {
         next();
     } else {
         return response.status(404).render('404');
     }
 };
+
 exports.consultaEstadoCuentaAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaEstadoCuentaAlumno');
+    const tienePermiso = request.session.permisos.includes('consultaEstadoCuentaAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -25,7 +26,7 @@ exports.consultaEstadoCuentaAlumno = (request, response, next) => {
 };
 
 exports.consultaHistorialPagos = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaHistorialPagos');
+    const tienePermiso = request.session.permisos.includes('consultaHistorialPagos');
     if (tienePermiso) {
         next();
     } else {
@@ -34,7 +35,7 @@ exports.consultaHistorialPagos = (request, response, next) => {
 };
 
 exports.consultaHistorialPagosAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaHistorialPagosAlumno');
+    const tienePermiso = request.session.permisos.includes('consultaHistorialPagosAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -43,7 +44,7 @@ exports.consultaHistorialPagosAlumno = (request, response, next) => {
 };
 
 exports.consultaPlanMaterias = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaPlanMaterias');
+    const tienePermiso = request.session.permisos.includes('consultaPlanMaterias');
     if (tienePermiso) {
         next();
     } else {
@@ -52,7 +53,7 @@ exports.consultaPlanMaterias = (request, response, next) => {
 };
 
 exports.consultaPlanMateriasAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaPlanMateriasAlumno');
+    const tienePermiso = request.session.permisos.includes('consultaPlanMateriasAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -61,7 +62,7 @@ exports.consultaPlanMateriasAlumno = (request, response, next) => {
 };
 
 exports.consultaHistorialValorCredito = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaHistorialValorCredito');
+    const tienePermiso = request.session.permisos.includes('consultaHistorialValorCredito');
     if (tienePermiso) {
         next();
     } else {
@@ -69,9 +70,8 @@ exports.consultaHistorialValorCredito = (request, response, next) => {
     }
 };
 
-
 exports.consultaReporteAlumnos = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'consultaReporteAlumnos');
+    const tienePermiso = request.session.permisos.includes('consultaReporteAlumnos');
     if (tienePermiso) {
         next();
     } else {

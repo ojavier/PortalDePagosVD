@@ -1,5 +1,5 @@
 exports.registraReferenciaPersonalizadaAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'registraReferenciaPersonalizadaAlumno');
+    const tienePermiso = request.session.permisos.includes('registraReferenciaPersonalizadaAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -8,7 +8,7 @@ exports.registraReferenciaPersonalizadaAlumno = (request, response, next) => {
 };
 
 exports.registrarSolicitudCobroAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'registrarSolicitudCobroAlumno');
+    const tienePermiso = request.session.permisos.includes('registrarSolicitudCobroAlumno');
     if (tienePermiso) {
         next();
     } else {
@@ -17,7 +17,7 @@ exports.registrarSolicitudCobroAlumno = (request, response, next) => {
 };
 
 exports.registrarPagoEfectivoAlumno = (request, response, next) => {
-    const tienePermiso = request.session.permisos.some(permiso => permiso.NombrePrivilegio === 'registrarPagoEfectivoAlumno');
+    const tienePermiso = request.session.permisos.includes('registrarPagoEfectivoAlumno');
     if (tienePermiso) {
         next();
     } else {
