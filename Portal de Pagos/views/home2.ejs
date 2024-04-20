@@ -146,8 +146,7 @@
               <% solpagos.forEach(function(solicitudesdepagos, index) { %>
                 <tr>
                     <td>
-                        <label>
-                            <input type="radio" id="paymentOption<%= index %>" name="paymentOption" value="<%= solicitudesdepagos.Concepto %>">
+                        <label id="paymentOption" name="paymentOption" value="<%= solicitudesdepagos.Concepto %>">
                             <span><%= solicitudesdepagos.Concepto %></span>
                         </label>
                     </td>
