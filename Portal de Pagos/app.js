@@ -77,11 +77,10 @@ app.set('views', 'views');
 
 const DataTable = require( 'datatables.net' );
 
-// TODO: Add a proper 404 page
 app.use((request, response, next) => {
   response.status(404).render('404', {
     isLoggedIn: request.session.isLoggedIn || false, 
-    permisos: request.session.permisos || {},
+    permisos: request.session.permisos || [],
     usuario: request.session.usuario || {}
   });
 });
