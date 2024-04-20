@@ -12,13 +12,7 @@ exports.get_login = (request, response, next) => {
             error: error
         });
     } else {
-        response.render('home', {
-            pagePrimaryTitle: 'Portal de Gestión de Pagos',
-            isLoggedIn: isLoggedIn,
-            permisos: request.session.permisos || [],
-            usuario: request.session.usuario || {},
-            error: error
-        });
+        response.redirect('/');
     }
 };
 
