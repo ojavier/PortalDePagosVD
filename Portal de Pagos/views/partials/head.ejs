@@ -19,13 +19,11 @@
 </head>
 <body style="background: rgb(229, 230, 235); font-family: 'Roboto Slab';">
 
-    <% 
-    let normalizedPrivileges = Array.isArray(permisos) ? permisos : Object.values(permisos || {});
+    <% console.log(permisos, isLoggedIn, usuario); %>
 
-    function checkPermission(permission) {
-        return normalizedPrivileges.includes(permission);
-    }
-    %>
+    <% function checkPermission(permission) {
+           return permisos.includes(permission);
+       } %>
 
     <ul id="dropdown1" class="dropdown-content">
         <% if (checkPermission('registrarSolicitudCobroAlumno') || checkPermission('registrarPagoEfectivoAlumno')) { %>
@@ -64,12 +62,10 @@
     </nav>  
 
     <script type="text/javascript">
-        // Initialize dropdown trigger using jQuery
         $(document).ready(function() {
             $(".dropdown-trigger").dropdown();
         });
 
-        // Load widget script asynchronously
         window.onload = function(){
             (function(d, script) {
                 script = d.createElement('script');
