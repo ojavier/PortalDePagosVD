@@ -79,14 +79,13 @@ const DataTable = require( 'datatables.net' );
 
 // TODO: Add a proper 404 page
 app.use((request, response, next) => {
-  response.status(404);
-  response.render('article', {
-    pagePrimaryTitle: '404',
-    includeImageSection: false,
-    includeContent: true,
-    content: '<h2>The file you\'re searching for doesn\'t exist</h2>',
+  response.status(404).render('404', {
+    isLoggedIn: request.session.isLoggedIn || false, 
+    permisos: request.session.permisos || {},
+    usuario: request.session.usuario || {}
   });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
