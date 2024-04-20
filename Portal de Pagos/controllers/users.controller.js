@@ -1,27 +1,23 @@
 const Usuario = require('../models/usuario.model');
 
 exports.get_login = (request, response, next) => {
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
     const error = request.session.error || '';
     request.session.error = '';
     response.render('login', {
         Email: request.session.Email || '',
         error: error,
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.post_login = (request, response, next) => {
     console.log("Datos recibidos: ", request.body.Email, request.body.Password);
     Usuario.fetchOne(request.body.Email)
-        .then(([usuario]) => {  // Aquí cambiamos 'usuarios' a 'usuario' para reflejar que es un objeto único, no un array
+        .then(([usuario]) => {
             console.log("Usuario encontrado: ", usuario);
-            if (usuario) {  // Aquí ya no necesitas verificar 'usuario.length > 0'
+            if (usuario) {
                 if (usuario.Password === request.body.Password) {
                     console.log('Valid Password');
                     request.session.isLoggedIn = true;

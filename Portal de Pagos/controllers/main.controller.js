@@ -6,41 +6,26 @@ const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require("
 
 exports.get_root = (request, response, next) => {
 
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
-
     response.render('login', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 // TODO: The controller needs a proper name that isn't already used
 exports.get_login = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-     if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 }
 
 exports.get_home = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll(), Pago.fetchAll()])
         .then(([estadoCuentaRows, solPagoRows, pagoRows]) => {
@@ -50,8 +35,8 @@ exports.get_home = (request, response, next) => {
                 solpagos: solPagoRows[0],
                 pagos: pagoRows[0],
                 isLoggedIn: request.session.isLoggedIn || false,
-                permisos: request.session.permisos,
-                usuario: request.session.usuario
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
             });
         })
         .catch(err => {
@@ -60,97 +45,67 @@ exports.get_home = (request, response, next) => {
 };
 
 exports.get_paymethod = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     response.render('payment-methods', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_payplan = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     response.render('payment-plan', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_profile = (request, response, next) => {    
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     response.render('profile', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_reportes = (request, response, next) => {    
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     response.render('reportes', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_creditos = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
         cicloescolar: rows,
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
         });
     });
 };
 
 exports.get_configuracion = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     Alumno.fetchAll().then(([rows]) => {
     response.render('configuracion', {
         pagePrimaryTitle: 'Configuración',
         alumnos: rows,
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
         });
     });
 }
@@ -166,19 +121,14 @@ exports.post_configuracion = (request, response, next) => {
 }
 
 exports.get_pagos = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
 
     Alumno.fetchAll().then(([rows]) => {
         response.render('pagos', {
             pagePrimaryTitle: 'Registrar Pago',
             alumnos: rows,
             isLoggedIn: request.session.isLoggedIn || false,
-            permisos: request.session.permisos,
-            usuario: request.session.usuario
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
         });
     });
 }
@@ -204,17 +154,13 @@ exports.post_RegistrarPago = (request, response, next) => {
 }
 
 exports.get_importar = (request, response, next) => {
-    
-    // Initialize permisos if it doesn't exist
-    if (!request.session.permisos) {
-        request.session.permisos = {};
-    }
+
 
     response.render('importar', {
         pagePrimaryTitle: 'Importar Transferencias',
         isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos,
-        usuario: request.session.usuario
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 }
 
