@@ -5,18 +5,38 @@ const moment = require('moment');
 const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require("../models/main.models");
 
 exports.get_root = (request, response, next) => {
-    response.render('login', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-    });
+    const isLoggedIn = request.session.isLoggedIn || false;
+    if(!isLoggedIn) {
+        response.render('login', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    } else {
+        response.render('home', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    }
 };
 
+
+// TODO: The controller needs a proper name that isn't already used
 exports.get_login = (request, response, next) => {
+
     response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 }
 
 exports.get_home = (request, response, next) => {
+
     Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll(), Pago.fetchAll()])
         .then(([estadoCuentaRows, solPagoRows, pagoRows]) => {
             response.render('home2', {
@@ -24,6 +44,9 @@ exports.get_home = (request, response, next) => {
                 estadoCuentas: estadoCuentaRows[0],
                 solpagos: solPagoRows[0],
                 pagos: pagoRows[0],
+                isLoggedIn: request.session.isLoggedIn || false,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
             });
         })
         .catch(err => {
@@ -39,43 +62,66 @@ exports.get_paymethod = (request, response, next) => {
                 pagePrimaryTitle: 'Portal de Gestión de Pagos',
                 estadoCuentas: estadoCuentaRows[0],
                 solpagos: solPagoRows[0],
-                paymentType: paymentType 
+                paymentType: paymentType,
+                isLoggedIn: request.session.isLoggedIn || false,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
             });
         });
 };
 
 exports.get_payplan = (request, response, next) => {
+
     response.render('payment-plan', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_profile = (request, response, next) => {    
+
     response.render('profile', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_reportes = (request, response, next) => {    
+
     response.render('reportes', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 };
 
 exports.get_creditos = (request, response, next) => {
+
     cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
         cicloescolar: rows,
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
         });
     });
 };
 
 exports.get_configuracion = (request, response, next) => {
+
     Alumno.fetchAll().then(([rows]) => {
     response.render('configuracion', {
         pagePrimaryTitle: 'Configuración',
         alumnos: rows,
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
         });
     });
 }
@@ -91,10 +137,14 @@ exports.post_configuracion = (request, response, next) => {
 }
 
 exports.get_pagos = (request, response, next) => {
+
     Alumno.fetchAll().then(([rows]) => {
         response.render('pagos', {
             pagePrimaryTitle: 'Registrar Pago',
             alumnos: rows,
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
         });
     });
 }
@@ -120,8 +170,13 @@ exports.post_RegistrarPago = (request, response, next) => {
 }
 
 exports.get_importar = (request, response, next) => {
+
+
     response.render('importar', {
         pagePrimaryTitle: 'Importar Transferencias',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
     });
 }
 

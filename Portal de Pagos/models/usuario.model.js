@@ -1,4 +1,4 @@
-const db = require('./util/database');
+const db = require('../util/database');
 
 
 module.exports = class Usuario {
@@ -32,6 +32,17 @@ module.exports = class Usuario {
                 console.log(error);
             });
     }
+
+    static getPrivilegios(Email) {
+        return db.execute(`
+            SELECT p.NombrePrivilegio
+            FROM usuario u
+            JOIN roldeusuarios ru ON u.Email = ru.Email
+            JOIN permisosrol pr ON ru.IdRol = pr.IdRol
+            JOIN permisos p ON pr.IdPermisos = p.IdPermisos
+            WHERE u.Email = ?
+        `, [Email]);
+    }    
     
 
 }
