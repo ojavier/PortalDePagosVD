@@ -25,8 +25,8 @@
            return permisos.includes(permission);
        } %>
 
-    <ul id="dropdown1" class="dropdown-content">
-        <% if (checkPermission('registrarSolicitudCobroAlumno') || checkPermission('registrarPagoEfectivoAlumno')) { %>
+   <ul id="dropdown1" class="dropdown-content dropdown-content-fixed">
+        <% if (checkPermission('registrarPagoEfectivoAlumno') || checkPermission('registrarSolicitudCobroAlumno')) { %>
             <li><a href="/pagos" class="black-text">REGISTRAR PAGO - SOLICITUD DE COBRO</a></li>
         <% } %>
             <li class="divider"></li>
@@ -43,13 +43,13 @@
                 <% if (isLoggedIn) { %>
                     <li><a href="/home">HOME</a></li>
                 <% } %>
-                <% if (checkPermission('modificaValorCreditoAcademico')) { %>
+                <% if (checkPermission('registraReferenciaPersonalizadaAlumno')) { %>
                     <li><a href="/configuracion">CONFIGURACIÓN</a></li>
                 <% } %>
-                <% if (checkPermission('consultaHistorialPagosAlumno') || checkPermission('consultaEstadoCuentaAlumno')) { %>
+                <% if (checkPermission('consultaHistorialValorCredito') || checkPermission('modificaValorCreditoAcademico')) { %>
                     <li><a href="/creditos">CRÉDITOS</a></li>
                 <% } %>
-                <% if (checkPermission('registrarSolicitudCobroAlumno') || checkPermission('importarRegistroTransferenciasAlumno')) { %>
+                <% if (checkPermission('registrarPagoEfectivoAlumno') || checkPermission('registrarSolicitudCobroAlumno') || checkPermission('importarRegistroTransferenciasAlumno')) { %>
                     <li style="width: 135px;"><a class="dropdown-trigger" href="#!" data-target="dropdown1">PAGOS<i class="material-icons right">arrow_drop_down</i></a></li>
                 <% } %>
                 <% if (isLoggedIn) { %>
