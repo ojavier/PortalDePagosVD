@@ -14,6 +14,13 @@
   <div class="row">
     <div class="col l3 m3 s12"></div>
     <div class="col l6 m6 s12">
+      <% if (error != null) { %>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                M.toast({html: '<%= error %>'})
+            });
+        </script>
+    <% } %>
       <form action="/users/login" method="POST">
            <div class="card-panel z-depth-6">
             <img src="/images/via.avif" height="70" class="center-image">
@@ -41,7 +48,6 @@
          </div>
       </form>
     </div>
-      <div class="col l3 m3 s12"></div>
   </div>
 </div>
 </div>
