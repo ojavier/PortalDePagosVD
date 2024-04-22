@@ -5,8 +5,6 @@ Link video Avance 5:
 (https://drive.google.com/drive/folders/1L8DbmRNQsHuHBzkqpZ2x2sMPLjrdzZLG?usp=sharing)
 
 Link del sitio: https://ivd-pagos-protech-solutions-535d4bcbe35a.herokuapp.com/users/login
-
-| Email: oscar@gmail.com | Contraseña: 1234 | <br>
 <br>
 Requisitos que se pueden probar:
 - Login
