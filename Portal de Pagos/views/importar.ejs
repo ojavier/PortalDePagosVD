@@ -23,7 +23,7 @@
                         <input id="csvFile" name="csvFile" type="file" accept=".csv">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Subir un archivo">
+                        <input class="file-path validate" type="text" placeholder="Arrastra un archivo">
                     </div>
                 </div>
                 <br>
@@ -46,6 +46,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<!-- JSZip (required for Excel export) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<!-- pdfmake (required for PDF export) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+<!-- DataTables Buttons -->
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+
+<!-- DataTables Buttons HTML5 export -->
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 
 <script>
     var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.findInternal = function (a, b, c) { a instanceof String && (a = String(a)); for (var e = a.length, d = 0; d < e; d++) { var f = a[d]; if (b.call(c, f, d, a)) return { i: d, v: f } } return { i: -1, v: void 0 } }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1;
@@ -78,44 +90,143 @@
     });
 </script>
 
-
 <script>
-$(document).ready(function() {
 
-    document.getElementById('csvFile').addEventListener('change', function(evt) {
-        var file = evt.target.files[0];
-        Papa.parse(file, {
-            header: true,
-            dynamicTyping: true,
-            skipEmptyLines: true, // Skip empty lines
-            complete: function(results, file) {
-                var data = results.data;
-                // Check for parsing errors
-                if (results.errors.length > 0) {
-                    console.error('Error parsing CSV file:', results.errors);
-                    return;
-                }
-                // Remove any rows where 'Fecha' is null or undefined
-                data = data.filter(function(row) {
-                    return row.Fecha != null;
+    $(document).ready(function() {
+        var fileSelected = false;
+        var isValidFile = false;
+    
+        document.getElementById('csvFile').addEventListener('change', function(evt) {
+            // Check if a file has been selected
+            if (!evt.target.files.length) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Seleccione un archivo!',
                 });
-                $('#csvTable').DataTable({
-                    data: data,
-                    columns: Object.keys(data[0]).map(function(key) {
-                        return { title: key, data: key }
-                    })
+                fileSelected = false;
+                return;
+            }
+    
+            fileSelected = true;
+            var file = evt.target.files[0];
+            Papa.parse(file, {
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true, // Skip empty lines
+                complete: function(results, file) {
+                    var data = results.data;
+                    // Check for parsing errors
+                    if (results.errors.length > 0) {
+                        console.error('Error parsing CSV file:', results.errors);
+                        return;
+                    }
+
+                    var firstRow = data[0];
+                    if (!firstRow.Referencia || !firstRow.Descripcion || !firstRow.Importe || !firstRow.Fecha) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Error: Este archivo no tiene los parametros correctos!',
+                        });
+                        isValidFile = false; // Set the flag to false
+                        return;
+                    }
+                    isValidFile = true; // Set the flag to true if the file is valid
+
+                    // Remove any rows where 'Fecha' is null or undefined
+                    data = data.filter(function(row) {
+                        return row.Fecha != null;
+                    });
+
+
+                    if ($.fn.DataTable.isDataTable('#csvTable')) {
+                        $('#csvTable').DataTable().destroy();
+                    }
+
+                    // Create new DataTable
+                    $('#csvTable').DataTable({
+                        data: data,
+                        columns: Object.keys(data[0]).map(function(key) {
+                            return { title: key, data: key }
+                        }),
+                        language: {
+                        processing:     "Procesando...",
+                        search:         "Buscar:",
+                        lengthMenu:    "Mostrar _MENU_ elementos",
+                        info:           "Mostrando de _START_ a _END_ de _TOTAL_ elementos",
+                        infoEmpty:      "Mostrando 0 de 0 de 0 elementos",
+                        infoFiltered:   "(filtrado de _MAX_ elementos en total)",
+                        infoPostFix:    "",
+                        loadingRecords: "Cargando registros...",
+                        zeroRecords:    "No se encontraron registros",
+                        emptyTable:     "No hay datos disponibles en la tabla",
+                        paginate: {
+                            first:      "Primero",
+                            previous:   "Anterior",
+                            next:       "Siguiente",
+                            last:       "Último"
+                        },
+                        aria: {
+                            sortAscending:  ": activar para ordenar la columna de manera ascendente",
+                            sortDescending: ": activar para ordenar la columna de manera descendente"
+                        }
+                    }
                 });
             },
-            error: function(err, file) {
-                console.error('Error reading file:', file, err);
+                error: function(err, file) {
+                    console.error('Error reading file:', file, err);
+                    isValidFile = false;
+                }
+            });
+        });
+        
+        // Add event listener for form submit
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            if (!isValidFile) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Error: Archivo CSV no tiene los parametros correctos!',
+                }).then(() => {
+                    location.reload(); // Reload the page
+                });
+                return;
             }
+
+            let NombreArchivo = $('#csvFile').val();
+    
+            if (!fileSelected) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Seleccione un archivo!',
+                });
+                return;
+            }
+    
+            Swal.fire({
+                html: `Quieres importar el archivo: <b>${NombreArchivo}</b>?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, importar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Archivo importado con éxito!',
+                        timer: 1000,
+                        timerProgressBar: true,
+                        onClose: () => {
+                            e.target.submit();
+                        }
+                    });
+                }
+            });
         });
     });
-});
 </script>
-
-
-
 
 
 
