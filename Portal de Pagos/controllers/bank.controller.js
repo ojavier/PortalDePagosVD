@@ -1,6 +1,5 @@
 const builder = require('xmlbuilder');
-const bcrypt = require('bcryptjs');
-
+import crypto from 'crypto';
  
 // Crear la cadena XML con XML Builder
 var originalString = builder.create('P')
@@ -75,87 +74,58 @@ var originalString = builder.create('P')
   // Imprimir la cadena XML
   console.log(xmlbuilder);
 
-  // Cifrado con bcryptjs
-  var key = '5DCC67393750523CD165F17E1EFADD21';
-  var ciphertext = bcrypt.hashSync(originalString, key);
 
-  // Crear la cadena XML con los datos cifrados
-var encryptedXml = builder.create('P')
-.ele('pgs')
-  .ele('data0', 'SNDBX123')
-  .up()
-  .ele('data', bcryptCiphertext)
-.end({ pretty: true });
- 
-// Codificar la cadena XML para enviarla en la solicitud POST
-var data = encodeURIComponent("xml=" + encryptedXml);
+// Defining algorithm
+const algorithm = 'aes-128-cbc';
+const password = '5DCC67393750523CD165F17E1EFADD21'; 
+// Defining key
+const key = crypto.randomBytes(16); // Usar 16 bytes para una clave de AES-128
+// Defining iv
+const iv = crypto.randomBytes(16);
 
-// Crear una nueva solicitud XMLHttpRequest
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function() {
-  if(this.readyState === 4) {
-    console.log(this.responseText);
+const encriptar = (password)=>{
+    // Creating and initializing the cipher object 
+  const cipher = crypto.createCipheriv(algorithm, key, iv)
+    // Concatenating password and the cipher
+  const passwordEncrypted = Buffer.concat([cipher.update(password),cipher.final()])
+  return{
+    iv: iv.toString('hex'),
+    encrypted: passwordEncrypted.toString('hex')
   }
-});
-
-xhr.open("POST", "https://sandboxpo.mit.com.mx/gen");
-xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-// Enviar la cadena XML cifrada al servidor
-xhr.send(data);
-
-var originalString = builder.create('P');
-// Cifrado con bcryptjs
-var keyBcrypt = '5DCC67393750523CD165F17E1EFADD21';
-var bcryptCiphertext = bcrypt.hashSync(xmlBuilder, keyBcrypt);
-
-// Decifrado con bcryptjs
-var decryptedXml = bcrypt.compareSync(xmlBuilder, bcryptCiphertext);
-
-console.log("Decrypted XML: " + decryptedXml);
+};
 
 
-// Notificacion POST
+//Generacion de URL
+var originalString = "xml=<pgs><data0>SNDBX123</data0><data>Cadena Cifrada</data></pgs>";
+  var data = encodeURIComponent(originalString);
 
-const xml = builder.create('CENTEROFPAYMENTS')
-  .ele('reference', {}, 'PRUEBASCRYPTODEV')
-  .up()
-  .ele('response', {}, 'approved')
-  .up()
-  .ele('folioBpay', {}, '7c105d2d-880b-4f72-a15f-87c6a117949')
-  .up()
-  .ele('auth', {}, '00000')
-  .up()
-  .ele('cd_response', {}, '00')
-  .up()
-  .ele('cd_error')
-  .up()
-  .ele('nb_error')
-  .up()
-  .ele('nb_company', {}, 'CRYPTO')
-  .up()
-  .ele('nb_fpago')
-  .up()
-  .ele('tp_operation')
-  .up()
-  .ele('amount', {}, '28.00')
-  .up()
-  .ele('id_url', {}, 'XB1PT6V6')
-  .up()
-  .ele('email')
-  .up()
-  .ele('datos_adicionales')
-  .up()
-  .ele('nb_fpago', {}, 'BPAY')
-  .end({ pretty: true });
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+      console.log(this.responseText);
+    }
+  });
+  
+  xhr.open("POST", "https://sandboxpo.mit.com.mx/gen");
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  
+  xhr.send(data);
 
-console.log(xml);
+
+// Decrypting
+const desencriptar = (password) => {
+  const iv = Buffer.from(password.iv,'hex')
+  const encrypted = Buffer.from(password.encrypted, 'hex')
+
+  const passwordDecrypted = crypto.createDecipheriv(algorithm, key, iv)
+  // Concatenating passwordDecrypted to generate hex string
+  return Buffer.concat([passwordDecrypted.update(encrypted),passwordDecrypted.final()]).toString()
+}
 
 
 //Redirect
-
 // Variables
 let nbResponse = "";
 let idLiga = "";
