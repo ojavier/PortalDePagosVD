@@ -94,6 +94,7 @@
 
     $(document).ready(function() {
         var fileSelected = false;
+        var isValidFile = false;
     
         document.getElementById('csvFile').addEventListener('change', function(evt) {
             // Check if a file has been selected
@@ -119,6 +120,18 @@
                         console.error('Error parsing CSV file:', results.errors);
                         return;
                     }
+
+                    var firstRow = data[0];
+                    if (!firstRow.Referencia || !firstRow.Descripcion || !firstRow.Importe || !firstRow.Fecha) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Error: Este archivo no tiene los parametros correctos!',
+                        });
+                        isValidFile = false; // Set the flag to false
+                        return;
+                    }
+                    isValidFile = true; // Set the flag to true if the file is valid
+
                     // Remove any rows where 'Fecha' is null or undefined
                     data = data.filter(function(row) {
                         return row.Fecha != null;
@@ -161,6 +174,7 @@
             },
                 error: function(err, file) {
                     console.error('Error reading file:', file, err);
+                    isValidFile = false;
                 }
             });
         });
@@ -168,6 +182,16 @@
         // Add event listener for form submit
         $('form').on('submit', function(e) {
             e.preventDefault();
+
+            if (!isValidFile) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Error: Archivo CSV no tiene los parametros correctos!',
+                }).then(() => {
+                    location.reload(); // Reload the page
+                });
+                return;
+            }
 
             let NombreArchivo = $('#csvFile').val();
     
