@@ -186,15 +186,26 @@ exports.get_importar = (request, response, next) => {
 exports.post_importar = (request, response, next) => {
     console.log(request.file);
     const operations = [];
-    fs.createReadStream(request.file.path)
+    let hasError = false; 
+    const stream = fs.createReadStream(request.file.path)
         .pipe(csvParser({
             columns: ['Referencia', 'Descripcion', 'Importe', 'Fecha']
         }))
+
         .on('data', (row) => {
             // Check if the row is empty
             const isEmptyRow = Object.values(row).every(val => val === null || val === '');
 
             if (!isEmptyRow) {
+                // Validate the row parameters
+                if (!row.Referencia || !row.Descripcion || !row.Importe || !row.Fecha) {
+                    console.log('Error: CSV file has wrong parameters');
+                    response.status(400).send('Error: El CSV contiene los parametros erroneos, no se proceso la solicitud');
+                    hasError = true;
+                    stream.end();
+                    return;
+                }
+        
                 const fecha = moment(row.Fecha, 'DDMMYYYY').format('YYYY-MM-DD');
 
                 const operation = Pago.getEmailByReferencia(row.Referencia)
@@ -222,6 +233,7 @@ exports.post_importar = (request, response, next) => {
             }
         })
         .on('end', () => {
+            if (!hasError && !response.headersSent) {
             Promise.all(operations)
                 .then(() => {
                     console.log('CSV file successfully processed');
@@ -231,6 +243,7 @@ exports.post_importar = (request, response, next) => {
                     console.log('Error processing CSV file:', error);
                     response.status(500).send('Error processing CSV file');
                 });
+        }
         });
 };
 
