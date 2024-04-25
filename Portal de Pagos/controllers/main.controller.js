@@ -92,18 +92,19 @@ exports.get_profile = (request, response, next) => {
     });
 };
 
-exports.get_reportes = (request, response, next) => {    
-
-    response.render('reportes', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
+exports.get_reportes = (request, response, next) => {   
+    cicloescolar.fetchAll().then(([rows]) => {
+        response.render('reportes', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            cicloescolar: rows,
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
     });
 };
 
 exports.get_creditos = (request, response, next) => {
-
     cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',

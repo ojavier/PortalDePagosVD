@@ -46,6 +46,9 @@
                 <% if (checkPermission('registraReferenciaPersonalizadaAlumno')) { %>
                     <li><a href="/configuracion">CONFIGURACIÓN</a></li>
                 <% } %>
+                <% if (checkPermission('consultaReporteAlumnos')) { %>
+                    <li><a href="/reportes">REPORTES</a></li>
+                <% } %>
                 <% if (checkPermission('consultaHistorialValorCredito') || checkPermission('modificaValorCreditoAcademico')) { %>
                     <li><a href="/creditos">CRÉDITOS</a></li>
                 <% } %>
