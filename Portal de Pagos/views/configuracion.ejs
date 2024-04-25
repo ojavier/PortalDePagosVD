@@ -169,10 +169,19 @@ $('#modifyReferenciaBtn').click(function(e) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            $('form').submit();
+            Swal.fire({
+                title:'Referencia Asignada!',
+                text:'Se ha modificado la referencia exitosamente',
+                icon:'success',
+                timer: 1000,
+                timerProgressBar: true,
+                onClose: () => {
+                    $('form').submit();
+                }
+            });
         }
+        });
     });
-}); 
 
 
 // Initialize the DataTable
