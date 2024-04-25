@@ -1,22 +1,74 @@
 <%- include('partials/head.ejs', {
     isLoggedIn: isLoggedIn, 
     permisos: permisos,
+    alumnos: alumnos,
+    cicloescolar: cicloescolar,
     usuario: usuario
   }) %>
 
-<h1 class="centrado">Reportes</h1>
-<br><br><br>
+
 <div class="container">
-    <canvas id="myChart"></canvas>
-  </div>
-  
+    <h2 class="centrado">Reportes y Estadísticas</h2>
+
+<br><br><br>
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <h4>Reporte de Costo de Créditos</h4>
+                    <br>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    <br> <br>
+
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <h4>Reporte de Alumnos por Beca</h4>
+                    <br>
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <script>
-      var ctx = document.getElementById("myChart").getContext("2d");
-      var labels = [<% cicloescolar.forEach(function(cicloescolar, index) { %>'<%= cicloescolar.MesInicio%> - <%= cicloescolar.MesFin%> <%= cicloescolar.Año%>'<%= index !== cicloescolar.length - 1 ? ',' : '' %> <% }); %>];
-      var data = [<% cicloescolar.forEach(function(cicloescolar, index) { %>'<%= cicloescolar.CostoCreditos%>'<%= index !== cicloescolar.length - 1 ? ',' : '' %> <% }); %>];
+
+    const cicloescolar = <%- JSON.stringify(cicloescolar[0]) %>;
+    console.log(cicloescolar);
+
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+    var labels = cicloescolar.map(function(cicloescolar) {
+        return cicloescolar.MesInicio + ' - ' + cicloescolar.MesFin + ' ' + cicloescolar.Año;
+    });
+      
+    var data = cicloescolar.map(function(cicloescolar) {
+        return cicloescolar.CostoCreditos;
+    });
+
+
+    const alumnos = <%- JSON.stringify(alumnos[0]) %>;
+    console.log(alumnos);
+
+    var ctx2 = document.getElementById("myChart2").getContext("2d");
+
+    var labels2 = ['Beca 0-50', 'Beca 50-100'];
+
+    var data2 = [
+        alumnos.filter(function(alumno) { return alumno.Beca >= 0 && alumno.Beca <= 50; }).length,
+        alumnos.filter(function(alumno) { return alumno.Beca > 50 && alumno.Beca <= 100; }).length,
+    ];
+
       var myChart = new Chart(ctx, {
-          type: "bar", // Cambia "line" a "bar"
+          type: "bar",
           data: {
               labels: labels,
               datasets: [{
@@ -24,6 +76,29 @@
                   data: data,
                   backgroundColor: 'rgba(54, 162, 235, 0.2)',
                   borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+
+      var myChart2 = new Chart(ctx2, {
+          type: "bar",
+          data: {
+              labels: labels2,
+              datasets: [{
+                  label: 'número de alumnos por beca',
+                  data: data2,
+                  backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                  borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
                   borderWidth: 1
               }]
           },

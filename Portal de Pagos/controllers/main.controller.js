@@ -93,15 +93,20 @@ exports.get_profile = (request, response, next) => {
 };
 
 exports.get_reportes = (request, response, next) => {   
-    cicloescolar.fetchAll().then(([rows]) => {
-        response.render('reportes', {
-            pagePrimaryTitle: 'Portal de Gestión de Pagos',
-            cicloescolar: rows,
-            isLoggedIn: request.session.isLoggedIn || false,
-            permisos: request.session.permisos || [],
-            usuario: request.session.usuario || {}
-        });
-    });
+    Promise.all([cicloescolar.fetchAll(), Alumno.fetchAllAlumnosBeca()])
+        .then(([cicloescolarRows, alumnoRows]) => {
+            console.log('cicloescolarRows:', cicloescolarRows);
+            console.log('alumnoRows:', alumnoRows);
+            response.render('reportes', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                cicloescolar: cicloescolarRows,
+                alumnos: alumnoRows,
+                isLoggedIn: request.session.isLoggedIn || false,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        })
+        .catch(err => console.log(err));
 };
 
 exports.get_creditos = (request, response, next) => {
