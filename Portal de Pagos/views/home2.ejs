@@ -5,13 +5,13 @@
 }) %>
 
 
-<div class="container">
-  <div class="row">
-      <main class="col s9" style="padding-right: 40px;">
-          <h4 class="roboto-slab">Plan de Materias</h4>
+<div class='container'>
+  <div class='row'>
+      <main class='col s9' style='padding-right: 40px;'>
+          <h4 class='roboto-slab'>Plan de Materias</h4>
           <br>
-          <div class="card">
-              <table class="striped TablaProfesional">
+          <div class='card'>
+              <table class='striped TablaProfesional'>
                 <thead>
                   <tr>
                     <th>3er Semestre</th>
@@ -69,13 +69,13 @@
       </main>
 
     <br>
-    <div class ="col s3" style="padding-left: 20px;">
-      <div class="card">
-        <div class="card-content center">
-            <i class="material-icons large">account_circle</i>
-            <span class="card-title">Pablo Perez Castro</span>
+    <div class ='col s3' style='padding-left: 20px;'>
+      <div class='card'>
+        <div class='card-content center'>
+            <i class='material-icons large'>account_circle</i>
+            <span class='card-title'>Pablo Perez Castro</span>
             <p>2º Semestre - #10001</p>
-            <p class="green-text">Status: Activo</p>
+            <p class='green-text'>Status: Activo</p>
         </div>
       </div>
     </div>
@@ -85,17 +85,17 @@
 <br>
 <br>
 <!-- Tabla interactiva de estado de cuenta e historial de pagos -->
-<div class="container">
-    <div class="row">
-      <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-        <div class="card" style="padding-left: 20px; padding-right: 20px;">
-            <ul class="tabs">
-                <li class="tab col s12"><a href="#estado-cuenta">Estado de cuenta</a></li>
+<div class='container'>
+    <div class='row'>
+      <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+        <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+            <ul class='tabs'>
+                <li class='tab col s12'><a href='#estado-cuenta'>Estado de cuenta</a></li>
             </ul>
 
-        <div id="estado-cuenta">
+        <div id='estado-cuenta'>
             <!-- Contenido Estado de cuenta  -->
-            <table class="striped">
+            <table class='striped'>
               <thead>
                 <tr>
                   <th>Concepto</th>
@@ -121,20 +121,20 @@
             </table>
         </div>
       </div>
-      <a href="/paymethod?paymentType=colegiatura" class="btn modal-trigger carmin">Pagar Colegiatura</a>
+      <a href='/paymethod?paymentType=colegiatura' class='btn modal-trigger carmin'>Pagar Colegiatura</a>
 
 
 <br><br><br>
 
-<div class="row">
-  <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-    <div class="card" style="padding-left: 20px; padding-right: 20px;">
-        <ul class="tabs">
-            <li class="tab col s12"><a href="#otros-pagos">Otros Pagos</a></li>
+<div class='row'>
+  <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+    <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+        <ul class='tabs'>
+            <li class='tab col s12'><a href='#otros-pagos'>Otros Pagos</a></li>
           </ul>
-      <div id="otros-pagos">
+      <div id='otros-pagos'>
           <!-- Contenido Otros-Pagos  -->
-          <table class="striped">
+          <table class='striped'>
             <thead>
               <tr>
                 <th>Concepto</th>
@@ -146,7 +146,7 @@
               <% solpagos.forEach(function(solicitudesdepagos, index) { %>
                 <tr>
                     <td>
-                        <label id="paymentOption" name="paymentOption" value="<%= solicitudesdepagos.Concepto %>">
+                        <label id='paymentOption' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>'>
                             <span><%= solicitudesdepagos.Concepto %></span>
                         </label>
                     </td>
@@ -166,26 +166,26 @@
 </div>
 </div>
 </div>
-<a href="/paymethod?paymentType=otros" button type="submit" class="btn modal-trigger carmin">PAGAR OTROS PAGOS</a>
+<a href='/paymethod?paymentType=otros' button type='submit' class='btn modal-trigger carmin'>PAGAR OTROS PAGOS</a>
 
 
 <br><br><br>
 
-<div class="row">
-  <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-    <div class="card" style="padding-left: 20px; padding-right: 20px;">
-        <ul class="tabs">
-            <li class="tab col s12"><a href="#historial-de-pagos">Historial de Pagos</a></li>
+<div class='row'>
+  <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+    <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+        <ul class='tabs'>
+            <li class='tab col s12'><a href='#historial-de-pagos'>Historial de Pagos</a></li>
           </ul>
-      <div id="historial-de-pagos">
-        <ul class="tabs">
-          <li class="tab col s4"><a href="#test1">Todo</a></li>
-          <li class="tab col s4"><a href="#test2">Colegiatura</a></li>
-          <li class="tab col s4"><a href="#test3">Otros pagos</a></li>
+      <div id='historial-de-pagos'>
+        <ul class='tabs'>
+          <li class='tab col s4'><a href='#test1'>Todo</a></li>
+          <li class='tab col s4'><a href='#test2'>Colegiatura</a></li>
+          <li class='tab col s4'><a href='#test3'>Otros pagos</a></li>
         </ul>
           <!-- Contenido Historial De Pagos  -->
-          <div class="card" id="test1" class="tab col s12 ">
-            <table class="striped">
+          <div class='card' id='test1' class='tab col s12 '>
+            <table class='striped'>
               <thead>
                 <tr>
                   <th>Concepto</th>
@@ -220,8 +220,8 @@
               </tbody>
             </table>
           </div>
-          <div class="card" id="test2" class="tab col s12">
-            <table class="striped">
+          <div class='card' id='test2' class='tab col s12'>
+            <table class='striped'>
               <thead>
                 <tr>
                   <th>Concepto</th>
@@ -233,7 +233,7 @@
               </thead>
               <tbody>
                 <% pagos.forEach(function(pago) { %>
-                  <% if (pago.Concepto === "Colegiatura") { %>
+                  <% if (pago.Concepto === 'Colegiatura') { %>
                     <tr>
                       <td><%= pago.Concepto %></td>
                       <td><%= pago.Total %></td>
@@ -258,8 +258,8 @@
                 </tbody>
             </table>
           </div>
-          <div class="card" id="test3" class="tab col s12">
-            <table class="striped">
+          <div class='card' id='test3' class='tab col s12'>
+            <table class='striped'>
               <thead>
                 <tr>
                   <th>Concepto</th>
@@ -271,7 +271,7 @@
               </thead>
               <tbody>
                 <% pagos.forEach(function(pago) { %>
-                  <% if (pago.Concepto !== "Colegiatura") { %>
+                  <% if (pago.Concepto !== 'Colegiatura') { %>
                     <tr>
                       <td><%= pago.Concepto %></td>
                       <td><%= pago.Total %></td>
@@ -304,7 +304,7 @@
 </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

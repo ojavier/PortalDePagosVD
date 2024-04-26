@@ -17,10 +17,10 @@ exports.get_login = (request, response, next) => {
 };
 
 exports.post_login = (request, response, next) => {
-    console.log("Datos recibidos: ", request.body.Email, request.body.Password);
+    console.log('Datos recibidos: ', request.body.Email, request.body.Password);
     Usuario.fetchOne(request.body.Email)
         .then(([usuario]) => {
-            console.log("Usuario encontrado: ", usuario);
+            console.log('Usuario encontrado: ', usuario);
             if (usuario) {
                 if (usuario.Password === request.body.Password) {
                     console.log('Valid Password');
@@ -37,12 +37,12 @@ exports.post_login = (request, response, next) => {
                         });
                 } else {
                     console.log('Contraseña incorrecta');
-                    request.session.error = "Usuario y/o contraseña incorrectos";
+                    request.session.error = 'Usuario y/o contraseña incorrectos';
                     response.redirect('/users/login');
                 }
             } else {
                 console.log('No se encontró el usuario');
-                request.session.error = "Usuario y/o contraseña incorrectos";
+                request.session.error = 'Usuario y/o contraseña incorrectos';
                 response.redirect('/users/login');
             }
         })

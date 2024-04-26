@@ -5,18 +5,18 @@
   }) %>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col s12">
+<div class='container'>
+    <div class='row'>
+        <div class='col s12'>
             <h4>REGISTRAR PAGO / SOLICITUD COBRO</h4>
             <p>Para registrar un pago o solicitar un cobro, busca y selecciona a un alumno de la tabla, llena los datos correspondientes en el formulario inferior.</p>
             <br>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col s12">
-          <table id="myTable" class="striped">
+    <div class='row'>
+        <div class='col s12'>
+          <table id='myTable' class='striped'>
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -46,51 +46,51 @@
     <br><br>
 
     <div>
-        <div class="row">
-            <div class="col s8">
-                <div class="card">
-                    <div class="card-content">
-                            <span class="card-title">Registrar PAGO Manual</span>
-                    <form action="/pagos" method="POST">
-                        <div class="row">
-                            <div class="col s10 offset-s1 input-field">
+        <div class='row'>
+            <div class='col s8'>
+                <div class='card'>
+                    <div class='card-content'>
+                            <span class='card-title'>Registrar PAGO Manual</span>
+                    <form action='/pagos' method='POST'>
+                        <div class='row'>
+                            <div class='col s10 offset-s1 input-field'>
                                 <p>Email</p>
-                                <input id="emailpago" name="emailpago" type="text" required="" autocomplete="off" class="validate" readonly>
+                                <input id='emailpago' name='emailpago' type='text' required='' autocomplete='off' class='validate' readonly>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s10 offset-s1 input-field">
+                        <div class='row'>
+                            <div class='col s10 offset-s1 input-field'>
                                 <p>Referencia</p>
-                                <input id="referencia" name="referencia" type="text" required="" autocomplete="off" class="validate" readonly>
+                                <input id='referencia' name='referencia' type='text' required='' autocomplete='off' class='validate' readonly>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s10 offset-s1 input-field">
-                                <input id="concepto_pago" name="concepto_pago" type="text" required="" autocomplete="off" class="validate">
-                                <label for="concepto_pago">Concepto</label>
+                        <div class='row'>
+                            <div class='col s10 offset-s1 input-field'>
+                                <input id='concepto_pago' name='concepto_pago' type='text' required='' autocomplete='off' class='validate'>
+                                <label for='concepto_pago'>Concepto</label>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s10 offset-s1 input-field">
-                                <input id="monto_pago" name="monto_pago" type="number" required="" autocomplete="off" class="validate">
-                                <label for="monto_pago">Monto</label>
+                        <div class='row'>
+                            <div class='col s10 offset-s1 input-field'>
+                                <input id='monto_pago' name='monto_pago' type='number' required='' autocomplete='off' class='validate'>
+                                <label for='monto_pago'>Monto</label>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col s10 offset-s1 input-field">
-                                <input id="fechapago" name="fechapago" type="date" required="" autocomplete="off" class="validate">
-                                <label for="fechapago">Fecha Realización de Pago</label>
+                        <div class='row'>
+                            <div class='col s10 offset-s1 input-field'>
+                                <input id='fechapago' name='fechapago' type='date' required='' autocomplete='off' class='validate'>
+                                <label for='fechapago'>Fecha Realización de Pago</label>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col 8 offset-s4">
-                                <input type="hidden" name="formType" value="registrarPago">
-                                <button id="RegistrarPagoBtn" class="btn waves-effect waves-light green" type="submit">REGISTRAR PAGO</button>
+                        <div class='row'>
+                            <div class='col 8 offset-s4'>
+                                <input type='hidden' name='formType' value='registrarPago'>
+                                <button id='RegistrarPagoBtn' class='btn waves-effect waves-light green' type='submit'>REGISTRAR PAGO</button>
                             </div>
                         </div>
                     </form>
@@ -99,43 +99,43 @@
                 </div>
             </div>
 
-            <div class="col s4">
-                <div class="card">
-                    <div class="card-content">
-                            <span class="card-title">Solicitud de COBRO</span>
-                        <form action="/pagos" method="POST">
-                            <div class="row">
-                                <div class="col s10 offset-s1 input-field">
+            <div class='col s4'>
+                <div class='card'>
+                    <div class='card-content'>
+                            <span class='card-title'>Solicitud de COBRO</span>
+                        <form action='/pagos' method='POST'>
+                            <div class='row'>
+                                <div class='col s10 offset-s1 input-field'>
                                     <p>Email</p>
-                                    <input id="email" name="email" type="text" required="" autocomplete="off" class="validate" readonly>
+                                    <input id='email' name='email' type='text' required='' autocomplete='off' class='validate' readonly>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col s10 offset-s1 input-field">
-                                    <input id="concepto" name="concepto" type="text" required="" autocomplete="off" class="validate">
-                                    <label for="concepto">Concepto</label>
+                            <div class='row'>
+                                <div class='col s10 offset-s1 input-field'>
+                                    <input id='concepto' name='concepto' type='text' required='' autocomplete='off' class='validate'>
+                                    <label for='concepto'>Concepto</label>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col s10 offset-s1 input-field">
-                                    <input id="monto" name="monto" type="number" required="" autocomplete="off" class="validate">
-                                    <label for="monto">Monto</label>
+                            <div class='row'>
+                                <div class='col s10 offset-s1 input-field'>
+                                    <input id='monto' name='monto' type='number' required='' autocomplete='off' class='validate'>
+                                    <label for='monto'>Monto</label>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col s10 offset-s1 input-field">
-                                    <input id="fechalimite" name="fechalimite" type="date" required="" autocomplete="off" class="validate">
-                                    <label for="fechalimite">Fecha Limite de Pago</label>
+                            <div class='row'>
+                                <div class='col s10 offset-s1 input-field'>
+                                    <input id='fechalimite' name='fechalimite' type='date' required='' autocomplete='off' class='validate'>
+                                    <label for='fechalimite'>Fecha Limite de Pago</label>
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col 8 offset-s2">
-                                    <input type="hidden" name="formType" value="solPagos">
-                                    <button id="SolicitarCobroBtn" class="btn waves-effect waves-light red" type="submit">REGISTRAR COBRO</button>
+                            <div class='row'>
+                                <div class='col 8 offset-s2'>
+                                    <input type='hidden' name='formType' value='solPagos'>
+                                    <button id='SolicitarCobroBtn' class='btn waves-effect waves-light red' type='submit'>REGISTRAR COBRO</button>
                                 </div>
                             </div>
                         </form>
@@ -148,19 +148,19 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
 
 <script>
     var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.findInternal = function (a, b, c) { a instanceof String && (a = String(a)); for (var e = a.length, d = 0; d < e; d++) { var f = a[d]; if (b.call(c, f, d, a)) return { i: d, v: f } } return { i: -1, v: void 0 } }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1;
-    $jscomp.defineProperty = $jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) { if (a == Array.prototype || a == Object.prototype) return a; a[b] = c.value; return a }; $jscomp.getGlobal = function (a) { a = ["object" == typeof globalThis && globalThis, a, "object" == typeof window && window, "object" == typeof self && self, "object" == typeof global && global]; for (var b = 0; b < a.length; ++b) { var c = a[b]; if (c && c.Math == Math) return c } throw Error("Cannot find global object"); }; $jscomp.global = $jscomp.getGlobal(this);
-    $jscomp.IS_SYMBOL_NATIVE = "function" === typeof Symbol && "symbol" === typeof Symbol("x"); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE; $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = "$jscp$"; var $jscomp$lookupPolyfilledValue = function (a, b) { var c = $jscomp.propertyToPolyfillSymbol[b]; if (null == c) return a[b]; c = a[c]; return void 0 !== c ? c : a[b] };
-    $jscomp.polyfill = function (a, b, c, e) { b && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(a, b, c, e) : $jscomp.polyfillUnisolated(a, b, c, e)) }; $jscomp.polyfillUnisolated = function (a, b, c, e) { c = $jscomp.global; a = a.split("."); for (e = 0; e < a.length - 1; e++) { var d = a[e]; if (!(d in c)) return; c = c[d] } a = a[a.length - 1]; e = c[a]; b = b(e); b != e && null != b && $jscomp.defineProperty(c, a, { configurable: !0, writable: !0, value: b }) };
+    $jscomp.defineProperty = $jscomp.ASSUME_ES5 || 'function' == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) { if (a == Array.prototype || a == Object.prototype) return a; a[b] = c.value; return a }; $jscomp.getGlobal = function (a) { a = ['object' == typeof globalThis && globalThis, a, 'object' == typeof window && window, 'object' == typeof self && self, 'object' == typeof global && global]; for (var b = 0; b < a.length; ++b) { var c = a[b]; if (c && c.Math == Math) return c } throw Error('Cannot find global object'); }; $jscomp.global = $jscomp.getGlobal(this);
+    $jscomp.IS_SYMBOL_NATIVE = 'function' === typeof Symbol && 'symbol' === typeof Symbol('x'); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE; $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = '$jscp$'; var $jscomp$lookupPolyfilledValue = function (a, b) { var c = $jscomp.propertyToPolyfillSymbol[b]; if (null == c) return a[b]; c = a[c]; return void 0 !== c ? c : a[b] };
+    $jscomp.polyfill = function (a, b, c, e) { b && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(a, b, c, e) : $jscomp.polyfillUnisolated(a, b, c, e)) }; $jscomp.polyfillUnisolated = function (a, b, c, e) { c = $jscomp.global; a = a.split('.'); for (e = 0; e < a.length - 1; e++) { var d = a[e]; if (!(d in c)) return; c = c[d] } a = a[a.length - 1]; e = c[a]; b = b(e); b != e && null != b && $jscomp.defineProperty(c, a, { configurable: !0, writable: !0, value: b }) };
     $jscomp.polyfillIsolated = function (a, b, c, e) {
-        var d = a.split("."); a = 1 === d.length; e = d[0]; e = !a && e in $jscomp.polyfills ? $jscomp.polyfills : $jscomp.global; for (var f = 0; f < d.length - 1; f++) { var l = d[f]; if (!(l in e)) return; e = e[l] } d = d[d.length - 1]; c = $jscomp.IS_SYMBOL_NATIVE && "es6" === c ? e[d] : null; b = b(c); null != b && (a ? $jscomp.defineProperty($jscomp.polyfills, d, { configurable: !0, writable: !0, value: b }) : b !== c && ($jscomp.propertyToPolyfillSymbol[d] = $jscomp.IS_SYMBOL_NATIVE ? $jscomp.global.Symbol(d) : $jscomp.POLYFILL_PREFIX + d, d =
+        var d = a.split('.'); a = 1 === d.length; e = d[0]; e = !a && e in $jscomp.polyfills ? $jscomp.polyfills : $jscomp.global; for (var f = 0; f < d.length - 1; f++) { var l = d[f]; if (!(l in e)) return; e = e[l] } d = d[d.length - 1]; c = $jscomp.IS_SYMBOL_NATIVE && 'es6' === c ? e[d] : null; b = b(c); null != b && (a ? $jscomp.defineProperty($jscomp.polyfills, d, { configurable: !0, writable: !0, value: b }) : b !== c && ($jscomp.propertyToPolyfillSymbol[d] = $jscomp.IS_SYMBOL_NATIVE ? $jscomp.global.Symbol(d) : $jscomp.POLYFILL_PREFIX + d, d =
             $jscomp.propertyToPolyfillSymbol[d], $jscomp.defineProperty(e, d, { configurable: !0, writable: !0, value: b })))
-    }; $jscomp.polyfill("Array.prototype.find", function (a) { return a ? a : function (b, c) { return $jscomp.findInternal(this, b, c).v } }, "es6", "es3");
-    (function (a) { "function" === typeof define && define.amd ? define(["jquery", "datatables.net"], function (b) { return a(b, window, document) }) : "object" === typeof exports ? module.exports = function (b, c) { b || (b = window); c && c.fn.dataTable || (c = require("datatables.net")(b, c).$); return a(c, b, b.document) } : a(jQuery, window, document) })(function (a, b, c, e) {
+    }; $jscomp.polyfill('Array.prototype.find', function (a) { return a ? a : function (b, c) { return $jscomp.findInternal(this, b, c).v } }, 'es6', 'es3');
+    (function (a) { 'function' === typeof define && define.amd ? define(['jquery', 'datatables.net'], function (b) { return a(b, window, document) }) : 'object' === typeof exports ? module.exports = function (b, c) { b || (b = window); c && c.fn.dataTable || (c = require('datatables.net')(b, c).$); return a(c, b, b.document) } : a(jQuery, window, document) })(function (a, b, c, e) {
         var d = a.fn.dataTable; a.extend(!0, d.defaults, {
             dom: "<'row'<'col s12 m6'l><'col s12 m6'f>><'row'<'col s12'tr>><'row'<'col s12 m12'i><'col s12 m12 center'p>>",
             renderer: "materializecss"
@@ -168,12 +168,12 @@
             var u = new d.Api(f), C = f.oClasses, n = f.oLanguage.oPaginate, D = f.oLanguage.oAria.paginate || {}, h, k, v = 0, y = function (q, w) {
                 var x, E = function (p) {
                     p.preventDefault();
-                    a(p.currentTarget).hasClass("disabled") || u.page() == p.data.action || u.page(p.data.action).draw("page")
+                    a(p.currentTarget).hasClass('disabled') || u.page() == p.data.action || u.page(p.data.action).draw('page')
                 }; var r = 0; for (x = w.length; r < x; r++) {
                     var g = w[r]; if (Array.isArray(g)) y(q, g); else {
-                        k = h = ""; switch (g) { case "ellipsis": h = "&#x2026;"; k = "disabled"; break; case "first": h = n.sFirst; k = g + (0 < m ? "" : " disabled"); break; case "previous": h = n.sPrevious; k = g + (0 < m ? "" : " disabled"); break; case "next": h = n.sNext; k = g + (m < t - 1 ? "" : " disabled"); break; case "last": h = n.sLast; k = g + (m < t - 1 ? "" : " disabled"); break; default: h = g + 1, k = m === g ? "active" : "" }if (h) {
+                        k = h = ''; switch (g) { case 'ellipsis': h = '&#x2026;'; k = 'disabled'; break; case 'first': h = n.sFirst; k = g + (0 < m ? '' : ' disabled'); break; case 'previous': h = n.sPrevious; k = g + (0 < m ? '' : ' disabled'); break; case 'next': h = n.sNext; k = g + (m < t - 1 ? '' : ' disabled'); break; case 'last': h = n.sLast; k = g + (m < t - 1 ? '' : ' disabled'); break; default: h = g + 1, k = m === g ? 'active' : '' }if (h) {
                             var F =
-                                a("<li>", { "class": C.sPageButton + " " + k, id: 0 === A && "string" === typeof g ? f.sTableId + "_" + g : null }).append(a("<a>", { href: "#", "aria-controls": f.sTableId, "aria-label": D[g], "data-dt-idx": v, tabindex: f.iTabIndex, "class": "" }).html(h)).appendTo(q); f.oApi._fnBindAction(F, { action: g }, E); v++
+                                a('<li>', { 'class': C.sPageButton + ' ' + k, id: 0 === A && 'string' === typeof g ? f.sTableId + '_' + g : null }).append(a('<a>', { href: '#', 'aria-controls': f.sTableId, 'aria-label': D[g], 'data-dt-idx': v, tabindex: f.iTabIndex, 'class': '' }).html(h)).appendTo(q); f.oApi._fnBindAction(F, { action: g }, E); v++
                         }
                     }
                 }
@@ -290,25 +290,25 @@ $(document).ready( function () {
     // Initialize the DataTable
     var table = $('#myTable').DataTable({
     language: {
-        processing:     "Procesando...",
-        search:         "Buscar:",
-        lengthMenu:    "Mostrar _MENU_ elementos",
-        info:           "Mostrando de _START_ a _END_ de _TOTAL_ elementos",
-        infoEmpty:      "Mostrando 0 de 0 de 0 elementos",
-        infoFiltered:   "(filtrado de _MAX_ elementos en total)",
-        infoPostFix:    "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords:    "No se encontraron registros",
-        emptyTable:     "No hay datos disponibles en la tabla",
+        processing:     'Procesando...',
+        search:         'Buscar:',
+        lengthMenu:    'Mostrar _MENU_ elementos',
+        info:           'Mostrando de _START_ a _END_ de _TOTAL_ elementos',
+        infoEmpty:      'Mostrando 0 de 0 de 0 elementos',
+        infoFiltered:   '(filtrado de _MAX_ elementos en total)',
+        infoPostFix:    '',
+        loadingRecords: 'Cargando registros...',
+        zeroRecords:    'No se encontraron registros',
+        emptyTable:     'No hay datos disponibles en la tabla',
         paginate: {
-            first:      "Primero",
-            previous:   "Anterior",
-            next:       "Siguiente",
-            last:       "Último"
+            first:      'Primero',
+            previous:   'Anterior',
+            next:       'Siguiente',
+            last:       'Último'
         },
         aria: {
-            sortAscending:  ": activar para ordenar la columna de manera ascendente",
-            sortDescending: ": activar para ordenar la columna de manera descendente"
+            sortAscending:  ': activar para ordenar la columna de manera ascendente',
+            sortDescending: ': activar para ordenar la columna de manera descendente'
         }
     }
 });
