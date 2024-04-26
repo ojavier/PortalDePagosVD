@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <!--Import Google Icon Font-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+    <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
         <!--Import materialize.css-->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="/estilos.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css'>
+    <link rel='stylesheet' href='/estilos.css'>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap' rel='stylesheet'>
     <title>Portal de Pagos VD</title>
 </head>
 <body style="background: rgb(235, 236, 241); font-family: 'Roboto Slab';">
@@ -25,48 +25,48 @@
            return permisos.includes(permission);
        } %>
 
-   <ul id="dropdown1" class="dropdown-content dropdown-content-fixed">
+   <ul id='dropdown1' class='dropdown-content dropdown-content-fixed'>
         <% if (checkPermission('registrarPagoEfectivoAlumno') || checkPermission('registrarSolicitudCobroAlumno')) { %>
-            <li><a href="/pagos" class="black-text">REGISTRAR PAGO - SOLICITUD DE COBRO</a></li>
+            <li><a href='/pagos' class='black-text'>REGISTRAR PAGO - SOLICITUD DE COBRO</a></li>
         <% } %>
-            <li class="divider"></li>
+            <li class='divider'></li>
         <% if (checkPermission('importarRegistroTransferenciasAlumno')) { %>
-            <li><a href="/importar" class="black-text">IMPORTAR TRANSFERENCIAS</a></li>
+            <li><a href='/importar' class='black-text'>IMPORTAR TRANSFERENCIAS</a></li>
         <% } %>
     </ul>
     
     <nav>
-        <div class="nav-wrapper" style="background: rgb(145, 1, 6);">
-            <a href="https://ivd.edu.mx/" class="logo-img"><img src="/images/via.avif" height="64"></a>
-            <a href="/home" class="brand-logo left" style="margin-left: 20px;">PORTAL DE PAGOS</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <div class='nav-wrapper' style='background: rgb(145, 1, 6);'>
+            <a href='https://ivd.edu.mx/' class='logo-img'><img src='/images/via.avif' height='64'></a>
+            <a href='/home' class='brand-logo left' style='margin-left: 20px;'>PORTAL DE PAGOS</a>
+            <ul id='nav-mobile' class='right hide-on-med-and-down'>
                 <% if (isLoggedIn) { %>
-                    <li><a href="/home">HOME</a></li>
+                    <li><a href='/home'>HOME</a></li>
                 <% } %>
                 <% if (checkPermission('registraReferenciaPersonalizadaAlumno')) { %>
-                    <li><a href="/configuracion">CONFIGURACIÓN</a></li>
+                    <li><a href='/configuracion'>CONFIGURACIÓN</a></li>
                 <% } %>
                 <% if (checkPermission('consultaReporteAlumnos')) { %>
-                    <li><a href="/reportes">REPORTES</a></li>
+                    <li><a href='/reportes'>REPORTES</a></li>
                 <% } %>
                 <% if (checkPermission('consultaHistorialValorCredito') || checkPermission('modificaValorCreditoAcademico')) { %>
-                    <li><a href="/creditos">CRÉDITOS</a></li>
+                    <li><a href='/creditos'>CRÉDITOS</a></li>
                 <% } %>
                 <% if (checkPermission('registrarPagoEfectivoAlumno') || checkPermission('registrarSolicitudCobroAlumno') || checkPermission('importarRegistroTransferenciasAlumno')) { %>
-                    <li style="width: 135px;"><a class="dropdown-trigger" href="#!" data-target="dropdown1">PAGOS<i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li style='width: 135px;'><a class='dropdown-trigger' href='#!' data-target='dropdown1'>PAGOS<i class='material-icons right'>arrow_drop_down</i></a></li>
                 <% } %>
                 <% if (isLoggedIn) { %>
-                    <li><a><i class="material-icons right">account_circle</i><strong><%= usuario.Nombre %></strong></a></li>
+                    <li><a><i class='material-icons right'>account_circle</i><strong><%= usuario.Nombre %></strong></a></li>
                 <% } else { %>
-                    <li><a href="/users/login"><i class="material-icons right">login</i>Log In</a></li>
+                    <li><a href='/users/login'><i class='material-icons right'>login</i>Log In</a></li>
                 <% } %>
             </ul>
         </div>
     </nav>  
 
-    <script type="text/javascript">
+    <script type='text/javascript'>
         $(document).ready(function() {
-            $(".dropdown-trigger").dropdown();
+            $('.dropdown-trigger').dropdown();
         });
 
         window.onload = function(){

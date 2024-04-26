@@ -1,31 +1,31 @@
 <%- include('partials/head.ejs') %>
 
-<main class="container" style="margin-top: 2rem;">
-    <div class="row">
+<main class='container' style='margin-top: 2rem;'>
+    <div class='row'>
         <!-- Columna para Seleccionar Método de Pago -->
-    <div class="col s6">
+    <div class='col s6'>
         <h5>Selecciona metodo de pago:</h5>
-            <div class="row">
-                <div class="col s6 responsibe-table">
+            <div class='row'>
+                <div class='col s6 responsibe-table'>
                     <p>
                         <label>
-                            <input id="payment-card" name="payment_method" type="radio" onclick="addEventListener()"/>
-                            <span style="font-size: large;">
+                            <input id='payment-card' name='payment_method' type='radio' onclick='addEventListener()'/>
+                            <span style='font-size: large;'>
                                 <strong>Tarjeta</strong>
-                                <img src="https://w7.pngwing.com/pngs/117/675/png-transparent-visa-and-mastercard-ads-mastercard-credit-card-american-express-visa-debit-card-mastercard-text-payment-logo.png" alt="Tarjeta de crédito" style="width: 50px; height: auto;">
+                                <img src='https://w7.pngwing.com/pngs/117/675/png-transparent-visa-and-mastercard-ads-mastercard-credit-card-american-express-visa-debit-card-mastercard-text-payment-logo.png' alt='Tarjeta de crédito' style='width: 50px; height: auto;'>
                             </span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input id="payment-transfer" name="payment_method" type="radio" />
-                            <span style="font-size: large;"><strong>Transferencia</strong></span>
+                            <input id='payment-transfer' name='payment_method' type='radio' />
+                            <span style='font-size: large;'><strong>Transferencia</strong></span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input id="payment-cash" name="payment_method" type="radio" />
-                            <span style="font-size: large;"><strong>Efectivo</strong></span>
+                            <input id='payment-cash' name='payment_method' type='radio' />
+                            <span style='font-size: large;'><strong>Efectivo</strong></span>
                         </label>
                     </p>
                 </div>
@@ -41,18 +41,18 @@
         %>  
         <!-- Columna para los Datos de Pago -->
         <% if (paymentType === 'colegiatura') { %>
-            <div class="col s6">
+            <div class='col s6'>
                 <h5>Resumen de pago:</h5>
-                <div class="card ">
-                  <div class="card-content ">
-                    <span class="card-title" id="paymentConcept"></span>
-                    <div class="row">
+                <div class='card '>
+                  <div class='card-content '>
+                    <span class='card-title' id='paymentConcept'></span>
+                    <div class='row'>
                         <tr>
                           <thead>
                                 <tr>
                                 <p></p>
                                 <th>Pago mensual:</th>
-                                <th id="paymentAmount"></th>
+                                <th id='paymentAmount'></th>
                                 </tr>
                           </thead>
                           <tbody>                
@@ -63,18 +63,20 @@
                             </tr>
                 <% } %>            
             </div>
+        </div>
+        </div>
         <% } else if (paymentType === 'otros') { %>
-            <!-- Mostrar 2 "card" -->
-            <!-- 1 "card" con toda la tabla de otros pagos que te permita seleccionar 1 opción -->
-            <div class="row">
-                <div class="col s6" style="padding-left: 20px; padding-right: 20px;">
-                  <div class="card" style="padding-left: 20px; padding-right: 20px;">
-                      <ul class="tabs">
-                          <li class="tab col s12"><a href="#otros-pagos"><h5>Selecciona el pago a realizar</h5></a></li>
+            <!-- Mostrar 2 'card' -->
+            <!-- 1 'card' con toda la tabla de otros pagos que te permita seleccionar 1 opción -->
+            <div class='row'>
+                <div class='col s6' style='padding-left: 20px; padding-right: 20px;'>
+                  <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+                      <ul class='tabs'>
+                          <li class='tab col s12'><a href='#otros-pagos'><h5>Selecciona el pago a realizar</h5></a></li>
                       </ul>
-                      <div id="otros-pagos">
+                      <div id='otros-pagos'>
                           <!-- Contenido Otros-Pagos  -->
-                          <table class="striped">
+                          <table class='striped'>
                               <thead>
                                   <tr>
                                       <th>Concepto</th>
@@ -87,7 +89,7 @@
                                     <tr>
                                         <td>
                                             <label>
-                                                <input type="radio" id="paymentOption<%= index %>" name="paymentOption" value="<%= solicitudesdepagos.Concepto %>" data-amount="<%= solicitudesdepagos.Cantidad %>">
+                                                <input type='radio' id='paymentOption<%= index %>' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>' data-amount='<%= solicitudesdepagos.Cantidad %>'>
                                                 <span><%= solicitudesdepagos.Concepto %></span>
                                             </label>
                                         </td>
@@ -109,17 +111,17 @@
               </div>
 
 
-              <div class="col s6">
+              <div class='col s6'>
                 <h5>Resumen de pago:</h5>
-                <div class="card ">
-                    <div class="card-content ">
-                        <span class="card-title" id="paymentConcept"></span>
-                        <div class="row">
+                <div class='card '>
+                    <div class='card-content '>
+                        <span class='card-title' id='paymentConcept'></span>
+                        <div class='row'>
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Total a pagar:</th>
-                                        <th id="paymentAmount"></th>
+                                        <th id='paymentAmount'></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -129,31 +131,31 @@
             <% } %>
 <!-- Botones de aceptar y rechazar -->
 <% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
-    <div class="container">
+    <div class='container'>
         <%- content %>
     </div>
 <% } %>
 
-    <div class="container section">
-        <div class="row">
-            <div class="col s6">
-                <a href="/home2" class="btn modal-trigger carmin">Regresar</a>
+    <div class='container section'>
+        <div class='row'>
+            <div class='col s6'>
+                <a href='/home2' class='btn modal-trigger carmin'>Regresar</a>
             </div>
-            <div class="col s6 right-align">
-                <button id="continue-button" class="btn modal-trigger carmin">Continuar</button>
+            <div class='col s6 right-align'>
+                <button id='continue-button' class='btn modal-trigger carmin'>Continuar</button>
             </div>
         </div>
     </div>
 
 
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <h4 id="modal-title"><strong></strong></h4>
-            <p id="modal-text"></p>
-            <p id="modal-account"></p>
+    <div id='payment-modal' class='modal'>
+        <div class='modal-content'>
+            <h4 id='modal-title'><strong></strong></h4>
+            <p id='modal-text'></p>
+            <p id='modal-account'></p>
         </div>
-        <div class="modal-footer">
-            <a href="/home2" class="modal-close waves-effect waves-green btn-flat">Entiendo</a>
+        <div class='modal-footer'>
+            <a href='/home2' class='modal-close waves-effect waves-green btn-flat'>Entiendo</a>
         </div>
     </div>
 </div>
@@ -218,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
             account.textContent = 'C. Juan Caballero y Osio 398, Calesa 2da Secc, 76020 Santiago de Querétaro, Qro.';
             instances[0].open();
         } else if (document.getElementById('payment-card').checked) {
-            window.location.href = "https://sandboxpol.mit.com.mx/i/SNDBX01";
+            window.location.href = 'https://sandboxpol.mit.com.mx/i/SNDBX01';
         }
     });
 });
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    </script>
+</script>
 
 
 

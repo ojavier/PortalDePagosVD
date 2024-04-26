@@ -1,6 +1,6 @@
 
 .roboto-slab {
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -167,7 +167,7 @@ label {
 }
 
 .eight h1:after,.eight h1:before {
-  content: " ";
+  content: '';
   display: block;
   border-bottom: 2px solid #000000;
 }
@@ -307,4 +307,7 @@ label {
   background-color:rgb(145, 1, 6);
 } /*Color of underline*/
 
+.page-footer {
+  margin-top: 20rem; 
+}
 
