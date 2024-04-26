@@ -143,7 +143,7 @@ class Referencia {
 }
 }
 
-class cicloescolar {
+class Cicloescolar {
     //Constructor
     constructor(mi_MesInicio, mi_MesFin, mi_Año, mi_CostoCreditos) {
         if (!mi_MesInicio || !mi_MesFin || !mi_Año || !mi_CostoCreditos) {
@@ -157,17 +157,17 @@ class cicloescolar {
     //Guardar
     save() {
         return db.execute(
-            'INSERT INTO cicloescolar (MesInicio, MesFin, Año, CostoCreditos) VALUES (?, ?, ?, ?)',
+            'INSERT INTO Cicloescolar (MesInicio, MesFin, Año, CostoCreditos) VALUES (?, ?, ?, ?)',
             [this.mi_MesInicio, this.mi_MesFin, this.mi_Año, this.mi_CostoCreditos]
         );
     }
 
     static fetchAll() {
-        return db.execute('SELECT * FROM cicloescolar');
+        return db.execute('SELECT * FROM Cicloescolar');
     }
 
     static fetchOne(idCiclo) {
-        return db.execute('SELECT * FROM cicloescolar WHERE IdCiclo = ?', [idCiclo]);
+        return db.execute('SELECT * FROM Cicloescolar WHERE IdCiclo = ?', [idCiclo]);
     }
 
     static fetch(idCiclo) {
@@ -178,4 +178,4 @@ class cicloescolar {
         }
     }
 }
-module.exports = { Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar };
+module.exports = { Alumno, SolPago, EstadoCuenta, Pago, Referencia, Cicloescolar };

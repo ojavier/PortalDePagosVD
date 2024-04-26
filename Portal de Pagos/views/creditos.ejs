@@ -22,10 +22,10 @@
             </thead>
 
             <tbody>
-                <% cicloescolar.forEach(function(cicloescolar) { %>
+                <% Cicloescolar.forEach(function(Cicloescolar) { %>
                     <tr>
-                        <td><%= cicloescolar.MesInicio%> - <%= cicloescolar.MesFin%> <%= cicloescolar.Año%></td>
-                        <td><%= cicloescolar.CostoCreditos%></td>
+                        <td><%= Cicloescolar.MesInicio%> - <%= Cicloescolar.MesFin%> <%= Cicloescolar.Año%></td>
+                        <td><%= Cicloescolar.CostoCreditos%></td>
                     </tr>
                 <% }); %>
             </tbody>
@@ -100,11 +100,11 @@
             e.preventDefault(); // Prevent the form from automatically submitting
     
             let nuevoValor = $('#CostoCreditos').val();
-            let cicloEscolar1 = $('#MesInicio').val();
-            let cicloEscolar2 = $('#MesFin').val();
+            let Cicloescolar1 = $('#MesInicio').val();
+            let Cicloescolar2 = $('#MesFin').val();
             let año = $('#Año').val();
     
-            if (nuevoValor == '' || cicloEscolar1 == '' || cicloEscolar2 == '' || año == '') {
+            if (nuevoValor == '' || Cicloescolar1 == '' || Cicloescolar2 == '' || año == '') {
                 Swal.fire({
                     html: '<b>Por favor, completa todos los campos</b>',
                     confirmButtonColor: '#d33',
@@ -115,7 +115,7 @@
     
             // If the new value is valid, submit the form
             Swal.fire({
-                html: `¿Quieres registrar el nuevo valor de crédito $<b>${nuevoValor}</b> para el ciclo escolar <b>${cicloEscolar1}-${cicloEscolar2} ${año}</b>?`,
+                html: `¿Quieres registrar el nuevo valor de crédito $<b>${nuevoValor}</b> para el ciclo escolar <b>${Cicloescolar1}-${Cicloescolar2} ${año}</b>?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
