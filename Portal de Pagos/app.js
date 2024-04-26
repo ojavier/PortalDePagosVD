@@ -12,7 +12,7 @@ app.use((request, response, next) => {
   next(); 
 });
 
-// "body-parser" is a third party midleware that allows you to analyze
+// 'body-parser' is a third party midleware that allows you to analyze
 // requests' bodies
 const bodyParser = require('body-parser');
 
@@ -28,7 +28,7 @@ app.use(session({
 
 
 // It allows you to analyze requests' bodies with content type
-// "application/x-www-form-urlencoded", meaning, it can give sense to
+// 'application/x-www-form-urlencoded', meaning, it can give sense to
 // the forms' data
 app.use(bodyParser.urlencoded({ extended: false }));
 

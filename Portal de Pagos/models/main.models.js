@@ -6,6 +6,11 @@ class Alumno {
         return db.execute('SELECT * FROM vista_alumno_usuario');
     }
 
+
+    static fetchAllAlumnosBeca() {
+        return db.execute('SELECT * FROM alumno');
+    }
+    
     // Fetch a single record from 'alumno' table by id
     static fetchOne(email) {
         return db.execute('SELECT * FROM vista_alumno_usuario WHERE Email = ?', [email]);

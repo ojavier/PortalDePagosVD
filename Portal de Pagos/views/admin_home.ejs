@@ -5,25 +5,25 @@
 }) %>
 
 
-<div class="container">
-  <div class="row">
-    <main class="col s9">
-      <div class="container">
-        <h4 class="center-align">Buscar Alumno:</h4>
-        <div class="row">
-          <div class="col s12">
-            <form action="/search" method="GET">
-              <div class="input-field">
-                <i class="material-icons prefix">search</i>
-                <input id="search" type="text" class="validate" name="query">
-                <label for="search">Buscar Alumno (Matrícula, Email)</label>
-                <button class="btn waves-effect waves-light" type="submit">Buscar</button>
+<div class='container'>
+  <div class='row'>
+    <main class='col s9'>
+      <div class='container'>
+        <h4 class='center-align'>Buscar Alumno:</h4>
+        <div class='row'>
+          <div class='col s12'>
+            <form action='/search' method='GET'>
+              <div class='input-field'>
+                <i class='material-icons prefix'>search</i>
+                <input id='search' type='text' class='validate' name='query'>
+                <label for='search'>Buscar Alumno (Matrícula, Email)</label>
+                <button class='btn waves-effect waves-light' type='submit'>Buscar</button>
               </div>
             </form>
           </div>
         </div>
 
-        <table class="striped">
+        <table class='striped'>
           <thead>
             <tr>
               <th>3er Semestre</th>
@@ -45,32 +45,32 @@
     </main>
   
  
-    <div class="col s3">
-      <div class="card">
-        <div class="card-content center">
-          <i class="material-icons large">account_circle</i>
-          <span class="card-title">Pablo Perez Castro</span>
+    <div class='col s3'>
+      <div class='card'>
+        <div class='card-content center'>
+          <i class='material-icons large'>account_circle</i>
+          <span class='card-title'>Pablo Perez Castro</span>
           <p>2º Semestre - #10001</p>
-          <p class="green-text">Status: Activo</p>
-          <div class="center-align">
-            <a href="/alumno/10001" class="waves-effect waves-light btn">Ver más información</a>
+          <p class='green-text'>Status: Activo</p>
+          <div class='center-align'>
+            <a href='/alumno/10001' class='waves-effect waves-light btn'>Ver más información</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <main class="col s9">
-      <div class="container">
-        <ul class="tabs">
-          <li class="tab col s6"><a href="#estado-cuenta">Estado de cuenta</a></li>
-          <li class="tab col s6"><a href="#historial-pagos">Historial de pagos</a></li>
+  <div class='row'>
+    <main class='col s9'>
+      <div class='container'>
+        <ul class='tabs'>
+          <li class='tab col s6'><a href='#estado-cuenta'>Estado de cuenta</a></li>
+          <li class='tab col s6'><a href='#historial-pagos'>Historial de pagos</a></li>
         </ul>
       </div>
 
-      <div id="estado-cuenta" class="container">
-        <table class="striped">
+      <div id='estado-cuenta' class='container'>
+        <table class='striped'>
           <thead>
             <tr>
               <th>Fecha Limite</th>
@@ -88,8 +88,8 @@
         </table>
       </div>
 
-      <div id="historial-pagos" class="container">
-        <table class="striped">
+      <div id='historial-pagos' class='container'>
+        <table class='striped'>
           <thead>
             <tr>
               <th>Forma de pago</th>
@@ -135,7 +135,7 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
