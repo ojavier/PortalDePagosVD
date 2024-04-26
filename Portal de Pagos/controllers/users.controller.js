@@ -1,5 +1,14 @@
 const Usuario = require('../models/usuario.model');
 
+exports.get_profile = (request, response, next) => {
+    const isLoggedIn = request.session.isLoggedIn || false;
+    response.render('profile-student', {
+        isLoggedIn: isLoggedIn,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {},
+    });
+};
+
 exports.get_login = (request, response, next) => {
     const error = request.session.error || null;
     const isLoggedIn = request.session.isLoggedIn || false;
