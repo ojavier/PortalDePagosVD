@@ -2,7 +2,7 @@ const Usuario = require('../models/usuario.model');
 
 exports.get_profile = (request, response, next) => {
     const isLoggedIn = request.session.isLoggedIn || false;
-    response.render('profile-student', {
+    response.render('profile', {
         isLoggedIn: isLoggedIn,
         permisos: request.session.permisos || [],
         usuario: request.session.usuario || {},
@@ -42,6 +42,15 @@ exports.post_login = (request, response, next) => {
                         })
                         .catch((error) => {
                             console.error('Error al extraer privilegios', error);
+                            response.redirect('/users/login');
+                        });
+                    Usuario.getUserRole(request.body.Email)
+                        .then(([roles]) => {
+                            request.session.rol = (roles.length > 0)? roles[0].Nombre : '';
+                            console.log(request.session.rol);
+                        })
+                        .catch((error) => {
+                            console.error('Error al extraer rol', error);
                             response.redirect('/users/login');
                         });
                 } else {
