@@ -82,14 +82,34 @@ exports.get_payplan = (request, response, next) => {
     });
 };
 
-exports.get_profile = (request, response, next) => {    
-
-    response.render('profile', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
+exports.get_profile = (request, response, next) => {
+    const isLoggedIn = request.session.isLoggedIn || false;
+    console.log(request.session.rol);
+    if(request.session.rol === 'Alumno'){
+        Alumno.fetchOne(request.session.usuario.Email)
+        .then(([rows]) => {
+            const alumno = rows[0] || {};
+            response.render('profile', {
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {},
+                role: request.session.rol || '',
+                matricula: alumno.Matricula || ''
+            });
+        })
+        .catch((error) => {
+            console.error('Error obteniendo la información del estudiante: ', error);
+            response.redirect('/');
+        });
+    } else {
+        response.render('profile', {
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            role: request.session.rol || '',
+            matricula: ''
+        });
+    }
 };
 
 exports.get_reportes = (request, response, next) => {   

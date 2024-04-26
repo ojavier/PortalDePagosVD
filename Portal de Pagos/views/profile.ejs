@@ -2,8 +2,7 @@
     isLoggedIn: isLoggedIn, 
     permisos: permisos,
     usuario: usuario
-  }) %>
-
+}) %>
 
 <main class='container' style='margin-top: 2rem;'>
     <div class='row'>
@@ -11,9 +10,8 @@
             <div class='card'>
                 <div class='card-content center'>
                     <i class='material-icons large'>account_circle</i>
-                    <span class='card-title'>Pablo Perez Castro</span>
-                    <p>2° Semestre - #10001</p>
-                    <p class='green-text'>Status: Activo</p>
+                    <span class='card-title'><%= usuario.Nombre %> <%= usuario.ApellidoP %> <%= usuario.ApellidoM %></span>
+                    <p class='<%= (usuario.status === 'Si')? "green-text" : "red-text" %>'>Status: <%= (usuario.status === 'Si')? "Activo" : "Inactivo" %></p>
                 </div>
             </div>
         </div>
@@ -25,36 +23,18 @@
                         <tbody>
                             <tr>
                                 <td>Nombre completo:</td>
-                                <td>Pablo Perez Castro</td>
+                                <td><%= usuario.Nombre %> <%= usuario.ApellidoP %> <%= usuario.ApellidoM %></td>
                             </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td><%= usuario.Email %></td>
+                            </tr>
+                            <% if (role === 'Alumno') { %>
                             <tr>
                                 <td>Matrícula:</td>
-                                <td>10001</td>
+                                <td><%= matricula %></td>
                             </tr>
-                            <tr>
-                                <td>Fecha de nacimiento:</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Carrera:</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Teléfono:</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Dirección:</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Contacto de emergencia:</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Ejemplo de información personal:</td>
-                                <td>--</td>
-                            </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
