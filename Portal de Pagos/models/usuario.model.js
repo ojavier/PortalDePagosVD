@@ -42,6 +42,16 @@ module.exports = class Usuario {
             JOIN permisos p ON pr.IdPermisos = p.IdPermisos
             WHERE u.Email = ?
         `, [Email]);
+    }
+    
+    static getUserRole(Email) {
+        return db.execute(`
+            SELECT r.Nombre
+            FROM usuario u
+            JOIN roldeusuarios ru ON u.Email = ru.Email
+            JOIN rol r ON ru.IdRol = r.IdRol
+            WHERE u.Email = ?
+        `, [Email]);
     }    
     
 
