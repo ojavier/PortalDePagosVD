@@ -311,3 +311,11 @@ label {
   margin-top: 20rem; 
 }
 
+.card-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.tab-content {
+  display: none; /* Initially hidden */
+}
