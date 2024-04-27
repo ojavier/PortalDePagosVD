@@ -15,6 +15,8 @@ router.get('/home', isAuth, mainController.get_login);
 
 router.get('/home2', isAuth, mainController.get_home);
 
+router.get('/admin-home', isAuth, mainController.get_adminHome);
+
 router.get('/paymethod', isAuth, mainController.get_paymethod);
 
 router.get('/payplan', isAuth, mainController.get_payplan);

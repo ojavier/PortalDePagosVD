@@ -82,6 +82,27 @@ exports.get_payplan = (request, response, next) => {
     });
 };
 
+// TODO: Later merge with the other home pages controllers in the unified version
+exports.get_adminHome = (request, response, next) => {
+    Alumno.fetchAll()
+    .then(([rows]) => {
+        console.log(rows);
+        response.render('admin-home', {
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            alumnos: rows,
+        });
+    })
+    .catch((error) => {
+        console.log('Admin home error: ', error);
+        response.redirect('/');
+    })
+};
+
+
+
+
 exports.get_profile = (request, response, next) => {
     const isLoggedIn = request.session.isLoggedIn || false;
     console.log(request.session.rol);
