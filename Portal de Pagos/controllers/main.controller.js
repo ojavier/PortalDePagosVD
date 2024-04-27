@@ -2,7 +2,10 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const moment = require('moment');
 
-const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, Cicloescolar}= require('../models/main.models');
+const {Alumno, EstadoCuenta, Referencia}= require('../models/alumno.models');
+const {SolPago, Pago}= require('../models/pagos.models');
+const Cicloescolar = require('../models/materias.models');
+
 
 exports.get_root = (request, response, next) => {
     const error = request.session.error || null;
