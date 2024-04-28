@@ -23,7 +23,7 @@ class SolPago {
     }
 
     static fetchOne(email) {
-        return db.execute('SELECT * FROM solicitudesdepagos WHERE IdSPago = ? AND TipoDeCobro = "Otros"', [email]);
+        return db.execute('SELECT * FROM solicitudesdepagos WHERE Email = ? AND TipoDeCobro = "Otros"', [email]);
     }
 
     static fetch(email) {
@@ -60,7 +60,7 @@ class Pago {
     }
 
     static fetchOne(email) {
-        return db.execute('SELECT * FROM pago', [email]);
+        return db.execute('SELECT * FROM pago WHERE Email = ?', [email]);
     }
 
     static fetch(email) {

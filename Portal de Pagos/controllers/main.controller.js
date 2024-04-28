@@ -19,26 +19,26 @@ exports.get_root = (request, response, next) => {
             error: error
         });
     } else {
-        response.render('home', {
-            pagePrimaryTitle: 'Portal de Gestión de Pagos',
-            isLoggedIn: isLoggedIn,
-            permisos: request.session.permisos || [],
-            usuario: request.session.usuario || {}
-        });
+        role = request.session.rol;
+        if(role === 'Alumno'){
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        } else if(role === 'Coordinador' || role === 'Administrador'){
+            response.render('/admin-home');
+        } else if(role === 'Desarrollador'){ // As long as the web page is in production
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        }
     }
 };
-
-
-// TODO: The controller needs a proper name that isn't already used
-exports.get_login = (request, response, next) => {
-
-    response.render('home', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
-}
 
 exports.get_home = (request, response, next) => {
 
@@ -84,6 +84,61 @@ exports.get_payplan = (request, response, next) => {
         usuario: request.session.usuario || {}
     });
 };
+
+// TODO: Later merge with the other home pages controllers in the unified version
+exports.get_adminHome = (request, response, next) => {
+    Alumno.fetchAll()
+    .then(([rows]) => {
+        response.render('admin-home', {
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            alumnos: rows,
+        });
+    })
+    .catch((error) => {
+        console.log('Admin home error: ', error);
+        response.redirect('/');
+    })
+};
+
+exports.get_studentData = (request, response, next) => {
+    const email = request.query.studentEmail;
+
+    console.log(email);
+
+    Promise.all([
+        EstadoCuenta.fetchOne(email),
+        SolPago.fetchOne(email),
+        Pago.fetchOne(email)
+    ])
+    .then(([estadoCuentaColegiaturaRegistros, estadoCuentaOtrosServiciosRegistros, historialDePagosRegistros]) => {
+        // Process the results here - usually, results are arrays of objects
+        const estadoCuentaColegiatura = estadoCuentaColegiaturaRegistros[0];
+        const estadoCuentaOtrosServicios = estadoCuentaOtrosServiciosRegistros[0];
+        const historialDePagos = historialDePagosRegistros[0];
+
+        // Prepare the data to be sent to the client
+        const dataToClient = {
+            estadoCuentaColegiatura: estadoCuentaColegiatura,
+            estadoCuentaOtrosServicios: estadoCuentaOtrosServicios,
+            historialDePagos: historialDePagos
+        };
+
+        // Send the JSON response to the client
+        response.json(dataToClient);
+    })
+    .catch((error) => {
+        console.log('Error recuperando la información del usuario:', error);
+    }); 
+    // TODO: Adapt the views so that they can receive and show .json error messages like the one show below
+    // .catch(err => {
+    //     response.status(500).json({
+    //         error: err
+    //     });
+    // });
+};
+
 
 exports.get_profile = (request, response, next) => {
     const isLoggedIn = request.session.isLoggedIn || false;
