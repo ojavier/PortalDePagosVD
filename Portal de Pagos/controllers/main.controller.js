@@ -2,7 +2,10 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const moment = require('moment');
 
-const {Alumno, SolPago, EstadoCuenta, Pago, Referencia, cicloescolar}= require('../models/main.models');
+const {Alumno, EstadoCuenta, Referencia}= require('../models/alumno.models');
+const {SolPago, Pago}= require('../models/pagos.models');
+const Cicloescolar = require('../models/materias.models');
+
 
 exports.get_root = (request, response, next) => {
     const error = request.session.error || null;
@@ -168,13 +171,13 @@ exports.get_profile = (request, response, next) => {
 };
 
 exports.get_reportes = (request, response, next) => {   
-    Promise.all([cicloescolar.fetchAll(), Alumno.fetchAllAlumnosBeca()])
-        .then(([cicloescolarRows, alumnoRows]) => {
-            console.log('cicloescolarRows:', cicloescolarRows);
+    Promise.all([Cicloescolar.fetchAll(), Alumno.fetchAllAlumnosBeca()])
+        .then(([CicloescolarRows, alumnoRows]) => {
+            console.log('CicloescolarRows:', CicloescolarRows);
             console.log('alumnoRows:', alumnoRows);
             response.render('reportes', {
                 pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                cicloescolar: cicloescolarRows,
+                Cicloescolar: CicloescolarRows,
                 alumnos: alumnoRows,
                 isLoggedIn: request.session.isLoggedIn || false,
                 permisos: request.session.permisos || [],
@@ -185,10 +188,10 @@ exports.get_reportes = (request, response, next) => {
 };
 
 exports.get_creditos = (request, response, next) => {
-    cicloescolar.fetchAll().then(([rows]) => {
+    Cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
-        cicloescolar: rows,
+        Cicloescolar: rows,
         isLoggedIn: request.session.isLoggedIn || false,
         permisos: request.session.permisos || [],
         usuario: request.session.usuario || {}
@@ -330,13 +333,13 @@ exports.post_importar = (request, response, next) => {
 
 
 
-exports.post_cicloescolar = (request, response, next) => {
+exports.post_Cicloescolar = (request, response, next) => {
     console.log(request.body);
-    const mi_cicloescolar = new cicloescolar(
+    const mi_Cicloescolar = new Cicloescolar(
         request.body.MesInicio, request.body.MesFin, request.body.Año, 
         request.body.CostoCreditos
     );
-    mi_cicloescolar.save()
+    mi_Cicloescolar.save()
     .then(([rows,FieldData]) => {
         response.redirect('/creditos');
     }).catch((error) => {

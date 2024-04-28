@@ -30,7 +30,7 @@ router.get('/reportes', isAuth, consultaReporteAlumnos, mainController.get_repor
 
 router.get('/creditos', isAuth, modificaValorCreditoAcademico, mainController.get_creditos);
 
-router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.post_cicloescolar);
+router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.post_Cicloescolar);
 
 router.get('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.get_configuracion);
 

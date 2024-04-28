@@ -2,7 +2,7 @@
     isLoggedIn: isLoggedIn, 
     permisos: permisos,
     alumnos: alumnos,
-    cicloescolar: cicloescolar,
+    Cicloescolar: Cicloescolar,
     usuario: usuario
   }) %>
 
@@ -41,17 +41,17 @@
   
   <script>
 
-    const cicloescolar = <%- JSON.stringify(cicloescolar[0]) %>;
-    console.log(cicloescolar);
+    const Cicloescolar = <%- JSON.stringify(Cicloescolar[0]) %>;
+    console.log(Cicloescolar);
 
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    var labels = cicloescolar.map(function(cicloescolar) {
-        return cicloescolar.MesInicio + ' - ' + cicloescolar.MesFin + ' ' + cicloescolar.Año;
+    var labels = Cicloescolar.map(function(Cicloescolar) {
+        return Cicloescolar.MesInicio + ' - ' + Cicloescolar.MesFin + ' ' + Cicloescolar.Año;
     });
       
-    var data = cicloescolar.map(function(cicloescolar) {
-        return cicloescolar.CostoCreditos;
+    var data = Cicloescolar.map(function(Cicloescolar) {
+        return Cicloescolar.CostoCreditos;
     });
 
 
