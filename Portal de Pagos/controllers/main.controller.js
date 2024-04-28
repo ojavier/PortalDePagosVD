@@ -86,7 +86,6 @@ exports.get_payplan = (request, response, next) => {
 exports.get_adminHome = (request, response, next) => {
     Alumno.fetchAll()
     .then(([rows]) => {
-        console.log(rows);
         response.render('admin-home', {
             isLoggedIn: request.session.isLoggedIn || false,
             permisos: request.session.permisos || [],
@@ -100,7 +99,42 @@ exports.get_adminHome = (request, response, next) => {
     })
 };
 
+exports.get_studentData = (request, response, next) => {
+    const email = request.query.studentEmail;
 
+    console.log(email);
+
+    Promise.all([
+        EstadoCuenta.fetchOne(email),
+        SolPago.fetchOne(email),
+        Pago.fetchOne(email)
+    ])
+    .then(([estadoCuentaColegiaturaRegistros, estadoCuentaOtrosServiciosRegistros, historialDePagosRegistros]) => {
+        // Process the results here - usually, results are arrays of objects
+        const estadoCuentaColegiatura = estadoCuentaColegiaturaRegistros[0];
+        const estadoCuentaOtrosServicios = estadoCuentaOtrosServiciosRegistros[0];
+        const historialDePagos = historialDePagosRegistros[0];
+
+        // Prepare the data to be sent to the client
+        const dataToClient = {
+            estadoCuentaColegiatura: estadoCuentaColegiatura,
+            estadoCuentaOtrosServicios: estadoCuentaOtrosServicios,
+            historialDePagos: historialDePagos
+        };
+
+        // Send the JSON response to the client
+        response.json(dataToClient);
+    })
+    .catch((error) => {
+        console.log('Error recuperando la información del usuario:', error);
+    }); 
+    // TODO: Adapt the views so that they can receive and show .json error messages like the one show below
+    // .catch(err => {
+    //     response.status(500).json({
+    //         error: err
+    //     });
+    // });
+};
 
 
 exports.get_profile = (request, response, next) => {

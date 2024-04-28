@@ -4,10 +4,10 @@
   usuario: usuario
 }) %>
 
-<div class='container'>
+<div class="container">
   <div class='row'>
     <div class='col s12'>
-      <table id='studentsTable' class='striped'>
+      <table id='tablaEstudiantes' class='striped'>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -33,90 +33,219 @@
       </table>
     </div>
   </div>
-
-    <!-- Plan de Materias Section -->
-    <div id='materias' class='section' style='display:none;'>
-      <div class='container'>
-        <div class='row'>
-            <main class='col s9'>
-                <h4 class='roboto-slab'>Plan de Materias</h4>
-                <div class='card'>
-                    <table class='striped TablaProfesional'>
-                      <thead>
-                        <tr>
-                          <th>3er Semestre</th>
-                          <th>Grupo</th>
-                          <th>Hora</th>
-                          <th>Créditos</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Historia del Arte</td>
-                          <td>221</td>
-                          <td>11:00 a 13:00 Lu/Ma</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Materiales Textiles</td>
-                          <td>15</td>
-                          <td>7:00 a 9:00 Lu/Ma</td>
-                          <td>10</td>
-                        </tr>
-                        <tr>
-                          <td>Ilustración Técnica de la Moda II</td>
-                          <td>67</td>
-                          <td>11:00 a 13:00 Mi/Ju</td>
-                          <td>4</td>
-                        </tr>
-                        <tr>
-                          <td>Fundamentos de Administración</td>
-                          <td>12</td>
-                          <td>15:00 a 16:00 Lu</td>
-                          <td>5</td>
-                        </tr>
-                        <tr>
-                          <td>Herramientas Industriales</td>
-                          <td>8</td>
-                          <td>10:00 a 12:00 Vi</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Patronaje de Prendas Infantiles</td>
-                          <td>140</td>
-                          <td>6:00 a 8:00 Vi</td>
-                          <td>10</td>
-                        </tr>
-                        <tr>
-                          <td>Confección de Prendas Masculinas</td>
-                          <td>200</td>
-                          <td>14:00 a 18:00 Mi</td>
-                          <td>12</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-            </main>
+  
+  <!-- Plan de Materias -->
+  <div id='materias' class='section' style='display:none;'>
+    <div class='row'>
+      <main class='col s12'>
+        <h4 class='roboto-slab' style='text-align: center;'>Plan de Materias</h4>
+          <div class='card'>
+              <table class='striped TablaProfesional'>
+                <thead>
+                  <tr>
+                    <th>3er Semestre</th>
+                    <th>Grupo</th>
+                    <th>Hora</th>
+                    <th>Créditos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Historia del Arte</td>
+                    <td>221</td>
+                    <td>11:00 a 13:00 Lu/Ma</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>Materiales Textiles</td>
+                    <td>15</td>
+                    <td>7:00 a 9:00 Lu/Ma</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td>Ilustración Técnica de la Moda II</td>
+                    <td>67</td>
+                    <td>11:00 a 13:00 Mi/Ju</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>Fundamentos de Administración</td>
+                    <td>12</td>
+                    <td>15:00 a 16:00 Lu</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>Herramientas Industriales</td>
+                    <td>8</td>
+                    <td>10:00 a 12:00 Vi</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>Patronaje de Prendas Infantiles</td>
+                    <td>140</td>
+                    <td>6:00 a 8:00 Vi</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td>Confección de Prendas Masculinas</td>
+                    <td>200</td>
+                    <td>14:00 a 18:00 Mi</td>
+                    <td>12</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </main>
+  </div>
+  </div>
+  
+  <!-- Later change for css spacing -->
+  <br><br>
+  
+  <!-- Estado de Cuenta -->
+  <div id='estadosDeCuenta' class='section' style='display:none;'>
+  
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#estado-cuenta-colegiatura'>Estado de cuenta</a></li>
+          </ul>
+          <div>
+            <!-- Contenido Estado de Cuenta -->
+            <table class='striped'>
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Limite</th>
+                </tr>
+              </thead>
+              <tbody id="estadoCuentaColegiatura">
+                <!-- Los datos del estado de cuentas se insertarán aquí con AJAX -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+  
+    <!-- Later change for css spacing -->
+    <br><br><br>
+  
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#estado-cuenta-otros-servicios'>Otros Servicios</a></li>
+          </ul>
+          <div>
+            <!-- Contenido Otros Servicios  -->
+            <table class='striped'>
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Limite</th>
+                </tr>
+              </thead>
+              <tbody id="estadoCuentaOtrosServicios">
+                <!-- Los datos de otros servicios se insertarán aquí con AJAX -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  
+  <!-- Later change for css spacing -->
+  <br><br><br>
+  
+  <div id='historialDePagos' class='section' style='display:none;'>
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#historial-de-pagos'>Historial de Pagos</a></li>
+          </ul>
+          <div id="historial-de-pagos">
+            <ul class='tabs'>
+              <li class='tab col s4'><a href='#historial-pagos-todo'>Todo</a></li>
+              <li class='tab col s4'><a href='#historial-pagos-colegiatura'>Colegiatura</a></li>
+              <li class='tab col s4'><a href='#historial-pagos-otros-servicios'>Otros Servicios</a></li>
+            </ul>
+            <div id="historial-pagos-todo">
+              <table id="tablaHistorialPagosTodo" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+            <div id="historial-pagos-colegiatura">
+              <table id="tablaHistorialPagosColegiatura" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+            <div id="historial-pagos-otros-servicios">
+              <table id="tablaHistorialPagosOtrosServicios" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
 
- 
-<%- include('partials/footer.ejs') %>
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
 <script>
 $(document).ready( function () {
-    let table = $('#studentsTable').DataTable({
-      responsive: true,
+    let table = $('#tablaEstudiantes').DataTable({
       language: {
         processing:     'Procesando...',
         search:         'Buscar:',
         lengthMenu:    'Mostrar _MENU_ elementos',
         info:           'Mostrando de _START_ a _END_ de _TOTAL_ elementos',
-        infoEmpty:      'Mostrando 0 de 0 elementos',
+        infoEmpty:      'Mostrando 0 de 0 de 0 elementos',
         infoFiltered:   '(filtrado de _MAX_ elementos en total)',
+        infoPostFix:    '',
         loadingRecords: 'Cargando registros...',
         zeroRecords:    'No se encontraron registros',
         emptyTable:     'No hay datos disponibles en la tabla',
@@ -133,19 +262,100 @@ $(document).ready( function () {
       }
     });
 
-    $('#studentsTable tbody').on('click', 'tr', function(){
+    $('select').formSelect();  
+
+    $('#tablaEstudiantes tbody').on('click', 'tr', function(){
+        if (!$(this).hasClass('selected')) {
+              table.$('tr.selected').removeClass('selected');
+        }
+
         $(this).toggleClass('selected');  
 
         if ($(this).hasClass('selected')) {
           let email = $(this).find('td').eq(3).text();
 
+          if (email) {
+            $.ajax({
+              url: '/student-data',
+              type: 'GET',
+              data: { studentEmail: email },
+              dataType: 'json',
+              success: function(data) {
+                // Vaciar la tabla de estadoCuenta antes de añadir los nuevos datos
+                $('#estadoCuentaColegiatura').empty();
+                
+                // Iterar sobre el array estadoCuentaColegiatura y añadir los datos a la tabla
+                data.estadoCuentaColegiatura.forEach(function(item) {
+                var fechaLimite = new Date(item.FechaLimite);
+                var formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                var row = `<tr>
+                                <td>${item.Concepto}</td>
+                                <td>$${item.Cantidad}</td>
+                                <td>${formattedDate}</td>
+                          </tr>`;
+                          $('#estadoCuentaColegiatura').append(row);
+                });
+
+                // Vaciar la tabla de otros pagos antes de añadir los nuevos datos
+                $('#estadoCuentaOtrosServicios').empty();
+               
+                // Iterar sobre el array estadoCuentaOtrosServicios y añadir los datos a la tabla
+                data.estadoCuentaOtrosServicios.forEach(function(item) {
+                  var fechaLimite = new Date(item.FechaLimite);
+                  var formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                  var row = `<tr>
+                                <td>${item.Concepto}</td>
+                                <td>$${item.Cantidad}</td>
+                                <td>${formattedDate}</td>
+                            </tr>`;
+                  $('#estadoCuentaOtrosServicios').append(row);
+                });
+
+                // Vaciar las tablas antes de añadir nuevos datos
+                $('#tablaHistorialPagosTodo tbody').empty();
+                $('#tablaHistorialPagosColegiatura tbody').empty();
+                $('#tablaHistorialPagosOtrosServicios tbody').empty();
+
+                // Añadir datos a cada tabla
+                data.historialDePagos.forEach(function(pago) {
+                  var fechaLimite = new Date(pago.FechaLimite);
+                  var fechaPagoRealizado = new Date(pago.Fecha);
+                  var formattedFechaLimite = `${fechaLimite.getDate()}-${fechaLimite.getMonth() + 1}-${fechaLimite.getFullYear()}`;
+                  var formattedFechaPago = `${fechaPagoRealizado.getDate()}-${fechaPagoRealizado.getMonth() + 1}-${fechaPagoRealizado.getFullYear()}`;
+                  var row = `<tr>
+                              <td>${pago.Concepto}</td>
+                              <td>$${pago.Total}</td>
+                              <td>${pago.Metodo}</td>
+                              <td>${formattedFechaLimite}</td>
+                              <td>${formattedFechaPago}</td>
+                            </tr>`;
+                  if (pago.Concepto === 'Colegiatura') {
+                    $('#tablaHistorialPagosColegiatura tbody').append(row);
+                  } else {
+                    $('#tablaHistorialPagosOtrosServicios tbody').append(row);
+                  }
+                  $('#tablaHistorialPagosTodo tbody').append(row);
+                });
+              },
+              error: function(xhr, status, error) {
+                console.error('AJAX Error: ', status, error);
+              }
+            });
+          }
+
+
           $('#materias').show();
-          $('#email').val(email);
+          $('#estadosDeCuenta').show();
+          $('#historialDePagos').show();
         } else {
           $('#materias').hide();
-          $('#email').val('');
+          $('#estadosDeCuenta').hide();
+          $('#historialDePagos').hide();
         }
     });
+
+    $('.tabs').tabs();
+
 });
 </script>
 <script>
@@ -178,3 +388,4 @@ $(document).ready( function () {
       }; return d
   });
 </script>
+<%- include('partials/footer.ejs') %>
