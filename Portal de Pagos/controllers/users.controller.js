@@ -12,7 +12,24 @@ exports.get_login = (request, response, next) => {
             error: error
         });
     } else {
-        response.redirect('/');
+        role = request.session.rol;
+        if(role === 'Alumno'){
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        } else if(role === 'Coordinador' || role === 'Administrador'){
+            response.render('/admin-home');
+        } else if(role === 'Desarrollador'){ // As long as the web page is in production
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        }
     }
 };
 
@@ -33,7 +50,25 @@ exports.post_login = async (request, response, next) => {
             request.session.rol = roles.length > 0 ? roles[0].Nombre : '';
             
             console.log('Role set in session: ', request.session.rol);
-            response.redirect('/home');
+            role = request.session.rol;
+            if(role === 'Alumno'){
+                response.render('home', {
+                    pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                    isLoggedIn: isLoggedIn,
+                    permisos: request.session.permisos || [],
+                    usuario: request.session.usuario || {}
+                });
+            } else if(role === 'Coordinador' || role === 'Administrador'){
+                response.redirect('/admin-home');
+            } else if(role === 'Desarrollador'){ // As long as the web page is in production
+                response.render('home', {
+                    pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                    isLoggedIn: isLoggedIn,
+                    permisos: request.session.permisos || [],
+                    usuario: request.session.usuario || {}
+                });
+            }
+
         } else {
             console.log('Autenticación fallida. El usuario no ha sido encontrado o su contraseña fue inválida.');
             request.session.error = 'Usuario y/o contraseña incorrectos';

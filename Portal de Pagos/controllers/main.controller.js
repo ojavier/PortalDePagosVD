@@ -16,26 +16,26 @@ exports.get_root = (request, response, next) => {
             error: error
         });
     } else {
-        response.render('home', {
-            pagePrimaryTitle: 'Portal de Gestión de Pagos',
-            isLoggedIn: isLoggedIn,
-            permisos: request.session.permisos || [],
-            usuario: request.session.usuario || {}
-        });
+        role = request.session.rol;
+        if(role === 'Alumno'){
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        } else if(role === 'Coordinador' || role === 'Administrador'){
+            response.render('/admin-home');
+        } else if(role === 'Desarrollador'){ // As long as the web page is in production
+            response.render('home', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                isLoggedIn: isLoggedIn,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        }
     }
 };
-
-
-// TODO: The controller needs a proper name that isn't already used
-exports.get_login = (request, response, next) => {
-
-    response.render('home', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
-}
 
 exports.get_home = (request, response, next) => {
 
