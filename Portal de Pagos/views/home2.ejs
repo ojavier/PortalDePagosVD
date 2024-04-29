@@ -104,20 +104,31 @@
                 </tr>
               </thead>
               <tbody>
-                <% estadoCuentas.forEach(function(estadoCuenta) { %>
-                  <tr>
-                    <td><%= estadoCuenta.Concepto %></td>
-                    <td>$ <%= estadoCuenta.Cantidad %></td>
-                    <td>      
-                      <% 
-                      let date = new Date(estadoCuenta.FechaLimite);
-                      let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                      %>
-                      <%= formattedDate %>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
+                <% 
+                var estadoCuentasUsuario = estadoCuentas.filter(function(estadoCuenta) { 
+                    return estadoCuenta.Email === usuario.Email; 
+                });
+            
+                if (estadoCuentasUsuario.length === 0) { %>
+                    <tr>
+                        <td colspan="3" class="center">Estás al corriente en tus pagos de Colegiatura.</td>
+                    </tr>
+                <% } else {
+                    estadoCuentasUsuario.forEach(function(estadoCuenta) { %>
+                        <tr>
+                            <td><%= estadoCuenta.Concepto %></td>
+                            <td>$ <%= estadoCuenta.Cantidad %></td>
+                            <td>      
+                                <% 
+                                let date = new Date(estadoCuenta.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>
+                    <% }); 
+                } %>
+            </tbody>
             </table>
         </div>
       </div>
@@ -143,24 +154,35 @@
               </tr>
             </thead>
             <tbody>
-              <% solpagos.forEach(function(solicitudesdepagos, index) { %>
-                <tr>
-                    <td>
-                        <label id='paymentOption' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>'>
-                            <span><%= solicitudesdepagos.Concepto %></span>
-                        </label>
-                    </td>
-                    <td>$ <%= solicitudesdepagos.Cantidad %></td>
-                    <td>      
-                        <% 
-                        let date = new Date(solicitudesdepagos.FechaLimite);
-                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                        %>
-                        <%= formattedDate %>
-                    </td>
-                </tr>
-            <% }); %>
-        </tbody>
+              <% 
+              var solpagosUsuario = solpagos.filter(function(solicitud) { 
+                  return solicitud.Email === usuario.Email; 
+              });
+          
+              if (solpagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="3" class="center">Estás al corriente en tus pagos de Otros Servicios.</td>
+                  </tr>
+              <% } else {
+                  solpagosUsuario.forEach(function(solicitudesdepagos, index) { %>
+                      <tr>
+                          <td>
+                              <label id='paymentOption' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>'>
+                                  <span><%= solicitudesdepagos.Concepto %></span>
+                              </label>
+                          </td>
+                          <td>$ <%= solicitudesdepagos.Cantidad %></td>
+                          <td>      
+                              <% 
+                              let date = new Date(solicitudesdepagos.FechaLimite);
+                              let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                              %>
+                              <%= formattedDate %>
+                          </td>
+                      </tr>
+                  <% }); 
+              } %>
+          </tbody>
     </table>
 </div>
 </div>
@@ -197,27 +219,38 @@
                 </tr>
               </thead>
               <tbody>
-              <% pagos.forEach(function(pago) { %>
-                <tr>
-                  <td><%= pago.Concepto %></td>
-                  <td><%= pago.Total %></td>
-                  <td><%= pago.Metodo %></td>
-                  <td>                    
-                    <% 
-                    let date = new Date(pago.FechaLimite);
-                    let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                    %>
-                    <%= formattedDate %>
-                    </td>
-                    <td>      
-                    <% 
-                    date = new Date(pago.Fecha);
-                    formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                    %>
-                    <%= formattedDate %>
-                    </td>
-                </tr>
-                <% }); %>
+                <% 
+                var pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email; 
+                });
+
+                if (pagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="5" class="center">No se han realizado pagos todavía.</td>
+                  </tr>
+                <% } else {
+                    pagosUsuario.forEach(function(pago) { %>
+                        <tr>
+                            <td><%= pago.Concepto %></td>
+                            <td><%= pago.Total %></td>
+                            <td><%= pago.Metodo %></td>
+                            <td>                    
+                                <% 
+                                let date = new Date(pago.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                            <td>      
+                                <% 
+                                date = new Date(pago.Fecha);
+                                formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>              
+                    <% });
+                } %>
               </tbody>
             </table>
           </div>
@@ -234,32 +267,41 @@
                 </tr>
               </thead>
               <tbody>
-                <% pagos.forEach(function(pago) { %>
-                  <% if (pago.Concepto === 'Colegiatura') { %>
-                    <tr>
-                      <td><%= pago.Concepto %></td>
-                      <td><%= pago.Total %></td>
-                      <td><%= pago.Metodo %></td>
-                      <td>                    
-                        <% 
-                        let date = new Date(pago.FechaLimite);
-                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                        %>
-                        <%= formattedDate %>
-                        </td>
-                        <td>      
-                        <% 
-                        date = new Date(pago.Fecha);
-                        formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                        %>
-                        <%= formattedDate %>
-                        </td>
-                    </tr>
-                  <% } %>
-                <% }); %>
-                </tbody>
-            </table>
-          </div>
+                <% 
+                var pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email && pago.Concepto === 'Colegiatura'; 
+                });
+            
+                if (pagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="5" class="center">No se han realizado pagos de Colegiatura todavía.</td>
+                  </tr>
+                <% } else {
+                  pagosUsuario.forEach(function(pago) { %>
+                        <tr>
+                            <td><%= pago.Concepto %></td>
+                            <td><%= pago.Total %></td>
+                            <td><%= pago.Metodo %></td>
+                            <td>                    
+                                <% 
+                                let date = new Date(pago.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                            <td>      
+                                <% 
+                                date = new Date(pago.Fecha);
+                                formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>
+                        <% });
+                      } %>
+            </tbody>
+        </table>
+    </div>
 
           <div id="test3">
             <table class="striped">
@@ -273,8 +315,17 @@
                 </tr>
               </thead>
               <tbody>
-                <% pagos.forEach(function(pago) { %>
-                  <% if (pago.Concepto !== 'Colegiatura') { %>
+                <% 
+                var pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email && pago.Concepto !== 'Colegiatura'; 
+                });
+                
+                if (pagosUsuario.length === 0) { %>
+                    <tr>
+                        <td colspan="5" class="center">No se han realizado pagos de Otros Servicios todavía.</td>
+                    </tr>
+                <% } else {
+                    pagosUsuario.forEach(function(pago) { %>
                     <tr>
                       <td><%= pago.Concepto %></td>
                       <td><%= pago.Total %></td>
@@ -294,8 +345,8 @@
                         <%= formattedDate %>
                         </td>
                     </tr>
-                  <% } %>
-                <% }); %>
+                    <% });
+                  } %>
               </tbody>
             </table>
           </div> 
