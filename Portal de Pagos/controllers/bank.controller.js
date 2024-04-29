@@ -1,8 +1,13 @@
 const builder = require('xmlbuilder');
-import crypto from 'crypto';
- 
+const crypto = require('crypto');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid'); // Importar función para generar UUID
+
+// Generar referencia UUID
+const reference = uuidv4();
+
 // Crear la cadena XML con XML Builder
-var originalString = builder.create('P')
+const xmlData = builder.create('P')
   .ele('business')
     .ele('id_company', 'SNBX')
     .up()
@@ -15,7 +20,7 @@ var originalString = builder.create('P')
   .ele('nb_fpago', 'COD')
   .up()
   .ele('url')
-    .ele('reference', 'FACTURA999')
+    .ele('reference', reference) // Utilizar referencia generada
     .up()
     .ele('amount', '1.00')
     .up()
@@ -71,58 +76,50 @@ var originalString = builder.create('P')
   .up()
   .end({ pretty: true });
 
-  // Imprimir la cadena XML
-  console.log(xmlbuilder);
+// Imprimir la cadena XML
+console.log(xmlData.toString());
 
-
-// Defining algorithm
+// Definir algoritmo, clave e iv
 const algorithm = 'aes-128-cbc';
-const password = '5DCC67393750523CD165F17E1EFADD21'; 
-// Defining key
-const key = crypto.randomBytes(16); // Usar 16 bytes para una clave de AES-128
-// Defining iv
+const key = '5DCC67393750523CD165F17E1EFADD21';
 const iv = crypto.randomBytes(16);
 
-const encriptar = (password)=>{
-    // Creating and initializing the cipher object 
-  const cipher = crypto.createCipheriv(algorithm, key, iv)
-    // Concatenating password and the cipher
-  const passwordEncrypted = Buffer.concat([cipher.update(password),cipher.final()])
-  return{
-    iv: iv.toString('hex'),
-    encrypted: passwordEncrypted.toString('hex')
-  }
+// Función para encriptar
+const encriptar = (data, key, iv) => {
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encryptedData = cipher.update(data, 'utf-8', 'hex');
+  encryptedData += cipher.final('hex');
+  return encryptedData;
 };
 
+// Encriptar la cadena XML
+const encryptedXmlData = encriptar(xmlData.toString(), key, iv);
+console.log('Cadena XML encriptada:', encryptedXmlData);
 
-//Generacion de URL
-var originalString = "xml=<pgs><data0>SNDBX123</data0><data>Cadena Cifrada</data></pgs>";
-  var data = encodeURIComponent(originalString);
+// Generar URL codificando la cadena XML encriptada
+const urlData = `xml=${encodeURIComponent(encryptedXmlData)}`;
+axios.post('https://sandboxpo.mit.com.mx/gen', urlData, {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+}).then(response => {
+  console.log('Respuesta del servidor:', response.data);
+}).catch(error => {
+  console.error('Error al enviar solicitud:', error);
+});
 
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-  
-  xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-      console.log(this.responseText);
-    }
-  });
-  
-  xhr.open("POST", "https://sandboxpo.mit.com.mx/gen");
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  
-  xhr.send(data);
+// Función para desencriptar
+const desencriptar = (encryptedData, key, iv) => {
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
+  decryptedData += decipher.final('utf-8');
+  return decryptedData;
+};
 
+// Ejemplo de desencriptación
+const decryptedXmlData = desencriptar(encryptedXmlData, key, iv);
+console.log('Cadena XML desencriptada:', decryptedXmlData);
 
-// Decrypting
-const desencriptar = (password) => {
-  const iv = Buffer.from(password.iv,'hex')
-  const encrypted = Buffer.from(password.encrypted, 'hex')
-
-  const passwordDecrypted = crypto.createDecipheriv(algorithm, key, iv)
-  // Concatenating passwordDecrypted to generate hex string
-  return Buffer.concat([passwordDecrypted.update(encrypted),passwordDecrypted.final()]).toString()
-}
 
 
 //Redirect
