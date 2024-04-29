@@ -44,27 +44,38 @@
             <div class='col s6'>
                 <h5>Resumen de pago:</h5>
                 <div class='card '>
-                  <div class='card-content '>
-                    <span class='card-title' id='paymentConcept'></span>
-                    <div class='row'>
-                        <tr>
-                          <thead>
-                                <tr>
-                                <p></p>
-                                <th>Pago mensual:</th>
-                                <th id='paymentAmount'></th>
-                                </tr>
-                          </thead>
-                          <tbody>                
-                            <% if (paymentData && paymentData.length > 0) { %>
-                            <tr>
-                                <td><%= paymentData[0].Concepto %></td>
-                                <td><strong>$<%= paymentData[0].Cantidad %></strong></td>
-                            </tr>
-                <% } %>            
+                    <div class='card-content '>
+                        <span class='card-title' id='paymentConcept'></span>
+                        <div class='row'>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Pago mensual:</th>
+                                        <th id='paymentAmount'></th>
+                                    </tr>
+                                </thead>
+                                <tbody>                
+                                    <% 
+                                    var paymentDataUsuario = paymentData.filter(function(pago) { 
+                                        return pago.Email === usuario.Email; 
+                                    });
+        
+                                    if (paymentDataUsuario.length === 0) { %>
+                                        <tr>
+                                            <td colspan="2">No hay datos de pago disponibles</td>
+                                        </tr>
+                                    <% } else { %>
+                                        <tr>
+                                            <td><%= paymentDataUsuario[0].Concepto %></td>
+                                            <td><strong>$<%= paymentDataUsuario[0].Cantidad %></strong></td>
+                                        </tr>
+                                    <% } %>            
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
         <% } else if (paymentType === 'otros') { %>
             <!-- Mostrar 2 'card' -->
             <!-- 1 'card' con toda la tabla de otros pagos que te permita seleccionar 1 opción -->
@@ -85,24 +96,35 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                <% solpagos.forEach(function(solicitudesdepagos, index) { %>
+                                <% 
+                                var solpagosUsuario = solpagos.filter(function(solicitud) { 
+                                    return solicitud.Email === usuario.Email; 
+                                });
+                            
+                                if (solpagosUsuario.length === 0) { %>
                                     <tr>
-                                        <td>
-                                            <label>
-                                                <input type='radio' id='paymentOption<%= index %>' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>' data-amount='<%= solicitudesdepagos.Cantidad %>'>
-                                                <span><%= solicitudesdepagos.Concepto %></span>
-                                            </label>
-                                        </td>
-                                        <td>$ <%= solicitudesdepagos.Cantidad %></td>
-                                        <td>      
-                                            <% 
-                                            let date = new Date(solicitudesdepagos.FechaLimite);
-                                            let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                                            %>
-                                            <%= formattedDate %>
-                                        </td>
+                                        <td colspan="3">No hay solicitudes de pagos pendientes</td>
                                     </tr>
-                                <% }); %>
+                                <% } else {
+                                    solpagosUsuario.forEach(function(solicitudesdepagos, index) { %>
+                                        <tr>
+                                            <td>
+                                                <label>
+                                                    <input type='radio' id='paymentOption<%= index %>' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>' data-amount='<%= solicitudesdepagos.Cantidad %>'>
+                                                    <span><%= solicitudesdepagos.Concepto %></span>
+                                                </label>
+                                            </td>
+                                            <td>$ <%= solicitudesdepagos.Cantidad %></td>
+                                            <td>      
+                                                <% 
+                                                let date = new Date(solicitudesdepagos.FechaLimite);
+                                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                                %>
+                                                <%= formattedDate %>
+                                            </td>
+                                        </tr>
+                                    <% });
+                                } %>
                             </tbody>
                           </table>
                       </div>
@@ -129,6 +151,8 @@
                     </div>
                 </div>
             <% } %>
+        </div>
+    </div>
 <!-- Botones de aceptar y rechazar -->
 <% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
     <div class='container'>
@@ -146,6 +170,7 @@
             </div>
         </div>
     </div>
+
 
 
     <div id='payment-modal' class='modal'>
