@@ -21,7 +21,7 @@ exports.get_login = (request, response, next) => {
                 usuario: request.session.usuario || {}
             });
         } else if(role === 'Coordinador' || role === 'Administrador'){
-            response.render('/admin-home');
+            response.redirect('/admin-home');
         } else if(role === 'Desarrollador'){ // As long as the web page is in production
             response.render('home', {
                 pagePrimaryTitle: 'Portal de Gestión de Pagos',
