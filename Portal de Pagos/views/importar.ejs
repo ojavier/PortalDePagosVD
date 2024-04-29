@@ -15,6 +15,7 @@
     <br>
 
     <div class='row'>
+        <p style="font-size: larger;">1. Selecciona un Archivo: </p>
         <div class='col s12'>
             <form action='/importar' method='POST' enctype='multipart/form-data'>
                 <div class='file-field input-field'>
@@ -30,10 +31,10 @@
                 <div class='row'>
                     <table id='csvTable'></table>
                 </div>
-                <br>
                 <div class='row'>
                     <div class='col s12'>
                         <p>Por favor, asegúrese de que el archivo CSV cumple con el formato y los datos correctos antes de subirlo.</p>
+                        <br>
                         <button id='subirCSV' class='btn waves-effect waves-light carmin' type='submit'>SUBIR</button>
                     </div>
                 </div>
