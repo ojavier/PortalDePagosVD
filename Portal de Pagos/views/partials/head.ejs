@@ -56,7 +56,9 @@
                     <li style='width: 135px;'><a class='dropdown-trigger' href='#!' data-target='dropdown1'>PAGOS<i class='material-icons right'>arrow_drop_down</i></a></li>
                 <% } %>
                 <% if (isLoggedIn) { %>
+
                     <li><a href="/profile"><i class='material-icons right'>account_circle</i><strong><%= usuario.Nombre %></strong></a></li>
+                    <li><a href="/users/logout">Log Out</a></li>
                 <% } else { %>
                     <li><a href='/users/login'><i class='material-icons right'>login</i>Log In</a></li>
                 <% } %>
