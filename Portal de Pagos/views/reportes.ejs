@@ -1,8 +1,6 @@
 <%- include('partials/head.ejs', {
     isLoggedIn: isLoggedIn, 
     permisos: permisos,
-    alumnos: alumnos,
-    Cicloescolar: Cicloescolar,
     usuario: usuario
   }) %>
 
@@ -11,7 +9,16 @@
 <div class='container'>
     <h2 class='centrado'>Reportes y Estadísticas</h2>
 
-<br><br><br>
+    <% if (error) { %>
+        <div class="card red darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Error</span>
+                <p><%= error %></p>
+            </div>
+        </div>
+    <% } %>
+    
+    <br><br><br>
 
     <div class='row'>
         <div class='col s12'>
@@ -24,7 +31,7 @@
             </div>
         </div>
 
-    <br> <br>
+        <br> <br>
 
         <div class='col s12'>
             <div class='card'>
@@ -35,6 +42,18 @@
                 </div>
             </div>
         </div>
+
+        <br> <br>
+
+        <div class='col s12'>
+            <div class='card'>
+                <div class='card-content'>
+                    <h4>Comparación de Dinero no Recibido: Colegiatura vs Otros Servicios</h4>
+                    <canvas id="moneyLostChart"></canvas>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -68,51 +87,89 @@
         alumnos.filter(function(alumno) { return alumno.Beca > 50 && alumno.Beca <= 100; }).length,
     ];
 
-      var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-              labels: labels,
-              datasets: [{
-                  label: 'Valor de Créditos a lo largo del tiempo',
-                  data: data,
-                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              }
-          }
-      });
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Valor De Créditos A Lo Largo Del Tiempo',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 
-      var myChart2 = new Chart(ctx2, {
-          type: 'bar',
-          data: {
-              labels: labels2,
-              datasets: [{
-                  label: 'número de alumnos por beca',
-                  data: data2,
-                  backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                  borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true
-                      }
-                  }]
-              }
-          }
-      });
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: labels2,
+            datasets: [{
+                label: 'Número De Alumnos Por Beca',
+                data: data2,
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    // Functionality and Display of Money Lost Comparison Chart ("Colegiatura" vs "Otros Servicios")
+    const unpaidColegiatura = <%- JSON.stringify(unpaidColegiatura) %>;
+    const unpaidOtros = <%- JSON.stringify(unpaidOtros) %>;
+
+    // The use of reduce is to calculate the total amount of money not received (payment is still pending) in each category
+    // This is done through a simple sum of the "Cantidad" of each value
+    const totalUnpaidColegiatura = unpaidColegiatura.reduce((acum, current) => acum + current.Cantidad, 0);
+    const totalUnpaidOtros = unpaidOtros.reduce((acum, current) => acum + current.Cantidad, 0);
+
+    const ctx3 = document.getElementById('moneyLostChart').getContext('2d');
+    const moneyLostChart = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: ['Colegiatura', 'Otros Servicios'],
+            datasets: [{
+                label: 'Dinero No Obtenido ($)',
+                data: [totalUnpaidColegiatura, totalUnpaidOtros],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)', // Pink for "Colegiatura"
+                    'rgba(54, 162, 235, 0.2)' // Blue for "Otros Servicios"
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
   </script>
 
 <%- include('partials/footer.ejs') %>

@@ -170,22 +170,41 @@ exports.get_profile = (request, response, next) => {
     }
 };
 
-exports.get_reportes = (request, response, next) => {   
-    Promise.all([Cicloescolar.fetchAll(), Alumno.fetchAllAlumnosBeca()])
-        .then(([CicloescolarRows, alumnoRows]) => {
-            console.log('CicloescolarRows:', CicloescolarRows);
-            console.log('alumnoRows:', alumnoRows);
-            response.render('reportes', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                Cicloescolar: CicloescolarRows,
-                alumnos: alumnoRows,
-                isLoggedIn: request.session.isLoggedIn || false,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
-        })
-        .catch(err => console.log(err));
+// TODO: Later the Comparison Chart of Money Not Yet Obtained will need to be in regard of the school cicles
+exports.get_reportes = (request, response, next) => {
+    Promise.all([
+        EstadoCuenta.fetchAllUnpaid(),
+        SolPago.fetchAllUnpaid(),
+        Cicloescolar.fetchAll(),
+        Alumno.fetchAllAlumnosBeca()
+    ]).then(([unpaidColegiatura, unpaidOtros, CicloescolarRows, alumnoRows]) => {
+        response.render('reportes', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            error: '',
+            unpaidColegiatura: unpaidColegiatura[0],
+            unpaidOtros: unpaidOtros[0],
+            Cicloescolar: CicloescolarRows,
+            alumnos: alumnoRows,
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    }).catch(error => { // TODO: Show the error in someway to the user instead of just sending a message
+        console.log('Error al recuperar la información para los reportes:', error);
+        response.render('reportes', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            error: 'Lo sentimos, hubo un problema al cargar la información. Por favor, intente de nuevo más tarde.',
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            unpaidColegiatura: [], // Envía arreglos vacíos o valores por defecto como fallback
+            unpaidOtros: [],
+            Cicloescolar: [],
+            alumnos: []
+        });
+    });
 };
+
 
 exports.get_creditos = (request, response, next) => {
     Cicloescolar.fetchAll().then(([rows]) => {

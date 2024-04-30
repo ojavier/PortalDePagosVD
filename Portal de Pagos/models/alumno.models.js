@@ -37,6 +37,16 @@ class EstadoCuenta {
         return db.execute('SELECT * FROM solicitudesdepagos WHERE Email = ? AND TipoDeCobro = "Colegiatura"', [email]);
     }
 
+    // The query is based on the notion that payments are considered pending as long as they are still in
+    // "solicitudesdepagos" table an "FechaLimite" has already passed.
+    static fetchAllUnpaid() {
+        const today = new Date().toISOString().slice(0, 10);
+        return db.execute(`
+            SELECT * 
+            FROM solicitudesdepagos 
+            WHERE FechaLimite < ? AND TipoDeCobro = 'Colegiatura'
+        `, [today]);
+    }
    
     static fetch(email) {
         if (email) {
