@@ -170,22 +170,30 @@ exports.get_profile = (request, response, next) => {
     }
 };
 
-exports.get_reportes = (request, response, next) => {   
-    Promise.all([Cicloescolar.fetchAll(), Alumno.fetchAllAlumnosBeca()])
-        .then(([CicloescolarRows, alumnoRows]) => {
-            console.log('CicloescolarRows:', CicloescolarRows);
-            console.log('alumnoRows:', alumnoRows);
-            response.render('reportes', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                Cicloescolar: CicloescolarRows,
-                alumnos: alumnoRows,
-                isLoggedIn: request.session.isLoggedIn || false,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
-        })
-        .catch(err => console.log(err));
+// TODO: Later the Comparison Chart of Money Not Yet Obtained will need to be in regard of the school cicles
+exports.get_reportes = (request, response, next) => {
+    Promise.all([
+        EstadoCuenta.fetchAllUnpaid(),
+        SolPago.fetchAllUnpaid(),
+        Cicloescolar.fetchAll(),
+        Alumno.fetchAllAlumnosBeca()
+    ]).then(([unpaidColegiatura, unpaidOtros, CicloescolarRows, alumnoRows]) => {
+        response.render('reportes', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            unpaidColegiatura: unpaidColegiatura[0],
+            unpaidOtros: unpaidOtros[0],
+            Cicloescolar: CicloescolarRows,
+            alumnos: alumnoRows,
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {}
+        });
+    }).catch(error => { // TODO: Show the error in someway to the user instead of just sending a message
+        console.log('Error al recuperar la información para los reportes:', error);
+        response.status(500).send('Error interno del servidor');
+    });
 };
+
 
 exports.get_creditos = (request, response, next) => {
     Cicloescolar.fetchAll().then(([rows]) => {
