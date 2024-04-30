@@ -180,6 +180,7 @@ exports.get_reportes = (request, response, next) => {
     ]).then(([unpaidColegiatura, unpaidOtros, CicloescolarRows, alumnoRows]) => {
         response.render('reportes', {
             pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            error: '',
             unpaidColegiatura: unpaidColegiatura[0],
             unpaidOtros: unpaidOtros[0],
             Cicloescolar: CicloescolarRows,
@@ -190,7 +191,17 @@ exports.get_reportes = (request, response, next) => {
         });
     }).catch(error => { // TODO: Show the error in someway to the user instead of just sending a message
         console.log('Error al recuperar la información para los reportes:', error);
-        response.status(500).send('Error interno del servidor');
+        response.render('reportes', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            error: 'Lo sentimos, hubo un problema al cargar la información. Por favor, intente de nuevo más tarde.',
+            isLoggedIn: request.session.isLoggedIn || false,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            unpaidColegiatura: [], // Envía arreglos vacíos o valores por defecto como fallback
+            unpaidOtros: [],
+            Cicloescolar: [],
+            alumnos: []
+        });
     });
 };
 
