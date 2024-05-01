@@ -132,7 +132,18 @@
             </table>
         </div>
       </div>
-      <a href='/paymethod?paymentType=colegiatura' class='btn modal-trigger carmin'>Pagar Colegiatura</a>
+      <a href='/paymethod?paymentType=colegiatura' button id="pagarColegiatura" class='btn modal-trigger carmin'>Pagar Colegiatura</a>
+
+      <!-- Modal Structure -->
+<div id="noPendingPaymentsModal" class="modal">
+  <div class="modal-content">
+    <h4>No hay pagos pendientes.</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-effect btn-flat">Cerrar</a>
+  </div>
+</div>
 
 
 <br><br><br>
@@ -188,9 +199,19 @@
 </div>
 </div>
 </div>
-<a href='/paymethod?paymentType=otros' button type='submit' class='btn modal-trigger carmin'>PAGAR OTROS SERVICIOS</a>
+<a href='/paymethod?paymentType=otros' button type='submit' id="pagarotrosservicios" class='btn modal-trigger carmin'>PAGAR OTROS SERVICIOS</a>
 
-
+      <!-- Modal Structure -->
+      <div id="noPendingPaymentsModalotros" class="modal">
+        <div class="modal-content">
+          <h4>No hay pagos pendientes.</h4>
+          <p></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect btn-flat">Cerrar</a>
+        </div>
+      </div>
+      
 <br><br><br>
 
 <div class='row'>
@@ -375,7 +396,33 @@ const instance = M.Tabs.init(el, options);
 $(document).ready(function(){
   $('.tabs').tabs();
 });
-</script>      
+</script>
+
+<script>
+  var estadoCuentasUsuarioLength = <%= estadoCuentasUsuario.length %>;
+  var solpagosUsuarioLength = <%= solpagosUsuario.length %>;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+
+    if (estadoCuentasUsuarioLength === 0) {
+      document.getElementById('pagarColegiatura').addEventListener('click', function(event) {
+        event.preventDefault();
+        var instance = M.Modal.getInstance(document.getElementById('noPendingPaymentsModal'));
+        instance.open();
+      });
+    }
+
+    if (solpagosUsuarioLength === 0) {
+      document.getElementById('pagarotrosservicios').addEventListener('click', function(event) {
+        event.preventDefault();
+        var instance = M.Modal.getInstance(document.getElementById('noPendingPaymentsModalotros'));
+        instance.open();
+      });
+    }
+  });
+</script>
 <%- include('partials/footer.ejs') %>
 
  
