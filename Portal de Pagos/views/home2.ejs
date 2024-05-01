@@ -105,7 +105,7 @@
               </thead>
               <tbody>
                 <% 
-                var estadoCuentasUsuario = estadoCuentas.filter(function(estadoCuenta) { 
+                const estadoCuentasUsuario = estadoCuentas.filter(function(estadoCuenta) { 
                     return estadoCuenta.Email === usuario.Email; 
                 });
             
@@ -155,7 +155,7 @@
             </thead>
             <tbody>
               <% 
-              var solpagosUsuario = solpagos.filter(function(solicitud) { 
+              const solpagosUsuario = solpagos.filter(function(solicitud) { 
                   return solicitud.Email === usuario.Email; 
               });
           
@@ -220,7 +220,7 @@
               </thead>
               <tbody>
                 <% 
-                var pagosUsuario = pagos.filter(function(pago) { 
+                let pagosUsuario = pagos.filter(function(pago) { 
                     return pago.Email === usuario.Email; 
                 });
 
@@ -268,7 +268,7 @@
               </thead>
               <tbody>
                 <% 
-                var pagosUsuario = pagos.filter(function(pago) { 
+                pagosUsuario = pagos.filter(function(pago) { 
                     return pago.Email === usuario.Email && pago.Concepto === 'Colegiatura'; 
                 });
             
@@ -316,7 +316,7 @@
               </thead>
               <tbody>
                 <% 
-                var pagosUsuario = pagos.filter(function(pago) { 
+                pagosUsuario = pagos.filter(function(pago) { 
                     return pago.Email === usuario.Email && pago.Concepto !== 'Colegiatura'; 
                 });
                 
@@ -362,13 +362,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var tabs = document.querySelectorAll('.tabs');
+        const tabs = document.querySelectorAll('.tabs');
         M.Tabs.init(tabs);
     });
 </script>
 
 <script>
-var instance = M.Tabs.init(el, options);
+const instance = M.Tabs.init(el, options);
 
 // Or with jQuery
 

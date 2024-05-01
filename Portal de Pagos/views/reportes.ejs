@@ -64,13 +64,13 @@
     const Cicloescolar = <%- JSON.stringify(Cicloescolar[0]) %>;
     console.log(Cicloescolar);
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('myChart').getContext('2d');
 
-    var labels = Cicloescolar.map(function(Cicloescolar) {
+    const labels = Cicloescolar.map(function(Cicloescolar) {
         return Cicloescolar.MesInicio + ' - ' + Cicloescolar.MesFin + ' ' + Cicloescolar.Año;
     });
       
-    var data = Cicloescolar.map(function(Cicloescolar) {
+    const data = Cicloescolar.map(function(Cicloescolar) {
         return Cicloescolar.CostoCreditos;
     });
 
@@ -78,16 +78,16 @@
     const alumnos = <%- JSON.stringify(alumnos[0]) %>;
     console.log(alumnos);
 
-    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    const ctx2 = document.getElementById('myChart2').getContext('2d');
 
-    var labels2 = ['Beca 0-50', 'Beca 50-100'];
+    const labels2 = ['Beca 0-50', 'Beca 50-100'];
 
-    var data2 = [
+    const data2 = [
         alumnos.filter(function(alumno) { return alumno.Beca >= 0 && alumno.Beca <= 50; }).length,
         alumnos.filter(function(alumno) { return alumno.Beca > 50 && alumno.Beca <= 100; }).length,
     ];
 
-    var myChart = new Chart(ctx, {
+    const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -110,7 +110,7 @@
         }
     });
 
-    var myChart2 = new Chart(ctx2, {
+    const myChart2 = new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: labels2,

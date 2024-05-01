@@ -1,6 +1,6 @@
 const Usuario = require('../models/usuario.model');
 
-exports.get_login = (request, response, next) => {
+exports.getLogin = (request, response, next) => {
     const error = request.session.error || null;
     const isLoggedIn = request.session.isLoggedIn || false;
     if(!isLoggedIn) {
@@ -23,7 +23,7 @@ exports.get_login = (request, response, next) => {
     }
 };
 
-exports.post_login = async (request, response, next) => {
+exports.postLogin = async (request, response, next) => {
     try {
         console.log('Datos recibidos: ', request.body.Email, request.body.Password);
         const [usuario] = await Usuario.fetchOne(request.body.Email);
@@ -62,7 +62,7 @@ exports.post_login = async (request, response, next) => {
 
 
 
-exports.get_logout = (request, response, next) => {
+exports.getLogout = (request, response, next) => {
     request.session.destroy(() => {
         response.redirect('/users/login'); //Este código se ejecuta cuando la sesión se elimina.
     });

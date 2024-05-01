@@ -7,7 +7,7 @@ const {SolPago, Pago}= require('../models/pagos.models');
 const Cicloescolar = require('../models/materias.models');
 
 
-exports.get_root = (request, response, next) => {
+exports.getRoot = (request, response, next) => {
     const isLoggedIn = request.session.isLoggedIn || false;
     if(!isLoggedIn) {
         response.redirect('/users/login');
@@ -23,7 +23,7 @@ exports.get_root = (request, response, next) => {
     }
 };
 
-exports.get_academicPlan = (request, response, next) => {
+exports.getAcademicPlan = (request, response, next) => {
     response.render('home', {
         pagePrimaryTitle: 'Portal de Gestión de Pagos',
         isLoggedIn: request.session.isLoggedIn || false,
@@ -32,7 +32,7 @@ exports.get_academicPlan = (request, response, next) => {
     });
 };
 
-exports.get_studentHome = (request, response, next) => {
+exports.getStudentHome = (request, response, next) => {
     Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll(), Pago.fetchAll()])
         .then(([estadoCuentaRows, solPagoRows, pagoRows]) => {
             response.render('home2', {
@@ -50,34 +50,8 @@ exports.get_studentHome = (request, response, next) => {
         });
 };
 
-exports.get_paymethod = (request, response, next) => {
-    const paymentType = request.query.paymentType;
-    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
-        .then(([estadoCuentaRows, solPagoRows]) => {
-            response.render('recipe_paymethod', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                estadoCuentas: estadoCuentaRows[0],
-                solpagos: solPagoRows[0],
-                paymentType: paymentType,
-                isLoggedIn: request.session.isLoggedIn || false,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
-        });
-};
-
-exports.get_payplan = (request, response, next) => {
-
-    response.render('payment-plan', {
-        pagePrimaryTitle: 'Portal de Gestión de Pagos',
-        isLoggedIn: request.session.isLoggedIn || false,
-        permisos: request.session.permisos || [],
-        usuario: request.session.usuario || {}
-    });
-};
-
 // TODO: Later merge with the other home pages controllers in the unified version
-exports.get_adminHome = (request, response, next) => {
+exports.getAdminHome = (request, response, next) => {
     Alumno.fetchAll()
     .then(([rows]) => {
         response.render('admin-home', {
@@ -93,7 +67,7 @@ exports.get_adminHome = (request, response, next) => {
     })
 };
 
-exports.get_studentData = (request, response, next) => {
+exports.getStudentData = (request, response, next) => {
     const email = request.query.studentEmail;
 
     console.log(email);
@@ -130,8 +104,32 @@ exports.get_studentData = (request, response, next) => {
     // });
 };
 
+exports.getPayMethod = (request, response, next) => {
+    const paymentType = request.query.paymentType;
+    Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll()])
+        .then(([estadoCuentaRows, solPagoRows]) => {
+            response.render('recipe_paymethod', {
+                pagePrimaryTitle: 'Portal de Gestión de Pagos',
+                estadoCuentas: estadoCuentaRows[0],
+                solpagos: solPagoRows[0],
+                paymentType: paymentType,
+                isLoggedIn: request.session.isLoggedIn || false,
+                permisos: request.session.permisos || [],
+                usuario: request.session.usuario || {}
+            });
+        });
+};
 
-exports.get_profile = (request, response, next) => {
+exports.getPayPlan = (request, response, next) => {
+    response.render('payment-plan', {
+        pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
+    });
+};
+
+exports.getProfile = (request, response, next) => {
     const isLoggedIn = request.session.isLoggedIn || false;
     console.log(request.session.rol);
     if(request.session.rol === 'Alumno'){
@@ -162,7 +160,7 @@ exports.get_profile = (request, response, next) => {
 };
 
 // TODO: Later the Comparison Chart of Money Not Yet Obtained will need to be in regard of the school cicles
-exports.get_reportes = (request, response, next) => {
+exports.getReportes = (request, response, next) => {
     Promise.all([
         EstadoCuenta.fetchAllUnpaid(),
         SolPago.fetchAllUnpaid(),
@@ -196,8 +194,7 @@ exports.get_reportes = (request, response, next) => {
     });
 };
 
-
-exports.get_creditos = (request, response, next) => {
+exports.getCreditos = (request, response, next) => {
     Cicloescolar.fetchAll().then(([rows]) => {
     response.render('creditos', {
         pagePrimaryTitle: 'Créditos',
@@ -209,10 +206,9 @@ exports.get_creditos = (request, response, next) => {
     });
 };
 
-exports.get_configuracion = (request, response, next) => {
-
+exports.getReferences = (request, response, next) => {
     Alumno.fetchAll().then(([rows]) => {
-    response.render('configuracion', {
+    response.render('references', {
         pagePrimaryTitle: 'Configuración',
         alumnos: rows,
         isLoggedIn: request.session.isLoggedIn || false,
@@ -222,18 +218,17 @@ exports.get_configuracion = (request, response, next) => {
     });
 }
 
-exports.post_configuracion = (request, response, next) => {
+exports.postReferences = (request, response, next) => {
     console.log(request.body);
     const NuevaReferencia = new Referencia(request.body.email, request.body.referencia);
     NuevaReferencia.updateByEmail(request.body.email, request.body.referencia).then(([rows,FieldData]) => {
-        response.redirect('/configuracion');
+        response.redirect('/references');
     }).catch((error) => {
         console.log('Error al Actualizar Referencia', error);
     });
 }
 
-exports.get_pagos = (request, response, next) => {
-
+exports.getPagos = (request, response, next) => {
     Alumno.fetchAll().then(([rows]) => {
         response.render('pagos', {
             pagePrimaryTitle: 'Registrar Pago',
@@ -245,7 +240,7 @@ exports.get_pagos = (request, response, next) => {
     });
 }
 
-exports.post_SolPagos = (request, response, next) => {
+exports.postSolPagos = (request, response, next) => {
     console.log(request.body);
     const solicitud = new SolPago(request.body.email, request.body.concepto, request.body.monto, request.body.fechalimite);
     solicitud.save().then(([rows,FieldData]) => {
@@ -255,7 +250,7 @@ exports.post_SolPagos = (request, response, next) => {
     });
 };
 
-exports.post_RegistrarPago = (request, response, next) => {
+exports.postRegistrarPago = (request, response, next) => {
     console.log(request.body);
     const pago = new Pago(request.body.emailpago, request.body.referencia, request.body.concepto_pago, request.body.monto_pago, request.body.fechapago);
     pago.save().then(([rows,FieldData]) => {
@@ -265,9 +260,7 @@ exports.post_RegistrarPago = (request, response, next) => {
     });
 }
 
-exports.get_importar = (request, response, next) => {
-
-
+exports.getImportar = (request, response, next) => {
     response.render('importar', {
         pagePrimaryTitle: 'Importar Transferencias',
         isLoggedIn: request.session.isLoggedIn || false,
@@ -276,8 +269,7 @@ exports.get_importar = (request, response, next) => {
     });
 }
 
-
-exports.post_importar = (request, response, next) => {
+exports.postImportar = (request, response, next) => {
     console.log(request.file);
     const operations = [];
     let hasError = false; 
@@ -341,9 +333,7 @@ exports.post_importar = (request, response, next) => {
         });
 };
 
-
-
-exports.post_Cicloescolar = (request, response, next) => {
+exports.postCicloEscolar = (request, response, next) => {
     console.log(request.body);
     const mi_Cicloescolar = new Cicloescolar(
         request.body.MesInicio, request.body.MesFin, request.body.Año, 
@@ -357,13 +347,12 @@ exports.post_Cicloescolar = (request, response, next) => {
     });
 };
 
-exports.post_Forms = (request, response, next) => {
+exports.postForms = (request, response, next) => {
     if (request.body.formType === 'registrarPago') {
         // Call post_RegistrarPago if formType is 'registrarPago'
-        exports.post_RegistrarPago(request, response, next);
+        exports.postRegistrarPago(request, response, next);
     } else if (request.body.formType === 'solPagos') {
         // Otherwise, call post_SolPagos
-        exports.post_SolPagos(request, response, next);
+        exports.postSolPagos(request, response, next);
     }
 };
-
