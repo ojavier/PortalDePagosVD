@@ -14,21 +14,11 @@ exports.get_login = (request, response, next) => {
     } else {
         role = request.session.rol;
         if(role === 'Alumno'){
-            response.render('home', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                isLoggedIn: isLoggedIn,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
+            response.redirect('/academic-plan');
         } else if(role === 'Coordinador' || role === 'Administrador'){
             response.redirect('/admin-home');
         } else if(role === 'Desarrollador'){ // As long as the web page is in production
-            response.render('home', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                isLoggedIn: isLoggedIn,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
+            response.redirect('/academic-plan');
         }
     }
 };
@@ -52,21 +42,11 @@ exports.post_login = async (request, response, next) => {
             console.log('Role set in session: ', request.session.rol);
             role = request.session.rol;
             if(role === 'Alumno'){
-                response.render('home', {
-                    pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                    isLoggedIn: isLoggedIn,
-                    permisos: request.session.permisos || [],
-                    usuario: request.session.usuario || {}
-                });
+                response.redirect('/academic-plan');
             } else if(role === 'Coordinador' || role === 'Administrador'){
                 response.redirect('/admin-home');
             } else if(role === 'Desarrollador'){ // As long as the web page is in production
-                response.render('home', {
-                    pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                    isLoggedIn: isLoggedIn,
-                    permisos: request.session.permisos || [],
-                    usuario: request.session.usuario || {}
-                });
+                response.redirect('/academic-plan');
             }
 
         } else {
