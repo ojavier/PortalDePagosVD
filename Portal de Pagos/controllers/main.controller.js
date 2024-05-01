@@ -8,16 +8,9 @@ const Cicloescolar = require('../models/materias.models');
 
 
 exports.get_root = (request, response, next) => {
-    const error = request.session.error || null;
     const isLoggedIn = request.session.isLoggedIn || false;
     if(!isLoggedIn) {
-        response.render('login', {
-            pagePrimaryTitle: 'Portal de Gestión de Pagos',
-            isLoggedIn: isLoggedIn,
-            permisos: request.session.permisos || [],
-            usuario: request.session.usuario || {},
-            error: error
-        });
+        response.redirect('/users/login');
     } else {
         role = request.session.rol;
         if(role === 'Alumno'){
