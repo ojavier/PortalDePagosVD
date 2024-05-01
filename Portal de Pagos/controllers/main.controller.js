@@ -21,27 +21,25 @@ exports.get_root = (request, response, next) => {
     } else {
         role = request.session.rol;
         if(role === 'Alumno'){
-            response.render('home', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                isLoggedIn: isLoggedIn,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
+            response.redirect('/academic-plan');
         } else if(role === 'Coordinador' || role === 'Administrador'){
             response.redirect('/admin-home');
         } else if(role === 'Desarrollador'){ // As long as the web page is in production
-            response.render('home', {
-                pagePrimaryTitle: 'Portal de Gestión de Pagos',
-                isLoggedIn: isLoggedIn,
-                permisos: request.session.permisos || [],
-                usuario: request.session.usuario || {}
-            });
+            response.redirect('/academic-plan');
         }
     }
 };
 
-exports.get_home = (request, response, next) => {
+exports.get_academicPlan = (request, response, next) => {
+    response.render('home', {
+        pagePrimaryTitle: 'Portal de Gestión de Pagos',
+        isLoggedIn: request.session.isLoggedIn || false,
+        permisos: request.session.permisos || [],
+        usuario: request.session.usuario || {}
+    });
+};
 
+exports.get_studentHome = (request, response, next) => {
     Promise.all([EstadoCuenta.fetchAll(), SolPago.fetchAll(), Pago.fetchAll()])
         .then(([estadoCuentaRows, solPagoRows, pagoRows]) => {
             response.render('home2', {

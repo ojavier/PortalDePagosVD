@@ -11,7 +11,9 @@ const mainController = require('../controllers/main.controller');
 
 router.get('/', mainController.get_root);
 
-router.get('/home2', isAuth, mainController.get_home);
+router.get('/academic-plan', isAuth, mainController.get_academicPlan);
+
+router.get('/student-home', isAuth, mainController.get_studentHome);
 
 router.get('/admin-home', isAuth, consultaInformacionPersonalAlumno, consultaEstadoCuentaAlumno, consultaHistorialPagosAlumno, consultaPlanMateriasAlumno, mainController.get_adminHome);
 
