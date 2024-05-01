@@ -322,9 +322,9 @@ $(document).ready( function () {
                 
                 // Iterar sobre el array estadoCuentaColegiatura y añadir los datos a la tabla
                 data.estadoCuentaColegiatura.forEach(function(item) {
-                var fechaLimite = new Date(item.FechaLimite);
-                var formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
-                var row = `<tr>
+                const fechaLimite = new Date(item.FechaLimite);
+                const formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                const row = `<tr>
                                 <td>${item.Concepto}</td>
                                 <td>$${item.Cantidad}</td>
                                 <td>${formattedDate}</td>
@@ -337,9 +337,9 @@ $(document).ready( function () {
                
                 // Iterar sobre el array estadoCuentaOtrosServicios y añadir los datos a la tabla
                 data.estadoCuentaOtrosServicios.forEach(function(item) {
-                  var fechaLimite = new Date(item.FechaLimite);
-                  var formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
-                  var row = `<tr>
+                  const fechaLimite = new Date(item.FechaLimite);
+                  const formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                  const row = `<tr>
                                 <td>${item.Concepto}</td>
                                 <td>$${item.Cantidad}</td>
                                 <td>${formattedDate}</td>
@@ -354,11 +354,11 @@ $(document).ready( function () {
 
                 // Añadir datos a cada tabla
                 data.historialDePagos.forEach(function(pago) {
-                  var fechaLimite = new Date(pago.FechaLimite);
-                  var fechaPagoRealizado = new Date(pago.Fecha);
-                  var formattedFechaLimite = `${fechaLimite.getDate()}-${fechaLimite.getMonth() + 1}-${fechaLimite.getFullYear()}`;
-                  var formattedFechaPago = `${fechaPagoRealizado.getDate()}-${fechaPagoRealizado.getMonth() + 1}-${fechaPagoRealizado.getFullYear()}`;
-                  var row = `<tr>
+                  const fechaLimite = new Date(pago.FechaLimite);
+                  const fechaPagoRealizado = new Date(pago.Fecha);
+                  const formattedFechaLimite = `${fechaLimite.getDate()}-${fechaLimite.getMonth() + 1}-${fechaLimite.getFullYear()}`;
+                  const formattedFechaPago = `${fechaPagoRealizado.getDate()}-${fechaPagoRealizado.getMonth() + 1}-${fechaPagoRealizado.getFullYear()}`;
+                  const row = `<tr>
                               <td>${pago.Concepto}</td>
                               <td>$${pago.Total}</td>
                               <td>${pago.Metodo}</td>

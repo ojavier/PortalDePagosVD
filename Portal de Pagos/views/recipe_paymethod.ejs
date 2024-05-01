@@ -56,7 +56,7 @@
                                 </thead>
                                 <tbody>                
                                     <% 
-                                    var paymentDataUsuario = paymentData.filter(function(pago) { 
+                                    const paymentDataUsuario = paymentData.filter(function(pago) { 
                                         return pago.Email === usuario.Email; 
                                     });
         
@@ -97,7 +97,7 @@
                               </thead>
                               <tbody>
                                 <% 
-                                var solpagosUsuario = solpagos.filter(function(solicitud) { 
+                                const solpagosUsuario = solpagos.filter(function(solicitud) { 
                                     return solicitud.Email === usuario.Email; 
                                 });
                             
@@ -226,13 +226,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems);
+    const elems = document.querySelectorAll('.modal');
+    const instances = M.Modal.init(elems);
   
     document.getElementById('continue-button').addEventListener('click', function() {
-        var title = document.getElementById('modal-title');
-        var text = document.getElementById('modal-text');
-        var account = document.getElementById('modal-account');
+        const title = document.getElementById('modal-title');
+        const text = document.getElementById('modal-text');
+        const account = document.getElementById('modal-account');
 
         if (document.getElementById('payment-transfer').checked) {
             title.textContent = '¡Te ayudamos a completar tu pago por transferencia!';
@@ -254,10 +254,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Obtiene todas las opciones de pago
-        var paymentOptions = document.getElementsByName('paymentOption');
+        const paymentOptions = document.getElementsByName('paymentOption');
         // Obtiene los elementos que mostrarán el concepto y la cantidad de la opción de pago seleccionada
-        var paymentConcept = document.getElementById('paymentConcept');
-        var paymentAmount = document.getElementById('paymentAmount');
+        const paymentConcept = document.getElementById('paymentConcept');
+        const paymentAmount = document.getElementById('paymentAmount');
     
         // Para cada opción de pago, añade un evento de cambio
         paymentOptions.forEach(function(option) {
@@ -269,7 +269,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 </script>
-
-
 
 <%- include('partials/footer.ejs') %>
