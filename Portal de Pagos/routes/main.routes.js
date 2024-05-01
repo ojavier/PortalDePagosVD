@@ -9,41 +9,41 @@ const { consultaInformacionPersonalAlumno, consultaEstadoCuenta, consultaEstadoC
 
 const mainController = require('../controllers/main.controller');
 
-router.get('/', mainController.get_root);
+router.get('/', mainController.getRoot);
 
-router.get('/academic-plan', isAuth, mainController.get_academicPlan);
+router.get('/academic-plan', isAuth, mainController.getAcademicPlan);
 
-router.get('/student-home', isAuth, mainController.get_studentHome);
+router.get('/student-home', isAuth, mainController.getStudentHome);
 
-router.get('/admin-home', isAuth, consultaInformacionPersonalAlumno, consultaEstadoCuentaAlumno, consultaHistorialPagosAlumno, consultaPlanMateriasAlumno, mainController.get_adminHome);
+router.get('/admin-home', isAuth, consultaInformacionPersonalAlumno, consultaEstadoCuentaAlumno, consultaHistorialPagosAlumno, consultaPlanMateriasAlumno, mainController.getAdminHome);
 
-router.get('/student-data', isAuth, mainController.get_studentData);
+router.get('/student-data', isAuth, mainController.getStudentData);
 
-router.get('/paymethod', isAuth, mainController.get_paymethod);
+router.get('/paymethod', isAuth, mainController.getPayMethod);
 
-router.get('/payplan', isAuth, mainController.get_payplan);
+router.get('/payplan', isAuth, mainController.getPayPlan);
 
-router.get('/profile', isAuth, mainController.get_profile);
+router.get('/profile', isAuth, mainController.getProfile);
 
 // TODO: Add a view so that admins and coordinators can access a students profile info
 // router.get('/profile', isAuth, consultaInformacionPersonalAlumno, mainController.get_profile);
 
-router.get('/reportes', isAuth, consultaReporteAlumnos, mainController.get_reportes);
+router.get('/reportes', isAuth, consultaReporteAlumnos, mainController.getReportes);
 
-router.get('/creditos', isAuth, modificaValorCreditoAcademico, mainController.get_creditos);
+router.get('/creditos', isAuth, modificaValorCreditoAcademico, mainController.getCreditos);
 
-router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.post_Cicloescolar);
+router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.postCicloEscolar);
 
-router.get('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.get_configuracion);
+router.get('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.getConfiguracion);
 
-router.post('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.post_configuracion);
+router.post('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.postConfiguracion);
 
-router.get('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno, mainController.get_pagos);
+router.get('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno, mainController.getPagos);
 
-router.post('/pagos', isAuth, realizarPago, mainController.post_Forms);
+router.post('/pagos', isAuth, realizarPago, mainController.postForms);
 
-router.get('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.get_importar);
+router.get('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.getImportar);
 
-router.post('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.post_importar);
+router.post('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.postImportar);
 
 module.exports = router;
