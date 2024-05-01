@@ -11,9 +11,9 @@ const mainController = require('../controllers/main.controller');
 
 router.get('/', mainController.getRoot);
 
-router.get('/academic-plan', isAuth, mainController.getAcademicPlan);
+router.get('/academic-plan', isAuth, realizaProcesoAceptacionHorario, mainController.getAcademicPlan);
 
-router.get('/student-home', isAuth, mainController.getStudentHome);
+router.get('/student-home', isAuth, consultaEstadoCuenta, consultaHistorialPagos, consultaPlanMaterias, mainController.getStudentHome);
 
 router.get('/admin-home', isAuth, consultaInformacionPersonalAlumno, consultaEstadoCuentaAlumno, consultaHistorialPagosAlumno, consultaPlanMateriasAlumno, mainController.getAdminHome);
 
@@ -30,9 +30,9 @@ router.get('/profile', isAuth, mainController.getProfile);
 
 router.get('/reportes', isAuth, consultaReporteAlumnos, mainController.getReportes);
 
-router.get('/creditos', isAuth, modificaValorCreditoAcademico, mainController.getCreditos);
+router.get('/creditos', isAuth, consultaHistorialValorCredito, modificaValorCreditoAcademico, mainController.getCreditos);
 
-router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.postCicloEscolar);
+router.post('/creditos', isAuth, consultaHistorialValorCredito, modificaValorCreditoAcademico, mainController.postCicloEscolar);
 
 router.get('/references', isAuth, registraReferenciaPersonalizadaAlumno, mainController.getReferences);
 
