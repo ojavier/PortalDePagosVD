@@ -94,8 +94,8 @@
 <script>
 
     $(document).ready(function() {
-        var fileSelected = false;
-        var isValidFile = false;
+        let fileSelected = false;
+        let isValidFile = false;
     
         document.getElementById('csvFile').addEventListener('change', function(evt) {
             // Check if a file has been selected
@@ -109,20 +109,20 @@
             }
     
             fileSelected = true;
-            var file = evt.target.files[0];
+            const file = evt.target.files[0];
             Papa.parse(file, {
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true, // Skip empty lines
                 complete: function(results, file) {
-                    var data = results.data;
+                    let data = results.data;
                     // Check for parsing errors
                     if (results.errors.length > 0) {
                         console.error('Error parsing CSV file:', results.errors);
                         return;
                     }
 
-                    var firstRow = data[0];
+                    const firstRow = data[0];
                     if (!firstRow.Referencia || !firstRow.Descripcion || !firstRow.Importe || !firstRow.Fecha) {
                         Swal.fire({
                             icon: 'error',
@@ -228,10 +228,5 @@
         });
     });
 </script>
-
-
-
-
-
 
 <%- include('partials/footer.ejs') %>
