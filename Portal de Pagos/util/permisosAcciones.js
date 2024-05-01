@@ -3,7 +3,7 @@ exports.realizaProcesoAceptacionHorario = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
 
@@ -12,7 +12,7 @@ exports.realizarPago = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
 
@@ -21,7 +21,7 @@ exports.modificaValorCreditoAcademico = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
 
@@ -30,6 +30,6 @@ exports.importarRegistroTransferenciasAlumno = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };

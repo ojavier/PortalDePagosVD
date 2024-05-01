@@ -13,7 +13,7 @@ router.get('/', mainController.get_root);
 
 router.get('/home2', isAuth, mainController.get_home);
 
-router.get('/admin-home', isAuth, mainController.get_adminHome);
+router.get('/admin-home', isAuth, consultaInformacionPersonalAlumno, consultaEstadoCuentaAlumno, consultaHistorialPagosAlumno, consultaPlanMateriasAlumno, mainController.get_adminHome);
 
 router.get('/student-data', isAuth, mainController.get_studentData);
 

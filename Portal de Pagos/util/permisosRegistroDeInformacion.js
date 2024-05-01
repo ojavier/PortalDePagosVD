@@ -3,7 +3,7 @@ exports.registraReferenciaPersonalizadaAlumno = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
 
@@ -12,7 +12,7 @@ exports.registrarSolicitudCobroAlumno = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
 
@@ -21,6 +21,6 @@ exports.registrarPagoEfectivoAlumno = (request, response, next) => {
     if (tienePermiso) {
         next();
     } else {
-        return response.status(404).render('404');
+        return response.status(404).redirect('/404');
     }
 };
