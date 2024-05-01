@@ -206,9 +206,9 @@ exports.getCreditos = (request, response, next) => {
     });
 };
 
-exports.getConfiguracion = (request, response, next) => {
+exports.getReferences = (request, response, next) => {
     Alumno.fetchAll().then(([rows]) => {
-    response.render('configuracion', {
+    response.render('references', {
         pagePrimaryTitle: 'Configuración',
         alumnos: rows,
         isLoggedIn: request.session.isLoggedIn || false,
@@ -218,11 +218,11 @@ exports.getConfiguracion = (request, response, next) => {
     });
 }
 
-exports.postConfiguracion = (request, response, next) => {
+exports.postReferences = (request, response, next) => {
     console.log(request.body);
     const NuevaReferencia = new Referencia(request.body.email, request.body.referencia);
     NuevaReferencia.updateByEmail(request.body.email, request.body.referencia).then(([rows,FieldData]) => {
-        response.redirect('/configuracion');
+        response.redirect('/references');
     }).catch((error) => {
         console.log('Error al Actualizar Referencia', error);
     });

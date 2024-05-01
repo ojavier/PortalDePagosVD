@@ -34,9 +34,9 @@ router.get('/creditos', isAuth, modificaValorCreditoAcademico, mainController.ge
 
 router.post('/creditos', isAuth, modificaValorCreditoAcademico, mainController.postCicloEscolar);
 
-router.get('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.getConfiguracion);
+router.get('/references', isAuth, registraReferenciaPersonalizadaAlumno, mainController.getReferences);
 
-router.post('/configuracion', isAuth, registraReferenciaPersonalizadaAlumno, mainController.postConfiguracion);
+router.post('/references', isAuth, registraReferenciaPersonalizadaAlumno, mainController.postReferences);
 
 router.get('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno, mainController.getPagos);
 
