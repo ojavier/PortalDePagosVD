@@ -40,7 +40,7 @@ router.post('/references', isAuth, registraReferenciaPersonalizadaAlumno, mainCo
 
 router.get('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno, mainController.getPagos);
 
-router.post('/pagos', isAuth, realizarPago, mainController.postForms);
+router.post('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfectivoAlumno, mainController.postForms);
 
 router.get('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.getImportar);
 
