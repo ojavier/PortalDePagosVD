@@ -167,6 +167,7 @@ exports.getReportes = (request, response, next) => {
         Cicloescolar.fetchAll(),
         Alumno.fetchAllAlumnosBeca()
     ]).then(([unpaidColegiatura, unpaidOtros, CicloescolarRows, alumnoRows]) => {
+        console.log(unpaidColegiatura, unpaidOtros, CicloescolarRows, alumnoRows);
         response.render('reportes', {
             pagePrimaryTitle: 'Portal de Gestión de Pagos',
             error: '',
