@@ -88,6 +88,33 @@ app.use((request, response, next) => {
   });
 });
 
+
+  
+  // Definir una ruta POST para '/generar'
+  app.post('/gen', (req, res) => {
+    // Lógica para procesar la solicitud POST aquí
+    res.send('Respuesta a la solicitud POST recibida correctamente.');
+  }); 
+
+  // Ruta para manejar la respuesta del cobro
+  app.get('/respuesta-cobro', (req, res) => {
+    // Obtener parámetros de la solicitud GET
+    const nbResponse = req.query.nbResponse;
+    const idLiga = req.query.idLiga;
+    const referencia = req.query.referencia;
+    const importe = req.query.importe;
+    const email = req.query.email;
+    const nuAut = req.query.nuAut;
+
+    // Lógica para procesar la respuesta del cobro
+    // Aquí puedes realizar las acciones necesarias con los datos recibidos
+    
+    // Responder al navegador
+    res.send('Respuesta recibida correctamente.');
+  });
+
+
+
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
 });

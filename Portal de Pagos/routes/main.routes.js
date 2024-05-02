@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const mainController = require('../controllers/main.controller');
+const bankController = require('../controllers/bank.controller');
 
 router.get('/', mainController.get_root);
 
@@ -32,6 +33,10 @@ router.post('/pagos', mainController.post_Forms);
 router.get('/importar', mainController.get_importar);
 
 router.post('/importar', mainController.post_importar);
+
+router.post('/generar', bankController.generarURL);
+
+router.get('/respuesta-cobro', bankController.handleResponse);
 
 
 module.exports = router;

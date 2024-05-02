@@ -81,7 +81,7 @@ console.log(xmlData.toString());
 
 // Definir algoritmo, clave e iv
 const algorithm = 'aes-128-cbc';
-const key = '5DCC67393750523CD165F17E1EFADD21';
+const key = '5DCC67393750523CD165F17E1EFADD21'.slice(0, 16); // Truncar la clave a 16 bytes
 const iv = crypto.randomBytes(16);
 
 // Función para encriptar
@@ -96,17 +96,35 @@ const encriptar = (data, key, iv) => {
 const encryptedXmlData = encriptar(xmlData.toString(), key, iv);
 console.log('Cadena XML encriptada:', encryptedXmlData);
 
-// Generar URL codificando la cadena XML encriptada
-const urlData = `xml=${encodeURIComponent(encryptedXmlData)}`;
-axios.post('https://sandboxpo.mit.com.mx/gen', urlData, {
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
-}).then(response => {
-  console.log('Respuesta del servidor:', response.data);
-}).catch(error => {
-  console.error('Error al enviar solicitud:', error);
-});
+// Función para generar URL y enviar solicitud POST
+exports.generarURL = (req, res) => {
+  // Encriptar la cadena XML
+  const encryptedXmlData = encriptar(xmlData.toString(), key, iv);
+
+  // Generar URL codificando la cadena XML encriptada
+  const urlData = `xml=${encodeURIComponent(encryptedXmlData)}`;
+
+  axios.post('https://sandboxpo.mit.com.mx/gen', urlData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+  .then(response => {
+    console.log('Respuesta del servidor:', response.data);
+    // Aquí podrías enviar la respuesta al cliente si es necesario
+
+    // Redirigir al cliente a la URL generada
+    console.log('Redirigiendo al cliente a la URL:', response.data.url);
+    res.redirect(response.data.url); // Suponiendo que la respuesta del servidor contiene la URL generada
+  })
+  .catch(error => {
+    console.error('Error al enviar solicitud:', error);
+    // Manejo de errores y respuesta al cliente si es necesario
+    res.status(500).send('Error en el servidor');
+  });
+};
+
+
 
 // Función para desencriptar
 const desencriptar = (encryptedData, key, iv) => {
@@ -132,27 +150,19 @@ let email = "";
 let nuAut = "";
 
 // Obtenemos los parámetros del request
-if (request.getParameter("nbResponse") != null && request.getParameter("nbResponse") !== "") {
-  nbResponse = request.getParameter("nbResponse");
-}
 
-if (request.getParameter("idLiga") != null && request.getParameter("idLiga") !== "") {
-  idLiga = request.getParameter("idLiga");
-}
+exports.handleResponse = (req, res) => {
+  // Obtener parámetros de la solicitud GET
+  const nbResponse = req.query.nbResponse;
+  const idLiga = req.query.idLiga;
+  const referencia = req.query.referencia;
+  const importe = req.query.importe;
+  const email = req.query.email;
+  const nuAut = req.query.nuAut;
 
-if (request.getParameter("referencia") != null && request.getParameter("referencia") !== "") {
-  referencia = request.getParameter("referencia");
-}
-
-if (request.getParameter("importe") != null && request.getParameter("importe") !== "") {
-  importe = request.getParameter("importe");
-}
-
-if (request.getParameter("email") != null && request.getParameter("email") !== "") {
-  email = request.getParameter("email");
-}
-
-if (request.getParameter("nuAut") != null && request.getParameter("nuAut") !== "") {
-  nuAut = request.getParameter("nuAut");
-}
-
+  // Lógica para procesar la respuesta del cobro
+  // Aquí puedes realizar las acciones necesarias con los datos recibidos
+  
+  // Responder al navegador
+  res.send('Respuesta recibida correctamente.');
+};
