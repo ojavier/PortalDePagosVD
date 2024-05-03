@@ -147,6 +147,18 @@ exports.generarURL = (request, response) => {
           // Manejo de errores y respuesta al cliente si es necesario
         });
 
+        // Crear la cadena XML para la respuesta
+        const xmlResponse = builder.create('P_RESPONSE')
+          .ele('cd_response', 'success')
+          .up()
+          .ele('nb_response', '')
+          .up()
+          .ele('nb_url', 'https://sandboxpol.mit.com.mx/i/Rqmn9c8')
+          .end({ pretty: true });
+
+        // Imprimir la cadena XML de la respuesta
+        console.log('Respuesta XML:', xmlResponse.toString());
+
 
       } else {
         console.error('No se encontró ninguna solicitud de pago.');
