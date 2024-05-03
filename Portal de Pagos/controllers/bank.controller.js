@@ -133,7 +133,7 @@ exports.generarURL = (request, response) => {
             `xml=${encodeURIComponent(xmlData.toString())}&pgs=${encodeURIComponent(`<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`)}`, 
             {
               headers: {
-                'Content-Type': 'application/xml'
+                'Content-Type': 'application/x-www-form-urlencoded'
               }
             }
           )
