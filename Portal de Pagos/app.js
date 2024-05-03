@@ -7,6 +7,8 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+
 app.use((request, response, next) => {
   console.log('Middleware!');
   next(); 
@@ -84,6 +86,40 @@ app.use((request, response, next) => {
     usuario: request.session.usuario || {}
   });
 });
+
+
+// Definir una ruta POST para '/generar'
+app.post('/generar', (req, res) => {
+  // Lógica para procesar la solicitud POST aquí
+  try {
+    // Aquí va la lógica de procesamiento de la solicitud
+
+    // Si se procesa correctamente, enviar una respuesta exitosa
+    res.send('Respuesta a la solicitud POST recibida correctamente.');
+  } catch (error) {
+    // Si ocurre un error durante el procesamiento, enviar una respuesta de error
+    console.error('Error en el procesamiento de la solicitud:', error);
+    res.status(500).send('Error en el servidor al procesar la solicitud.');
+  }
+});
+
+
+  // Ruta para manejar la respuesta del cobro
+  app.get('/respuesta-cobro', (req, res) => {
+    // Obtener parámetros de la solicitud GET
+    const nbResponse = req.query.nbResponse;
+    const idLiga = req.query.idLiga;
+    const referencia = req.query.referencia;
+    const importe = req.query.importe;
+    const email = req.query.email;
+    const nuAut = req.query.nuAut;
+
+    // Lógica para procesar la respuesta del cobro
+    // Aquí puedes realizar las acciones necesarias con los datos recibidos
+    
+    // Responder al navegador
+    res.send('Respuesta recibida correctamente.');
+  });
 
 
 const PORT = process.env.PORT || 3000;

@@ -8,6 +8,7 @@ const { registraReferenciaPersonalizadaAlumno, registrarSolicitudCobroAlumno, re
 const { consultaInformacionPersonalAlumno, consultaEstadoCuenta, consultaEstadoCuentaAlumno, consultaHistorialPagos, consultaHistorialPagosAlumno, consultaPlanMaterias, consultaPlanMateriasAlumno, consultaHistorialValorCredito, consultaReporteAlumnos } = require('../util/permisosConsultaDeInformacion');
 
 const mainController = require('../controllers/main.controller');
+const bankController = require('../controllers/bank.controller');
 
 router.get('/', mainController.getRoot);
 
@@ -45,5 +46,11 @@ router.post('/pagos', isAuth, registrarSolicitudCobroAlumno, registrarPagoEfecti
 router.get('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.getImportar);
 
 router.post('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.postImportar);
+
+router.post('/generar', bankController.generarURL);
+
+router.get('/respuesta-cobro', bankController.handleResponse);
+
+
 
 module.exports = router;
