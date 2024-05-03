@@ -8,6 +8,9 @@ const { SolicitudDePago } = require('../models/bank.models'); // Importa la func
 // Clave secreta para firmar el token JWT
 const jwtSecretKey = 'dH4eHs8#&2jsnD3!qH7Gp';
 
+// Vector de inicialización específico proporcionado por el servidor
+const iv = Buffer.from('0123456789abcdef0123456789abcdef', 'hex');
+
 // Exporta la función generarURL directamente
 exports.generarURL = (request, response) => {
   const reference = uuidv4();
@@ -20,92 +23,109 @@ exports.generarURL = (request, response) => {
         const cantidad = solicitud.cantidad;
         
         // Crear la cadena XML con XML Builder
-      const xmlData = builder.create('P')
-      .ele('business')
-        .ele('id_company', 'SNBX')
-        .up()
-        .ele('id_branch', '01SNBXBRNCH')
-        .up()
-        .ele('user', 'SNBXUSR0123')
-        .up()
-        .ele('pwd', 'SECRETO')
-      .up() // Cierre del elemento <business>
-    .up() // Cierre del elemento <P>
-    .ele('nb_fpago', 'COD') // Declaración de nb_fpago fuera de business
-      .up() // Cierre de nb_fpago
-    .ele('url') // Inicio del elemento <url>
-      .ele('reference', reference)
-      .up()
-      .ele('amount', cantidad.toString())
-      .up()
-      .ele('moneda', 'MXN')
-      .up()
-      .ele('canal', 'W')
-      .up()
-      .ele('omitir_notif_default', '1')
-      .up()
-      .ele('id_promotion', 'SNBX12345678')
-      .up()
-      .ele('st_correo', '1')
-      .up()
-      .ele('fh_vigencia', '09/09/2021')
-      .up()
-      .ele('mail_cliente', solicitud.email.toString()) // Usar el email de la solicitud
-      .up()
-      .ele('data3ds')
-        .ele('ml', 'nospam@gmail.com')
-        .up()
-        .ele('cl', '5515009020')
-        .up()
-        .ele('dir', 'Calle y número exterior')
-        .up()
-        .ele('cd', 'Ciudad')
-        .up()
-        .ele('est', 'CX')
-        .up()
-        .ele('cp', '1234567890')
-        .up()
-        .ele('idc', '484')
-        .up() // Cerrar data3ds
-      .up() // Cerrar url
-    .ele('version', 'IntegraWPP') // <version>IntegraWPP</version>
-    .up() // Cerrar la etiqueta version
-  .end({ pretty: true });
-    
-
+        const xmlData = builder.create('P')
+          .ele('business')
+            .ele('id_company', 'SNBX')
+            .up()
+            .ele('id_branch', '01SNBXBRNCH')
+            .up()
+            .ele('user', 'SNBXUSR0123')
+            .up()
+            .ele('pwd', 'SECRETO')
+          .up() // Cierre del elemento <business>
+        .up() // Cierre del elemento <P>
+        .ele('nb_fpago', 'COD') // Declaración de nb_fpago fuera de business
+          .up() // Cierre de nb_fpago
+        .ele('url') // Inicio del elemento <url>
+          .ele('reference', reference)
+          .up()
+          .ele('amount', cantidad.toString())
+          .up()
+          .ele('moneda', 'MXN')
+          .up()
+          .ele('canal', 'W')
+          .up()
+          .ele('omitir_notif_default', '1')
+          .up()
+          .ele('id_promotion', 'SNBX12345678')
+          .up()
+          .ele('st_correo', '1')
+          .up()
+          .ele('fh_vigencia', '09/09/2021')
+          .up()
+          .ele('mail_cliente', solicitud.email.toString()) // Usar el email de la solicitud
+          .up()
+          .ele('data3ds')
+            .ele('ml', 'nospam@gmail.com')
+            .up()
+            .ele('cl', '5515009020')
+            .up()
+            .ele('dir', 'Calle y número exterior')
+            .up()
+            .ele('cd', 'Ciudad')
+            .up()
+            .ele('est', 'CX')
+            .up()
+            .ele('cp', '1234567890')
+            .up()
+            .ele('idc', '484')
+            .up() // Cerrar data3ds
+          .up() // Cerrar url
+        .ele('version', 'IntegraWPP') // <version>IntegraWPP</version>
+        .up() // Cerrar la etiqueta version
+        .end({ pretty: true });
+        
         // Imprimir la cadena XML
         console.log('Cadena XML:', xmlData.toString());
 
-        // Definir algoritmo, clave e iv
-      const algorithm = 'aes-128-cbc';
-      const key = Buffer.from('5DCC67393750523CD165F17E1EFADD21', 'hex');
-      const iv = crypto.randomBytes(16);
+        // Cadena original para cifrado
+        const originalXmlString = xmlData.toString();;
 
-      // Función para encriptar
-      const encriptar = (data, key, iv) => {
-        const cipher = crypto.createCipheriv(algorithm, key, iv);
-        let encryptedData = cipher.update(data, 'utf-8', 'hex');
-        encryptedData += cipher.final('hex');
-        return encryptedData;
-      };
+        // Clave para cifrado
+        const key = Buffer.from('5DCC67393750523CD165F17E1EFADD21', 'hex');
 
-      // Encriptar la cadena XML
-      const encryptedXmlData = encriptar(xmlData.toString(), key, iv);
-      console.log('Cadena XML encriptada:', encryptedXmlData);
+        // Crear un objeto Cipher para cifrado
+        const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
 
+        // Cifrar la cadena original
+        let encryptedXmlData = cipher.update(originalXmlString, 'utf-8', 'hex');
+        encryptedXmlData += cipher.final('hex');
 
-        // Generar URL y enviar solicitud POST
-        const urlData = `xml=${encodeURIComponent(encryptedXmlData)}`;
+        console.log("Cadena XML cifrada:", encryptedXmlData);
 
-        const axios = require('axios');
+        // Función para desencriptar
+        const desencriptar = (encryptedData, key) => {
+          // Convertir la clave de hexadecimal a Buffer
+          const keyBuffer = Buffer.from(key, 'hex');
+  
+          // Crear un objeto Decipher para descifrado
+          const decipher = crypto.createDecipheriv('aes-128-cbc', keyBuffer, iv);
+  
+          // Descifrar los datos en hexadecimal y convertirlos a UTF-8
+          let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
+          decryptedData += decipher.final('utf-8');
+  
+          return decryptedData;
+        };
+  
+        // Desencriptar la cadena XML
+        const decryptedXmlData = desencriptar(encryptedXmlData, key);
+  
+        console.log('Cadena XML desencriptada:', decryptedXmlData);
+  
+        // Enviar el XML como parte de la respuesta HTTP
+        response.status(200).send(xmlData.toString());
 
-        const originalString = "xml=<pgs><data0>SNDBX123</data0><data>Cadena Cifrada</data></pgs>";
+        // Agregar el elemento <pgs> a la cadena XML cifrada
+        const originalString = `<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`;
+
+        // Convertir la cadena original a URI
         const data = encodeURIComponent(originalString);
 
-        axios.post('https://sandboxpo.mit.com.mx/gen', data, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+        // Enviar solicitud POST con la cadena XML y el elemento <pgs>
+        axios.post('https://sandboxpo.mit.com.mx/gen', {
+          xml: originalXmlString,
+          pgs: `<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`
         })
         .then(response => {
           console.log('Respuesta del servidor:', response.data);
@@ -120,26 +140,9 @@ exports.generarURL = (request, response) => {
         console.error('No se encontró ninguna solicitud de pago.');
         response.status(404).send('No se encontró ninguna solicitud de pago.');
       }
-    })
-
-    // Función para desencriptar
-    const desencriptar = (encryptedData, key, iv) => {
-      // Convertir la clave de hexadecimal a Buffer
-      const keyBuffer = Buffer.from(key, 'hex');
-          
-      const decipher = crypto.createDecipheriv(algorithm, keyBuffer, iv);
-      let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
-      decryptedData += decipher.final('utf-8');
-      return decryptedData;
-    };
-
-    // Ejemplo de desencriptación
-    const decryptedXmlData = desencriptar(encryptedXmlData, key, iv);
-    console.log('Cadena XML desencriptada:', decryptedXmlData);
-
-    // Enviar el XML como parte de la respuesta HTTP
-    response.status(200).send(xmlData.toString());
+    });
 };
+
 
 // Función para manejar la respuesta del servidor
 exports.handleResponse = (req, response) => {
