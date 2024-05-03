@@ -7,6 +7,8 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+
 app.use((request, response, next) => {
   console.log('Middleware!');
   next(); 
@@ -90,11 +92,21 @@ app.use((request, response, next) => {
 
 
   
-  // Definir una ruta POST para '/generar'
-  app.post('/gen', (req, res) => {
-    // Lógica para procesar la solicitud POST aquí
+// Definir una ruta POST para '/generar'
+app.post('/generar', (req, res) => {
+  // Lógica para procesar la solicitud POST aquí
+  try {
+    // Aquí va la lógica de procesamiento de la solicitud
+
+    // Si se procesa correctamente, enviar una respuesta exitosa
     res.send('Respuesta a la solicitud POST recibida correctamente.');
-  }); 
+  } catch (error) {
+    // Si ocurre un error durante el procesamiento, enviar una respuesta de error
+    console.error('Error en el procesamiento de la solicitud:', error);
+    res.status(500).send('Error en el servidor al procesar la solicitud.');
+  }
+});
+
 
   // Ruta para manejar la respuesta del cobro
   app.get('/respuesta-cobro', (req, res) => {
