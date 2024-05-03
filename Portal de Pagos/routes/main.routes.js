@@ -47,7 +47,7 @@ router.get('/importar', isAuth, importarRegistroTransferenciasAlumno, mainContro
 
 router.post('/importar', isAuth, importarRegistroTransferenciasAlumno, mainController.postImportar);
 
-router.post('/generar', bankController.generarURL);
+router.post('/gen', bankController.generarURL);
 
 router.get('/respuesta-cobro', bankController.handleResponse);
 

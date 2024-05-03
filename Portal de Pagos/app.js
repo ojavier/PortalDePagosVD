@@ -89,7 +89,7 @@ app.use((request, response, next) => {
 
 
 // Definir una ruta POST para '/generar'
-app.post('/generar', (req, res) => {
+app.post('/gen', (req, res) => {
   // Lógica para procesar la solicitud POST aquí
   try {
     // Aquí va la lógica de procesamiento de la solicitud
