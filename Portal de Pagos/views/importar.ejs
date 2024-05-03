@@ -214,19 +214,34 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
+            // Make an AJAX request to submit the form and get the JSON response
+            $.ajax({
+                url: '/importar',
+                method: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    let references = '';
+                    if (response.reference) {
+                        console.log(response.reference);
+                        for (let ref of response.reference) {
+                            references += 'No se encontró un alumno con la referencia ' + ref + '<br>';
+                        }
+                    }
+
+                    // Show the Swal with the saved rows data
                     Swal.fire({
                         icon: 'success',
                         text: '¡Archivo importado con éxito!',
-                        timer: 1000,
-                        timerProgressBar: true,
-                        onClose: () => {
-                            e.target.submit();
-                        }
+                        html: '<strong>' + 'Se han añadido ' + response.rows.length + ' registros nuevos. ' + '</strong>' + '<br><br>' + references,
                     });
                 }
             });
-        });
+        }
     });
+});
+});
 </script>
 
 <%- include('partials/footer.ejs') %>
