@@ -1,6 +1,6 @@
 
 .roboto-slab {
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
@@ -167,7 +167,7 @@ label {
 }
 
 .eight h1:after,.eight h1:before {
-  content: " ";
+  content: '';
   display: block;
   border-bottom: 2px solid #000000;
 }
@@ -307,4 +307,75 @@ label {
   background-color:rgb(145, 1, 6);
 } /*Color of underline*/
 
+.page-footer {
+  margin-top: 20rem; 
+}
 
+.card-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.dropdown-content {
+  min-width: 200px; /* Ajusta según el ancho de contenido más largo */
+  overflow-x: hidden; /* O 'auto' si deseas que los usuarios puedan desplazarse horizontalmente */
+}
+
+.cardwhats{
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: 0.5s;
+}
+.socialContainer {
+  width: 70px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: 0.3s;
+}
+
+/* Whatsapp*/
+.containerFour:hover {
+  background-color: green;
+  transition-duration: 0.3s;
+}
+
+.socialContainer:active {
+  transform: scale(0.9);
+  transition-duration: 0.3s;
+}
+
+.socialSvg {
+  width: 35px;
+}
+
+.socialSvg path {
+  fill: rgb(255, 255, 255);
+}
+
+.socialContainer:hover .socialSvg {
+  animation: slide-in-top 0.3s both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

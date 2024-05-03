@@ -1,65 +1,102 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+    isLoggedIn: isLoggedIn, 
+    permisos: permisos,
+    usuario: usuario
+  }) %>
 
-<h1 class="centrado">Reportes</h1>
-<br><br><br>
-<div class="container">
-<div id="chartContainerRight">
-<canvas id="myChart"></canvas>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-<script>
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var myChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-            labels: ['Alumnos al corriente de los pagos', 'Alumnos atrasados en los pagos'],
-            datasets: [{
-                label: 'Pagos',
-                data: [68, 32],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-</script>
-<br><br><br>
-<div id="chartContainerLeft">
-    <canvas id="myChart2"></canvas>
+<div class='container'>
+    <h2 class='centrado'>Reportes y Estadísticas</h2>
+
+    <% if (error) { %>
+        <div class="card red darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Error</span>
+                <p><%= error %></p>
+            </div>
+        </div>
+    <% } %>
+    
+    <br><br><br>
+
+    <div class='row'>
+        <div class='col s12'>
+            <div class='card'>
+                <div class='card-content'>
+                    <h4>Reporte de Costo de Créditos</h4>
+                    <br>
+                    <canvas id='myChart'></canvas>
+                </div>
+            </div>
+        </div>
+
+        <br> <br>
+
+        <div class='col s12'>
+            <div class='card'>
+                <div class='card-content'>
+                    <h4>Reporte de Alumnos por Beca</h4>
+                    <br>
+                    <canvas id='myChart2'></canvas>
+                </div>
+            </div>
+        </div>
+
+        <br> <br>
+
+        <div class='col s12'>
+            <div class='card'>
+                <div class='card-content'>
+                    <h4>Comparación de Dinero no Recibido: Colegiatura vs Otros Servicios</h4>
+                    <canvas id="moneyLostChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-<script>
-    var ctx = document.getElementById("myChart2").getContext("2d");
-    var myChart = new Chart(ctx, {
-        type: "bar",
+
+  <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+  
+  <script>
+
+    const Cicloescolar = <%- JSON.stringify(Cicloescolar[0]) %>;
+    console.log(Cicloescolar);
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const labels = Cicloescolar.map(function(Cicloescolar) {
+        return Cicloescolar.MesInicio + ' - ' + Cicloescolar.MesFin + ' ' + Cicloescolar.Año;
+    });
+      
+    const data = Cicloescolar.map(function(Cicloescolar) {
+        return Cicloescolar.CostoCreditos;
+    });
+
+
+    const alumnos = <%- JSON.stringify(alumnos[0]) %>;
+    console.log(alumnos);
+
+    const ctx2 = document.getElementById('myChart2').getContext('2d');
+
+    const labels2 = ['Beca 0-50', 'Beca 50-100'];
+
+    const data2 = [
+        alumnos.filter(function(alumno) { return alumno.Beca >= 0 && alumno.Beca <= 50; }).length,
+        alumnos.filter(function(alumno) { return alumno.Beca > 50 && alumno.Beca <= 100; }).length,
+    ];
+
+    const myChart = new Chart(ctx, {
+        type: 'bar',
         data: {
-            labels: ['Alumnos con adeudo > $10,000', 'Alumnos con adeudo < $10,000'],
+            labels: labels,
             datasets: [{
-                label: 'Reporte de Agosto',
-                data: [50, 80],
-                backgroundColor: [
-                    'rgb(60, 60, 60)',                    
-                    'rgb(60, 60, 60)',
-                ],
-                borderColor: [
-                    'rgb(60, 60, 60)',                    
-                    'rgb(60, 60, 60)',
-                ],
+                label: 'Valor De Créditos A Lo Largo Del Tiempo',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },
@@ -73,6 +110,70 @@
             }
         }
     });
-</script>
-</div>
+
+    const myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: labels2,
+            datasets: [{
+                label: 'Número De Alumnos Por Beca',
+                data: data2,
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    // Functionality and Display of Money Lost Comparison Chart ("Colegiatura" vs "Otros Servicios")
+    const unpaidColegiatura = <%- JSON.stringify(unpaidColegiatura) %>;
+    const unpaidOtros = <%- JSON.stringify(unpaidOtros) %>;
+
+    // The use of reduce is to calculate the total amount of money not received (payment is still pending) in each category
+    // This is done through a simple sum of the "Cantidad" of each value
+    const totalUnpaidColegiatura = unpaidColegiatura.reduce((acum, current) => acum + current.Cantidad, 0);
+    const totalUnpaidOtros = unpaidOtros.reduce((acum, current) => acum + current.Cantidad, 0);
+    const totalGeneral = totalUnpaidColegiatura + totalUnpaidOtros;
+
+    const ctx3 = document.getElementById('moneyLostChart').getContext('2d');
+    const moneyLostChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: ['Colegiatura', 'Otros Servicios', 'Total General'],
+        datasets: [{
+            label: 'Dinero Pendiente Por Obtener ($)',
+            data: [totalUnpaidColegiatura, totalUnpaidOtros, totalGeneral],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)', // Rosa para "Colegiatura"
+                'rgba(54, 162, 235, 0.2)', // Azul para "Otros Servicios"
+                'rgba(128, 128, 128, 0.2)' // Gris para el "Total General"
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(128, 128, 128, 1)' // Borde gris para el "Total General"
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+    });
+
+  </script>
+
 <%- include('partials/footer.ejs') %>

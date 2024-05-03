@@ -1,34 +1,69 @@
-const Usuario = require('../usuario.model');
+const Usuario = require('../models/usuario.model');
 
-exports.get_login = (request, response, next) => {
-    const error = request.session.error || '';
-    request.session.error = '';
-    response.render('login', {
-        Email: request.session.Email || '',
-        error: error,
-    });
+exports.getLogin = (request, response, next) => {
+    const error = request.session.error || null;
+    const isLoggedIn = request.session.isLoggedIn || false;
+    if(!isLoggedIn) {
+        response.render('login', {
+            pagePrimaryTitle: 'Portal de Gestión de Pagos',
+            isLoggedIn: isLoggedIn,
+            permisos: request.session.permisos || [],
+            usuario: request.session.usuario || {},
+            error: error
+        });
+    } else {
+        role = request.session.rol;
+        if(role === 'Alumno'){
+            response.redirect('/academic-plan');
+        } else if(role === 'Coordinador' || role === 'Administrador'){
+            response.redirect('/admin-home');
+        } else if(role === 'Desarrollador'){ // As long as the web page is in production
+            response.redirect('/academic-plan');
+        }
+    }
 };
 
-exports.post_login = (request, response, next) => {
-    console.log(request.body.Email);
-    Usuario.fetchOne(request.body.Email)
-        .then(([usuarios, fieldData]) => {
-            console.log(usuarios);
-            if (usuarios) {
-                const usuario = usuarios[0];
-                response.redirect('/home');
-            } else {
-                request.session.error = "Usuario y/o contraseña incorrectos";
-                response.redirect('/users/login');
+exports.postLogin = async (request, response, next) => {
+    try {
+        console.log('Datos recibidos: ', request.body.Email, request.body.Password);
+        const [usuario] = await Usuario.fetchOne(request.body.Email);
+
+        if (usuario && usuario.Password === request.body.Password) {
+            console.log('Valid Password');
+            request.session.isLoggedIn = true;
+            request.session.usuario = usuario;
+
+            const [permits] = await Usuario.getPrivilegios(request.body.Email);
+            request.session.permisos = permits.map(permiso => permiso.NombrePrivilegio);
+
+            const [roles] = await Usuario.getUserRole(request.body.Email);
+            request.session.rol = roles.length > 0 ? roles[0].Nombre : '';
+            
+            console.log('Role set in session: ', request.session.rol);
+            role = request.session.rol;
+            if(role === 'Alumno'){
+                response.redirect('/academic-plan');
+            } else if(role === 'Coordinador' || role === 'Administrador'){
+                response.redirect('/admin-home');
+            } else if(role === 'Desarrollador'){ // As long as the web page is in production
+                response.redirect('/academic-plan');
             }
-        })
-        .catch((error) => {console.log(error);});
+
+        } else {
+            console.log('Autenticación fallida. El usuario no ha sido encontrado o su contraseña fue inválida.');
+            request.session.error = 'Usuario y/o contraseña incorrectos';
+            response.redirect('/users/login');
+        }
+    } catch (error) {
+        console.error('Error durante el proceso de login: ', error);
+        response.redirect('/users/login');
+    }
 };
 
 
-exports.get_logout = (request, response, next) => {
+
+exports.getLogout = (request, response, next) => {
     request.session.destroy(() => {
         response.redirect('/users/login'); //Este código se ejecuta cuando la sesión se elimina.
     });
 };
-

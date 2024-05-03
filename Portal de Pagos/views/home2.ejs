@@ -1,12 +1,17 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+  isLoggedIn: isLoggedIn, 
+  permisos: permisos,
+  usuario: usuario
+}) %>
 
-<div class="container">
-  <div class="row">
-      <main class="col s9" style="padding-right: 40px;">
-          <h4 class="roboto-slab">Plan de Materias</h4>
+
+<div class='container'>
+  <div class='row'>
+      <main class='col s9' style='padding-right: 40px;'>
+          <h4 class='roboto-slab'>Plan de Materias</h4>
           <br>
-          <div class="card">
-              <table class="striped TablaProfesional">
+          <div class='card'>
+              <table class='striped TablaProfesional'>
                 <thead>
                   <tr>
                     <th>3er Semestre</th>
@@ -64,13 +69,13 @@
       </main>
 
     <br>
-    <div class ="col s3" style="padding-left: 20px;">
-      <div class="card">
-        <div class="card-content center">
-            <i class="material-icons large">account_circle</i>
-            <span class="card-title">Pablo Perez Castro</span>
+    <div class ='col s3' style='padding-left: 20px;'>
+      <div class='card'>
+        <div class='card-content center'>
+            <i class='material-icons large'>account_circle</i>
+            <span class='card-title'>Pablo Perez Castro</span>
             <p>2º Semestre - #10001</p>
-            <p class="green-text">Status: Activo</p>
+            <p class='green-text'>Status: Activo</p>
         </div>
       </div>
     </div>
@@ -80,17 +85,17 @@
 <br>
 <br>
 <!-- Tabla interactiva de estado de cuenta e historial de pagos -->
-<div class="container">
-    <div class="row">
-      <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-        <div class="card" style="padding-left: 20px; padding-right: 20px;">
-            <ul class="tabs">
-                <li class="tab col s12"><a href="#estado-cuenta">Estado de cuenta</a></li>
+<div class='container'>
+    <div class='row'>
+      <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+        <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+            <ul class='tabs'>
+                <li class='tab col s12'><a href='#estado-cuenta'>Estado de cuenta</a></li>
             </ul>
 
-        <div id="estado-cuenta">
+        <div id='estado-cuenta'>
             <!-- Contenido Estado de cuenta  -->
-            <table class="striped">
+            <table class='striped'>
               <thead>
                 <tr>
                   <th>Concepto</th>
@@ -99,37 +104,59 @@
                 </tr>
               </thead>
               <tbody>
-                <% estadoCuentas.forEach(function(estadoCuenta) { %>
-                  <tr>
-                    <td><%= estadoCuenta.Concepto %></td>
-                    <td>$ <%= estadoCuenta.Cantidad %></td>
-                    <td>      
-                      <% 
-                      let date = new Date(estadoCuenta.FechaLimite);
-                      let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                      %>
-                      <%= formattedDate %>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
+                <% 
+                const estadoCuentasUsuario = estadoCuentas.filter(function(estadoCuenta) { 
+                    return estadoCuenta.Email === usuario.Email; 
+                });
+            
+                if (estadoCuentasUsuario.length === 0) { %>
+                    <tr>
+                        <td colspan="3" class="center">Estás al corriente en tus pagos de Colegiatura.</td>
+                    </tr>
+                <% } else {
+                    estadoCuentasUsuario.forEach(function(estadoCuenta) { %>
+                        <tr>
+                            <td><%= estadoCuenta.Concepto %></td>
+                            <td>$ <%= estadoCuenta.Cantidad %></td>
+                            <td>      
+                                <% 
+                                let date = new Date(estadoCuenta.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>
+                    <% }); 
+                } %>
+            </tbody>
             </table>
         </div>
       </div>
-      <a href="/paymethod" class="btn modal-trigger carmin">Pagar Colegiatura</a>
+      <a href='/paymethod?paymentType=colegiatura' button id="pagarColegiatura" class='btn modal-trigger carmin'>Pagar Colegiatura</a>
+
+      <!-- Modal Structure -->
+<div id="noPendingPaymentsModal" class="modal">
+  <div class="modal-content">
+    <h4>No hay pagos pendientes.</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-effect btn-flat">Cerrar</a>
+  </div>
+</div>
 
 
 <br><br><br>
 
-<div class="row">
-  <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-    <div class="card" style="padding-left: 20px; padding-right: 20px;">
-        <ul class="tabs">
-            <li class="tab col s12"><a href="#otros-pagos">Otros Pagos</a></li>
+<div class='row'>
+  <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+    <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+        <ul class='tabs'>
+            <li class='tab col s12'><a href='#otros-pagos'>Otros Servicios</a></li>
           </ul>
-      <div id="otros-pagos">
+      <div id='otros-pagos'>
           <!-- Contenido Otros-Pagos  -->
-          <table class="striped">
+          <table class='striped'>
             <thead>
               <tr>
                 <th>Concepto</th>
@@ -138,59 +165,212 @@
               </tr>
             </thead>
             <tbody>
-              <% solpagos.forEach(function(solicitudesdepagos) { %>
-                <tr>
-                  <td><%= solicitudesdepagos.Concepto %></td>
-                  <td>$ <%= solicitudesdepagos.Cantidad %></td>
-                  <td>      
-                    <% 
-                    let date = new Date(solicitudesdepagos.FechaLimite);
-                    let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
-                    %>
-                    <%= formattedDate %>
-                  </td>
-                </tr>
-              <% }); %>
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+              <% 
+              const solpagosUsuario = solpagos.filter(function(solicitud) { 
+                  return solicitud.Email === usuario.Email; 
+              });
+          
+              if (solpagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="3" class="center">Estás al corriente en tus pagos de Otros Servicios.</td>
+                  </tr>
+              <% } else {
+                  solpagosUsuario.forEach(function(solicitudesdepagos, index) { %>
+                      <tr>
+                          <td>
+                              <label id='paymentOption' name='paymentOption' value='<%= solicitudesdepagos.Concepto %>'>
+                                  <span><%= solicitudesdepagos.Concepto %></span>
+                              </label>
+                          </td>
+                          <td>$ <%= solicitudesdepagos.Cantidad %></td>
+                          <td>      
+                              <% 
+                              let date = new Date(solicitudesdepagos.FechaLimite);
+                              let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                              %>
+                              <%= formattedDate %>
+                          </td>
+                      </tr>
+                  <% }); 
+              } %>
+          </tbody>
+    </table>
 </div>
-<a href="/paymethod" class="btn modal-trigger carmin">PAGAR OTROS PAGOS</a>
+</div>
+</div>
+</div>
+<a href='/paymethod?paymentType=otros' button type='submit' id="pagarotrosservicios" class='btn modal-trigger carmin'>PAGAR OTROS SERVICIOS</a>
 
-
+      <!-- Modal Structure -->
+      <div id="noPendingPaymentsModalotros" class="modal">
+        <div class="modal-content">
+          <h4>No hay pagos pendientes.</h4>
+          <p></p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect btn-flat">Cerrar</a>
+        </div>
+      </div>
+      
 <br><br><br>
 
-<div class="row">
-  <div class="col s12" style="padding-left: 20px; padding-right: 20px;">
-    <div class="card" style="padding-left: 20px; padding-right: 20px;">
-        <ul class="tabs">
-            <li class="tab col s12"><a href="#historial-de-pagos">Historial de Pagos</a></li>
+<div class='row'>
+  <div class='col s12' style='padding-left: 20px; padding-right: 20px;'>
+    <div class='card' style='padding-left: 20px; padding-right: 20px;'>
+        <ul class='tabs'>
+            <li class='tab col s12'><a href='#historial-de-pagos'>Historial de Pagos</a></li>
           </ul>
-      <div id="historial-de-pagos">
+      <div id='historial-de-pagos'>
+        <ul class='tabs'>
+          <li class='tab col s4'><a href='#test1'>Todo</a></li>
+          <li class='tab col s4'><a href='#test2'>Colegiatura</a></li>
+          <li class='tab col s4'><a href='#test3'>Otros Servicios</a></li>
+        </ul>
           <!-- Contenido Historial De Pagos  -->
-          <table class="striped">
+
+          <div id="test1">
+            <table class="striped">
               <thead>
                 <tr>
-                  <th>Fecha Limite</th>
-                  <th>Monto</th>
                   <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha Limite</th>
+                  <th>Fecha de pago realizado</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>11/03/2027</td>
-                  <td>$5,472</td>
-                  <td>Tijeras Papeleria</td>
-                </tr>
-                <tr>
-                  <td>25/04/2027</td>
-                  <td>$2,457</td>
-                  <td>DIPLOMADO MDD</td>
-                </tr>
+                <% 
+                let pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email; 
+                });
+
+                if (pagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="5" class="center">No se han realizado pagos todavía.</td>
+                  </tr>
+                <% } else {
+                    pagosUsuario.forEach(function(pago) { %>
+                        <tr>
+                            <td><%= pago.Concepto %></td>
+                            <td><%= pago.Total %></td>
+                            <td><%= pago.Metodo %></td>
+                            <td>                    
+                                <% 
+                                let date = new Date(pago.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                            <td>      
+                                <% 
+                                date = new Date(pago.Fecha);
+                                formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>              
+                    <% });
+                } %>
               </tbody>
             </table>
+          </div>
+
+          <div id="test2">
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha Limite</th>
+                  <th>Fecha de pago realizado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% 
+                pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email && pago.Concepto === 'Colegiatura'; 
+                });
+            
+                if (pagosUsuario.length === 0) { %>
+                  <tr>
+                      <td colspan="5" class="center">No se han realizado pagos de Colegiatura todavía.</td>
+                  </tr>
+                <% } else {
+                  pagosUsuario.forEach(function(pago) { %>
+                        <tr>
+                            <td><%= pago.Concepto %></td>
+                            <td><%= pago.Total %></td>
+                            <td><%= pago.Metodo %></td>
+                            <td>                    
+                                <% 
+                                let date = new Date(pago.FechaLimite);
+                                let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                            <td>      
+                                <% 
+                                date = new Date(pago.Fecha);
+                                formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                                %>
+                                <%= formattedDate %>
+                            </td>
+                        </tr>
+                        <% });
+                      } %>
+            </tbody>
+        </table>
+    </div>
+
+          <div id="test3">
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Metodo</th>
+                  <th>Fecha Limite</th>
+                  <th>Fecha de pago realizado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% 
+                pagosUsuario = pagos.filter(function(pago) { 
+                    return pago.Email === usuario.Email && pago.Concepto !== 'Colegiatura'; 
+                });
+                
+                if (pagosUsuario.length === 0) { %>
+                    <tr>
+                        <td colspan="5" class="center">No se han realizado pagos de Otros Servicios todavía.</td>
+                    </tr>
+                <% } else {
+                    pagosUsuario.forEach(function(pago) { %>
+                    <tr>
+                      <td><%= pago.Concepto %></td>
+                      <td><%= pago.Total %></td>
+                      <td><%= pago.Metodo %></td>
+                      <td>                    
+                        <% 
+                        let date = new Date(pago.FechaLimite);
+                        let formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                        %>
+                        <%= formattedDate %>
+                        </td>
+                        <td>      
+                        <% 
+                        date = new Date(pago.Fecha);
+                        formattedDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+                        %>
+                        <%= formattedDate %>
+                        </td>
+                    </tr>
+                    <% });
+                  } %>
+              </tbody>
+            </table>
+          </div> 
       </div>
     </div>
   </div>
@@ -199,16 +379,50 @@
 </div>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var tabs = document.querySelectorAll('.tabs');
+        const tabs = document.querySelectorAll('.tabs');
         M.Tabs.init(tabs);
     });
 </script>
-    
+
+<script>
+const instance = M.Tabs.init(el, options);
+
+// Or with jQuery
+
+$(document).ready(function(){
+  $('.tabs').tabs();
+});
+</script>
+
+<script>
+  var estadoCuentasUsuarioLength = <%= estadoCuentasUsuario.length %>;
+  var solpagosUsuarioLength = <%= solpagosUsuario.length %>;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+
+    if (estadoCuentasUsuarioLength === 0) {
+      document.getElementById('pagarColegiatura').addEventListener('click', function(event) {
+        event.preventDefault();
+        var instance = M.Modal.getInstance(document.getElementById('noPendingPaymentsModal'));
+        instance.open();
+      });
+    }
+
+    if (solpagosUsuarioLength === 0) {
+      document.getElementById('pagarotrosservicios').addEventListener('click', function(event) {
+        event.preventDefault();
+        var instance = M.Modal.getInstance(document.getElementById('noPendingPaymentsModalotros'));
+        instance.open();
+      });
+    }
+  });
+</script>
 <%- include('partials/footer.ejs') %>
 
  

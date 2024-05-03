@@ -1,16 +1,21 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+  isLoggedIn: isLoggedIn, 
+  permisos: permisos,
+  usuario: usuario
+}) %>
 
-  <div class="container">
-    <div class="eight">
+
+  <div class='container'>
+    <div class='eight'>
       <h1>verifica tu plan académico</h1>
       <p>Ciclo escolar AGO-FEB 2024 </p>
     </div>
 
-    <div class ="row">
-    <div class="grid-container">
-      <div class=" grid-item grid-item-1 responsibe-table">
-        <div class="card">
-        <table class="striped">
+    <div class ='row'>
+    <div class='grid-container'>
+      <div class=' grid-item grid-item-1 responsibe-table'>
+        <div class='card'>
+        <table class='striped'>
           <thead>
             <tr>
                 <th>Nombre</th>
@@ -56,47 +61,42 @@
       </div>
     </div>
       
-      <div class="card">
-      <div class="grid-item grid-item-2 responsibe-table">
+      <div class='card'>
+      <div class='grid-item grid-item-2 responsibe-table'>
         <table>
           <thead>
             <tr>
-                <th>PLAN 5</th>
+                <th>Plan De 6 Pagos</th>
                 <th></th>
             </tr>
           </thead>
-  
           <tbody>
             <tr>
-              <td>Pago inicial 23%</td>
-              <td>$3,277.5</td>
-
+              <td>20 de enero 2024</td>
+              <td>$13,813.80</td>
             </tr>
             <tr>
-              <td>Pago mensual</td>
-              <td>$2,194.5</td>
+              <td>5 de febrero 2024</td>
+              <td>$9,249.24</td>
             </tr>
             <tr>
-              <td>Mes 1</td>
-              <td>$5,472</td>
+              <td>5 de marzo 2024</td>
+              <td>$9,249.24</td>
             </tr>
             <tr>
-              <td>Mes 2</td>
-              <td>$2,194.5</td>
+              <td>5 de abril 2024</td>
+              <td>$9,249.24</td>
             </tr>
             <tr>
-              <td>Mes 3</td>
-              <td>$2,194.5</td>
+              <td>5 de mayo 2024</td>
+              <td>$9,249.24</td>
             </tr>
             <tr>
-              <td>Mes 4</td>
-              <td>$2,194.5</td>
+              <td>5 de junio 2024</td>
+              <td>$9,249.24</td>
             </tr>
-            <tr>
-              <td>Mes 5</td>
-              <td>$2,194.5</td>
-            </tr>
-          </tbody>        
+          </tbody>
+                 
         </table>
         <br>
         <table>
@@ -123,21 +123,21 @@
   </div>
 <br><br>
 
-    <div class="container">
-    <div class="row">
-    <div class="col s6">
-      <a href="#idrechazar" class="btn modal-trigger carmin">Rechazar</a>
+    <div class='container'>
+    <div class='row'>
+    <div class='col s6'>
+      <a href='#idrechazar' class='btn modal-trigger carmin'>Rechazar</a>
     </div>
 
-    <div class="col s6">
-      <a href="/home2" class="btn modal-trigger carmin">Aceptar</a>
+    <div class='col s6'>
+      <a href='/student-home' class='btn modal-trigger carmin'>Aceptar</a>
     </div>
     </div>
   </div>
 
-      <div id="idrechazar" class="modal">
+      <div id='idrechazar' class='modal'>
 
-        <div class="modal-content">
+        <div class='modal-content'>
           <h4>¡Ponte en contacto con nosostros!</h4>
           <p>Si no estas conforme con tu horario actual, comunicate con nosotros:<br>
             <strong>Correos:</strong> <br>
@@ -149,20 +149,20 @@
               <strong>Teléfonos:</strong> <br>
               55 1234 5678 <br>
           </div>
-          <div class="modal-footer">
-            <a href="" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
+          <div class='modal-footer'>
+            <a href='' class='modal-close waves-effect waves-green btn-flat'>Entendido</a>
           </div>
         </div>
     </div>
 </div>
 
 <!-- Es nececsario tener la imagén aquí?? -->
-<link rel="icon" href="/assets/img/logo-clear.png" type="image/png"/>
+<link rel='icon' href='/assets/img/logo-clear.png' type='image/png'/>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
+      const elems = document.querySelectorAll('.modal');
+      const instances = M.Modal.init(elems);
     });
   </script>
 

@@ -1,35 +1,41 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+    isLoggedIn: isLoggedIn, 
+    permisos: permisos,
+    usuario: usuario
+  }) %>
 
-<div class="container">
-    <div class="row">
-        <div class="col s12">
+
+<div class='container'>
+    <div class='row'>
+        <div class='col s12'>
             <h4>IMPORTAR ARCHIVOS DE TRANSFERENCIAS</h4>
         </div>
     </div>
 
     <br>
 
-    <div class="row">
-        <div class="col s12">
-            <form action="/importar" method="POST" enctype="multipart/form-data">
-                <div class="file-field input-field">
-                    <div class="btn carmin">
+    <div class='row'>
+        <p style="font-size: larger;">1. Selecciona un Archivo: </p>
+        <div class='col s12'>
+            <form action='/importar' method='POST' enctype='multipart/form-data'>
+                <div class='file-field input-field'>
+                    <div class='btn carmin'>
                         <span>ELEGIR ARCHIVO</span>
-                        <input id="csvFile" name="csvFile" type="file" accept=".csv">
+                        <input id='csvFile' name='csvFile' type='file' accept='.csv'>
                     </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Subir un archivo">
+                    <div class='file-path-wrapper'>
+                        <input class='file-path validate' type='text' placeholder='Arrastra un archivo'>
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <table id="csvTable"></table>
+                <div class='row'>
+                    <table id='csvTable'></table>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col s12">
+                <div class='row'>
+                    <div class='col s12'>
                         <p>Por favor, asegúrese de que el archivo CSV cumple con el formato y los datos correctos antes de subirlo.</p>
-                        <button id="subirCSV" class="btn waves-effect waves-light carmin" type="submit">SUBIR</button>
+                        <br>
+                        <button id='subirCSV' class='btn waves-effect waves-light carmin' type='submit'>SUBIR</button>
                     </div>
                 </div>
             </form>
@@ -38,83 +44,204 @@
 </div>
 
 <!-- JavaScript -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js'></script>
+<!-- JSZip (required for Excel export) -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+
+<!-- pdfmake (required for PDF export) -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+
+<!-- DataTables Buttons -->
+<script src='https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js'></script>
+
+<!-- DataTables Buttons HTML5 export -->
+<script src='https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js'></script>
 
 <script>
     var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.findInternal = function (a, b, c) { a instanceof String && (a = String(a)); for (var e = a.length, d = 0; d < e; d++) { var f = a[d]; if (b.call(c, f, d, a)) return { i: d, v: f } } return { i: -1, v: void 0 } }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1;
-    $jscomp.defineProperty = $jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) { if (a == Array.prototype || a == Object.prototype) return a; a[b] = c.value; return a }; $jscomp.getGlobal = function (a) { a = ["object" == typeof globalThis && globalThis, a, "object" == typeof window && window, "object" == typeof self && self, "object" == typeof global && global]; for (var b = 0; b < a.length; ++b) { var c = a[b]; if (c && c.Math == Math) return c } throw Error("Cannot find global object"); }; $jscomp.global = $jscomp.getGlobal(this);
-    $jscomp.IS_SYMBOL_NATIVE = "function" === typeof Symbol && "symbol" === typeof Symbol("x"); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE; $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = "$jscp$"; var $jscomp$lookupPolyfilledValue = function (a, b) { var c = $jscomp.propertyToPolyfillSymbol[b]; if (null == c) return a[b]; c = a[c]; return void 0 !== c ? c : a[b] };
-    $jscomp.polyfill = function (a, b, c, e) { b && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(a, b, c, e) : $jscomp.polyfillUnisolated(a, b, c, e)) }; $jscomp.polyfillUnisolated = function (a, b, c, e) { c = $jscomp.global; a = a.split("."); for (e = 0; e < a.length - 1; e++) { var d = a[e]; if (!(d in c)) return; c = c[d] } a = a[a.length - 1]; e = c[a]; b = b(e); b != e && null != b && $jscomp.defineProperty(c, a, { configurable: !0, writable: !0, value: b }) };
+    $jscomp.defineProperty = $jscomp.ASSUME_ES5 || 'function' == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) { if (a == Array.prototype || a == Object.prototype) return a; a[b] = c.value; return a }; $jscomp.getGlobal = function (a) { a = ['object' == typeof globalThis && globalThis, a, 'object' == typeof window && window, 'object' == typeof self && self, 'object' == typeof global && global]; for (var b = 0; b < a.length; ++b) { var c = a[b]; if (c && c.Math == Math) return c } throw Error('Cannot find global object'); }; $jscomp.global = $jscomp.getGlobal(this);
+    $jscomp.IS_SYMBOL_NATIVE = 'function' === typeof Symbol && 'symbol' === typeof Symbol('x'); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE; $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = '$jscp$'; var $jscomp$lookupPolyfilledValue = function (a, b) { var c = $jscomp.propertyToPolyfillSymbol[b]; if (null == c) return a[b]; c = a[c]; return void 0 !== c ? c : a[b] };
+    $jscomp.polyfill = function (a, b, c, e) { b && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(a, b, c, e) : $jscomp.polyfillUnisolated(a, b, c, e)) }; $jscomp.polyfillUnisolated = function (a, b, c, e) { c = $jscomp.global; a = a.split('.'); for (e = 0; e < a.length - 1; e++) { var d = a[e]; if (!(d in c)) return; c = c[d] } a = a[a.length - 1]; e = c[a]; b = b(e); b != e && null != b && $jscomp.defineProperty(c, a, { configurable: !0, writable: !0, value: b }) };
     $jscomp.polyfillIsolated = function (a, b, c, e) {
-        var d = a.split("."); a = 1 === d.length; e = d[0]; e = !a && e in $jscomp.polyfills ? $jscomp.polyfills : $jscomp.global; for (var f = 0; f < d.length - 1; f++) { var l = d[f]; if (!(l in e)) return; e = e[l] } d = d[d.length - 1]; c = $jscomp.IS_SYMBOL_NATIVE && "es6" === c ? e[d] : null; b = b(c); null != b && (a ? $jscomp.defineProperty($jscomp.polyfills, d, { configurable: !0, writable: !0, value: b }) : b !== c && ($jscomp.propertyToPolyfillSymbol[d] = $jscomp.IS_SYMBOL_NATIVE ? $jscomp.global.Symbol(d) : $jscomp.POLYFILL_PREFIX + d, d =
+        var d = a.split('.'); a = 1 === d.length; e = d[0]; e = !a && e in $jscomp.polyfills ? $jscomp.polyfills : $jscomp.global; for (var f = 0; f < d.length - 1; f++) { var l = d[f]; if (!(l in e)) return; e = e[l] } d = d[d.length - 1]; c = $jscomp.IS_SYMBOL_NATIVE && 'es6' === c ? e[d] : null; b = b(c); null != b && (a ? $jscomp.defineProperty($jscomp.polyfills, d, { configurable: !0, writable: !0, value: b }) : b !== c && ($jscomp.propertyToPolyfillSymbol[d] = $jscomp.IS_SYMBOL_NATIVE ? $jscomp.global.Symbol(d) : $jscomp.POLYFILL_PREFIX + d, d =
             $jscomp.propertyToPolyfillSymbol[d], $jscomp.defineProperty(e, d, { configurable: !0, writable: !0, value: b })))
-    }; $jscomp.polyfill("Array.prototype.find", function (a) { return a ? a : function (b, c) { return $jscomp.findInternal(this, b, c).v } }, "es6", "es3");
-    (function (a) { "function" === typeof define && define.amd ? define(["jquery", "datatables.net"], function (b) { return a(b, window, document) }) : "object" === typeof exports ? module.exports = function (b, c) { b || (b = window); c && c.fn.dataTable || (c = require("datatables.net")(b, c).$); return a(c, b, b.document) } : a(jQuery, window, document) })(function (a, b, c, e) {
+    }; $jscomp.polyfill('Array.prototype.find', function (a) { return a ? a : function (b, c) { return $jscomp.findInternal(this, b, c).v } }, 'es6', 'es3');
+    (function (a) { 'function' === typeof define && define.amd ? define(['jquery', 'datatables.net'], function (b) { return a(b, window, document) }) : 'object' === typeof exports ? module.exports = function (b, c) { b || (b = window); c && c.fn.dataTable || (c = require('datatables.net')(b, c).$); return a(c, b, b.document) } : a(jQuery, window, document) })(function (a, b, c, e) {
         var d = a.fn.dataTable; a.extend(!0, d.defaults, {
-            dom: "<'row'<'col s12 m6'l><'col s12 m6'f>><'row'<'col s12'tr>><'row'<'col s12 m12'i><'col s12 m12 center'p>>",
-            renderer: "materializecss"
-        }); a.extend(d.ext.classes, { sWrapper: "dataTables_wrapper", sFilterInput: "", sLengthSelect: "", sProcessing: "dataTables_processing", sPageButton: "" }); d.ext.renderer.pageButton.materializecss = function (f, l, A, B, m, t) {
+            dom: '<'row'<'col s12 m6'l><'col s12 m6'f>><'row'<'col s12'tr>><'row'<'col s12 m12'i><'col s12 m12 center'p>>',
+            renderer: 'materializecss'
+        }); a.extend(d.ext.classes, { sWrapper: 'dataTables_wrapper', sFilterInput: '', sLengthSelect: '', sProcessing: 'dataTables_processing', sPageButton: '' }); d.ext.renderer.pageButton.materializecss = function (f, l, A, B, m, t) {
             var u = new d.Api(f), C = f.oClasses, n = f.oLanguage.oPaginate, D = f.oLanguage.oAria.paginate || {}, h, k, v = 0, y = function (q, w) {
                 var x, E = function (p) {
                     p.preventDefault();
-                    a(p.currentTarget).hasClass("disabled") || u.page() == p.data.action || u.page(p.data.action).draw("page")
+                    a(p.currentTarget).hasClass('disabled') || u.page() == p.data.action || u.page(p.data.action).draw('page')
                 }; var r = 0; for (x = w.length; r < x; r++) {
                     var g = w[r]; if (Array.isArray(g)) y(q, g); else {
-                        k = h = ""; switch (g) { case "ellipsis": h = "&#x2026;"; k = "disabled"; break; case "first": h = n.sFirst; k = g + (0 < m ? "" : " disabled"); break; case "previous": h = n.sPrevious; k = g + (0 < m ? "" : " disabled"); break; case "next": h = n.sNext; k = g + (m < t - 1 ? "" : " disabled"); break; case "last": h = n.sLast; k = g + (m < t - 1 ? "" : " disabled"); break; default: h = g + 1, k = m === g ? "active" : "" }if (h) {
+                        k = h = ''; switch (g) { case 'ellipsis': h = '&#x2026;'; k = 'disabled'; break; case 'first': h = n.sFirst; k = g + (0 < m ? '' : ' disabled'); break; case 'previous': h = n.sPrevious; k = g + (0 < m ? '' : ' disabled'); break; case 'next': h = n.sNext; k = g + (m < t - 1 ? '' : ' disabled'); break; case 'last': h = n.sLast; k = g + (m < t - 1 ? '' : ' disabled'); break; default: h = g + 1, k = m === g ? 'active' : '' }if (h) {
                             var F =
-                                a("<li>", { "class": C.sPageButton + " " + k, id: 0 === A && "string" === typeof g ? f.sTableId + "_" + g : null }).append(a("<a>", { href: "#", "aria-controls": f.sTableId, "aria-label": D[g], "data-dt-idx": v, tabindex: f.iTabIndex, "class": "" }).html(h)).appendTo(q); f.oApi._fnBindAction(F, { action: g }, E); v++
+                                a('<li>', { 'class': C.sPageButton + ' ' + k, id: 0 === A && 'string' === typeof g ? f.sTableId + '_' + g : null }).append(a('<a>', { href: '#', 'aria-controls': f.sTableId, 'aria-label': D[g], 'data-dt-idx': v, tabindex: f.iTabIndex, 'class': '' }).html(h)).appendTo(q); f.oApi._fnBindAction(F, { action: g }, E); v++
                         }
                     }
                 }
-            }; try { var z = a(l).find(c.activeElement).data("dt-idx") } catch (q) { } y(a(l).empty().html('<ul class="pagination"/>').children("ul"), B); z !== e && a(l).find("[data-dt-idx=" + z + "]").trigger("focus")
+            }; try { var z = a(l).find(c.activeElement).data('dt-idx') } catch (q) { } y(a(l).empty().html('<ul class='pagination'/>').children('ul'), B); z !== e && a(l).find('[data-dt-idx=' + z + ']').trigger('focus')
         }; return d
     });
 </script>
 
-
 <script>
-$(document).ready(function() {
 
-    document.getElementById('csvFile').addEventListener('change', function(evt) {
-        var file = evt.target.files[0];
-        Papa.parse(file, {
-            header: true,
-            dynamicTyping: true,
-            skipEmptyLines: true, // Skip empty lines
-            complete: function(results, file) {
-                var data = results.data;
-                // Check for parsing errors
-                if (results.errors.length > 0) {
-                    console.error('Error parsing CSV file:', results.errors);
-                    return;
-                }
-                // Remove any rows where 'Fecha' is null or undefined
-                data = data.filter(function(row) {
-                    return row.Fecha != null;
+    $(document).ready(function() {
+        let fileSelected = false;
+        let isValidFile = false;
+    
+        document.getElementById('csvFile').addEventListener('change', function(evt) {
+            // Check if a file has been selected
+            if (!evt.target.files.length) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Seleccione un archivo!',
                 });
-                $('#csvTable').DataTable({
-                    data: data,
-                    columns: Object.keys(data[0]).map(function(key) {
-                        return { title: key, data: key }
-                    })
+                fileSelected = false;
+                return;
+            }
+    
+            fileSelected = true;
+            const file = evt.target.files[0];
+            Papa.parse(file, {
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true, // Skip empty lines
+                complete: function(results, file) {
+                    let data = results.data;
+                    // Check for parsing errors
+                    if (results.errors.length > 0) {
+                        console.error('Error parsing CSV file:', results.errors);
+                        return;
+                    }
+
+                    const firstRow = data[0];
+                    if (!firstRow.Referencia || !firstRow.Descripcion || !firstRow.Importe || !firstRow.Fecha) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Error: Este archivo no tiene los parametros correctos!',
+                        });
+                        isValidFile = false; // Set the flag to false
+                        return;
+                    }
+                    isValidFile = true; // Set the flag to true if the file is valid
+
+                    // Remove any rows where 'Fecha' is null or undefined
+                    data = data.filter(function(row) {
+                        return row.Fecha != null;
+                    });
+
+
+                    if ($.fn.DataTable.isDataTable('#csvTable')) {
+                        $('#csvTable').DataTable().destroy();
+                    }
+
+                    // Create new DataTable
+                    $('#csvTable').DataTable({
+                        data: data,
+                        columns: Object.keys(data[0]).map(function(key) {
+                            return { title: key, data: key }
+                        }),
+                        language: {
+                        processing:     'Procesando...',
+                        search:         'Buscar:',
+                        lengthMenu:    'Mostrar _MENU_ elementos',
+                        info:           'Mostrando de _START_ a _END_ de _TOTAL_ elementos',
+                        infoEmpty:      'Mostrando 0 de 0 de 0 elementos',
+                        infoFiltered:   '(filtrado de _MAX_ elementos en total)',
+                        infoPostFix:    '',
+                        loadingRecords: 'Cargando registros...',
+                        zeroRecords:    'No se encontraron registros',
+                        emptyTable:     'No hay datos disponibles en la tabla',
+                        paginate: {
+                            first:      'Primero',
+                            previous:   'Anterior',
+                            next:       'Siguiente',
+                            last:       'Último'
+                        },
+                        aria: {
+                            sortAscending:  ': activar para ordenar la columna de manera ascendente',
+                            sortDescending: ': activar para ordenar la columna de manera descendente'
+                        }
+                    }
                 });
             },
-            error: function(err, file) {
-                console.error('Error reading file:', file, err);
-            }
+                error: function(err, file) {
+                    console.error('Error reading file:', file, err);
+                    isValidFile = false;
+                }
+            });
         });
+        
+        // Add event listener for form submit
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            if (!isValidFile) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Error: Archivo CSV no tiene los parametros correctos!',
+                }).then(() => {
+                    location.reload(); // Reload the page
+                });
+                return;
+            }
+
+            let NombreArchivo = $('#csvFile').val();
+    
+            if (!fileSelected) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Seleccione un archivo!',
+                });
+                return;
+            }
+    
+            Swal.fire({
+                html: `Quieres importar el archivo: <b>${NombreArchivo}</b>?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, importar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+            // Make an AJAX request to submit the form and get the JSON response
+            $.ajax({
+                url: '/importar',
+                method: 'POST',
+                data: new FormData(this),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    let references = '';
+                    if (response.reference) {
+                        console.log(response.reference);
+                        for (let ref of response.reference) {
+                            references += 'No se encontró un alumno con la referencia ' + ref + '<br>';
+                        }
+                    }
+
+                    // Show the Swal with the saved rows data
+                    Swal.fire({
+                        icon: 'success',
+                        text: '¡Archivo importado con éxito!',
+                        html: '<strong>' + 'Se han añadido ' + response.rows.length + ' registros nuevos. ' + '</strong>' + '<br><br>' + references,
+                    });
+                }
+            });
+        }
     });
 });
+});
 </script>
-
-
-
-
-
-
-
-
 
 <%- include('partials/footer.ejs') %>

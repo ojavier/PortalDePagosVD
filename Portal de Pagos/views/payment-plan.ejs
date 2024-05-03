@@ -1,21 +1,26 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+    isLoggedIn: isLoggedIn, 
+    permisos: permisos,
+    usuario: usuario
+  }) %>
 
-<main class="container" style="margin-top: 2rem;">
-    <div class="row">
+
+<main class='container' style='margin-top: 2rem;'>
+    <div class='row'>
         <!-- Columna para Seleccionar Método de Pago -->
-        <div class="col s12 m4">
+        <div class='col s12 m4'>
             <h5>Selecciona plan de pago:</h5>
-            <div class="row">
-                <div class="col s6">
+            <div class='row'>
+                <div class='col s6'>
                     <p>
                         <label>
-                            <input name="payment_method" type="radio" />
+                            <input name='payment_method' type='radio' />
                             <span><strong><big>Mensual (5 pagos)</big></strong></span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="payment_method" type="radio" />
+                            <input name='payment_method' type='radio' />
                             <span><strong><big>Semestral (único pago)</big></strong></span>
                         </label>
                     </p>
@@ -24,10 +29,10 @@
             </div>
         </div>      
         <!-- Columna para la Tabla de Cursos -->
-        <div class="col s12 m8">
-            <div class="card">
-                <div class="card-content">
-                    <table class="striped">
+        <div class='col s12 m8'>
+            <div class='card'>
+                <div class='card-content'>
+                    <table class='striped'>
                         <tbody>
                             <tr>
                                 <td>Semestre</td>
@@ -35,7 +40,7 @@
                                 <td>Créditos</td>
                             </tr>
                             <tr>
-                                <td colspan="3"><hr></td> <!-- Línea para indicar los títulos de las columnas -->
+                                <td colspan='3'><hr></td> <!-- Línea para indicar los títulos de las columnas -->
                             </tr>
                             <tr>
                                 <td>Historia del arte</td>
@@ -61,18 +66,18 @@
 </main>
 <!-- Botones de aceptar y rechazar -->
 <% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
-    <div class="container">
+    <div class='container'>
         <%- content %>
     </div>
 <% } %>
 
-<div class="container section">
-    <div class="row">
-        <div class="col s6">
-            <a href="#idaceptar" class="btn modal-trigger red">Regresar</a>
+<div class='container section'>
+    <div class='row'>
+        <div class='col s6'>
+            <a href='#idaceptar' class='btn modal-trigger red'>Regresar</a>
         </div>
-        <div class="col s6 right-align">
-            <a href="#idrechazar" class="btn modal-trigger red">Continuar</a>
+        <div class='col s6 right-align'>
+            <a href='#idrechazar' class='btn modal-trigger red'>Continuar</a>
         </div>
     </div>
 </div>

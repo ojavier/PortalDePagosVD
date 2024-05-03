@@ -1,0 +1,443 @@
+<%- include('partials/head.ejs', {
+  isLoggedIn: isLoggedIn, 
+  permisos: permisos,
+  usuario: usuario
+}) %>
+
+<div class="container">
+
+  <div class='row'>
+    <div class='col s12'>
+        <h4>Consultar Información Escolar Y De Pagos De Los Alumnos</h4>
+        <p>Para poder ver la información del alumno, primero selecciona un alumno de la tabla inferior, 
+          una vez este marcado en rojo, podrás scrollear hacia abajo para ver su información.
+        </p>
+        <br>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='col s12'>
+      <table id='tablaEstudiantes' class='striped'>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Email</th>
+            <th>Matricula</th>
+            <th>Referencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% alumnos.forEach(function(alumno) { %>
+            <tr data-email="<%= alumno.Email %>">
+              <td><%= alumno.Nombre %></td>
+                <td><%= alumno.ApellidoP %></td>
+                <td><%= alumno.ApellidoM %></td>
+                <td><%= alumno.Email %></td>
+                <td><%= alumno.Matricula %></td>
+                <td><%= alumno.Referencia %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Plan de Materias -->
+  <div id='materias' class='section' style='display:none;'>
+    <div class='row'>
+      <main class='col s12'>
+        <h4 class='roboto-slab' style='text-align: center;'>Plan de Materias</h4>
+          <div class='card'>
+              <table class='striped TablaProfesional'>
+                <thead>
+                  <tr>
+                    <th>3er Semestre</th>
+                    <th>Grupo</th>
+                    <th>Hora</th>
+                    <th>Créditos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Historia del Arte</td>
+                    <td>221</td>
+                    <td>11:00 a 13:00 Lu/Ma</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>Materiales Textiles</td>
+                    <td>15</td>
+                    <td>7:00 a 9:00 Lu/Ma</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td>Ilustración Técnica de la Moda II</td>
+                    <td>67</td>
+                    <td>11:00 a 13:00 Mi/Ju</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td>Fundamentos de Administración</td>
+                    <td>12</td>
+                    <td>15:00 a 16:00 Lu</td>
+                    <td>5</td>
+                  </tr>
+                  <tr>
+                    <td>Herramientas Industriales</td>
+                    <td>8</td>
+                    <td>10:00 a 12:00 Vi</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>Patronaje de Prendas Infantiles</td>
+                    <td>140</td>
+                    <td>6:00 a 8:00 Vi</td>
+                    <td>10</td>
+                  </tr>
+                  <tr>
+                    <td>Confección de Prendas Masculinas</td>
+                    <td>200</td>
+                    <td>14:00 a 18:00 Mi</td>
+                    <td>12</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </main>
+  </div>
+  </div>
+  
+  <!-- Later change for css spacing -->
+  <br><br>
+  
+  <!-- Estado de Cuenta -->
+  <div id='estadosDeCuenta' class='section' style='display:none;'>
+  
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#estado-cuenta-colegiatura'>Estado de cuenta</a></li>
+          </ul>
+          <div>
+            <!-- Contenido Estado de Cuenta -->
+            <table class='striped'>
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Limite</th>
+                </tr>
+              </thead>
+              <tbody id="estadoCuentaColegiatura">
+                <!-- Los datos del estado de cuentas se insertarán aquí con AJAX -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Later change for css spacing -->
+    <br><br><br>
+  
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#estado-cuenta-otros-servicios'>Otros Servicios</a></li>
+          </ul>
+          <div>
+            <!-- Contenido Otros Servicios  -->
+            <table class='striped'>
+              <thead>
+                <tr>
+                  <th>Concepto</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Limite</th>
+                </tr>
+              </thead>
+              <tbody id="estadoCuentaOtrosServicios">
+                <!-- Los datos de otros servicios se insertarán aquí con AJAX -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  
+  <!-- Later change for css spacing -->
+  <br><br><br>
+  
+  <div id='historialDePagos' class='section' style='display:none;'>
+    <div class='row'>
+      <div class='col s12 card-container'>
+        <div class='card card-container'>
+          <ul class='tabs'>
+            <li class='tab col s12'><a href='#historial-de-pagos'>Historial de Pagos</a></li>
+          </ul>
+          <div id="historial-de-pagos">
+            <ul class='tabs'>
+              <li class='tab col s4'><a href='#historial-pagos-todo'>Todo</a></li>
+              <li class='tab col s4'><a href='#historial-pagos-colegiatura'>Colegiatura</a></li>
+              <li class='tab col s4'><a href='#historial-pagos-otros-servicios'>Otros Servicios</a></li>
+            </ul>
+            <div id="historial-pagos-todo">
+              <table id="tablaHistorialPagosTodo" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+            <div id="historial-pagos-colegiatura">
+              <table id="tablaHistorialPagosColegiatura" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+            <div id="historial-pagos-otros-servicios">
+              <table id="tablaHistorialPagosOtrosServicios" class="striped">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Metodo</th>
+                    <th>Fecha Limite</th>
+                    <th>Fecha de pago realizado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Los datos se insertarán aquí con AJAX -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js'></script>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js'></script>
+<script>
+$(document).ready( function () {
+    let table = $('#tablaEstudiantes').DataTable({
+      language: {
+        processing:     'Procesando...',
+        search:         'Buscar:',
+        lengthMenu:    'Mostrar _MENU_ elementos',
+        info:           'Mostrando de _START_ a _END_ de _TOTAL_ elementos',
+        infoEmpty:      'Mostrando 0 de 0 de 0 elementos',
+        infoFiltered:   '(filtrado de _MAX_ elementos en total)',
+        infoPostFix:    '',
+        loadingRecords: 'Cargando registros...',
+        zeroRecords:    'No se encontraron registros',
+        emptyTable:     'No hay datos disponibles en la tabla',
+        paginate: {
+            first:      'Primero',
+            previous:   'Anterior',
+            next:       'Siguiente',
+            last:       'Último'
+        },
+        aria: {
+            sortAscending:  ': Activar para ordenar la columna de manera ascendente',
+            sortDescending: ': Activar para ordenar la columna de manera descendente'
+        }
+      }
+    });
+
+    $('select').formSelect();  
+
+    // Monitor user scroll events
+    let userHasScrolled = false;
+    let detectScroll = false; // Flag to determine if scroll should be detected
+
+    // Function to enable or disable scroll detection
+    function toggleScrollDetection(state) {
+      detectScroll = state;
+      if (state) {
+        $(window).on('scroll', function() {
+          if (!userHasScrolled) {
+            userHasScrolled = true;
+          }
+        });
+      } else {
+        $(window).off('scroll');
+      }
+    }
+
+
+    $('#tablaEstudiantes tbody').on('click', 'tr', function(){
+        if (!$(this).hasClass('selected')) {
+              table.$('tr.selected').removeClass('selected');
+        }
+
+        $(this).toggleClass('selected');  
+
+        if ($(this).hasClass('selected')) {
+
+          // Enable scroll detection
+          toggleScrollDetection(true);
+          userHasScrolled = false; // Reset scroll flag when a new user is selected
+
+
+          let email = $(this).find('td').eq(3).text();
+
+          if (email) {
+            $.ajax({
+              url: '/student-data',
+              type: 'GET',
+              data: { studentEmail: email },
+              dataType: 'json',
+              success: function(data) {
+                // Vaciar la tabla de estadoCuenta antes de añadir los nuevos datos
+                $('#estadoCuentaColegiatura').empty();
+                
+                // Iterar sobre el array estadoCuentaColegiatura y añadir los datos a la tabla
+                data.estadoCuentaColegiatura.forEach(function(item) {
+                const fechaLimite = new Date(item.FechaLimite);
+                const formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                const row = `<tr>
+                                <td>${item.Concepto}</td>
+                                <td>$${item.Cantidad}</td>
+                                <td>${formattedDate}</td>
+                          </tr>`;
+                          $('#estadoCuentaColegiatura').append(row);
+                });
+
+                // Vaciar la tabla de otros pagos antes de añadir los nuevos datos
+                $('#estadoCuentaOtrosServicios').empty();
+               
+                // Iterar sobre el array estadoCuentaOtrosServicios y añadir los datos a la tabla
+                data.estadoCuentaOtrosServicios.forEach(function(item) {
+                  const fechaLimite = new Date(item.FechaLimite);
+                  const formattedDate = fechaLimite.getDate() + '-' + (fechaLimite.getMonth() + 1) + '-' + fechaLimite.getFullYear();
+                  const row = `<tr>
+                                <td>${item.Concepto}</td>
+                                <td>$${item.Cantidad}</td>
+                                <td>${formattedDate}</td>
+                            </tr>`;
+                  $('#estadoCuentaOtrosServicios').append(row);
+                });
+
+                // Vaciar las tablas antes de añadir nuevos datos
+                $('#tablaHistorialPagosTodo tbody').empty();
+                $('#tablaHistorialPagosColegiatura tbody').empty();
+                $('#tablaHistorialPagosOtrosServicios tbody').empty();
+
+                // Añadir datos a cada tabla
+                data.historialDePagos.forEach(function(pago) {
+                  const fechaLimite = new Date(pago.FechaLimite);
+                  const fechaPagoRealizado = new Date(pago.Fecha);
+                  const formattedFechaLimite = `${fechaLimite.getDate()}-${fechaLimite.getMonth() + 1}-${fechaLimite.getFullYear()}`;
+                  const formattedFechaPago = `${fechaPagoRealizado.getDate()}-${fechaPagoRealizado.getMonth() + 1}-${fechaPagoRealizado.getFullYear()}`;
+                  const row = `<tr>
+                              <td>${pago.Concepto}</td>
+                              <td>$${pago.Total}</td>
+                              <td>${pago.Metodo}</td>
+                              <td>${formattedFechaLimite}</td>
+                              <td>${formattedFechaPago}</td>
+                            </tr>`;
+                  if (pago.Concepto === 'Colegiatura') {
+                    $('#tablaHistorialPagosColegiatura tbody').append(row);
+                  } else {
+                    $('#tablaHistorialPagosOtrosServicios tbody').append(row);
+                  }
+                  $('#tablaHistorialPagosTodo tbody').append(row);
+                });
+              },
+              error: function(xhr, status, error) {
+                console.error('AJAX Error: ', status, error);
+              }
+            });
+          }
+
+          // Making the information tables visible
+          $('#materias').show();
+          $('#estadosDeCuenta').show();
+          $('#historialDePagos').show();
+
+
+           // Delay the scroll for 1 or 2 seconds (1000 or 2000 milliseconds)
+          setTimeout(function() {
+            if (!userHasScrolled) {
+              $('html, body').animate({
+                scrollTop: $('#materias').offset().top
+              }, 1000); // Duration of scroll animation in milliseconds
+            }
+          }, 1200); // 1200 ms delay before scrolling
+
+          // Reset the flag after the action completes
+          setTimeout(function() {
+            userHasScrolled = false;
+          }, 2200); // Slightly longer than the scroll delay to ensure it's reset appropriately
+        } else {
+          // Hidding the information tables
+          $('#materias').hide();
+          $('#estadosDeCuenta').hide();
+          $('#historialDePagos').hide();
+        }
+    });
+
+    $('.tabs').tabs();
+
+});
+</script>
+<script>
+  var $jscomp = $jscomp || {}; $jscomp.scope = {}; $jscomp.findInternal = function (a, b, c) { a instanceof String && (a = String(a)); for (var e = a.length, d = 0; d < e; d++) { var f = a[d]; if (b.call(c, f, d, a)) return { i: d, v: f } } return { i: -1, v: void 0 } }; $jscomp.ASSUME_ES5 = !1; $jscomp.ASSUME_NO_NATIVE_MAP = !1; $jscomp.ASSUME_NO_NATIVE_SET = !1; $jscomp.SIMPLE_FROUND_POLYFILL = !1; $jscomp.ISOLATE_POLYFILLS = !1;
+  $jscomp.defineProperty = $jscomp.ASSUME_ES5 || 'function' == typeof Object.defineProperties ? Object.defineProperty : function (a, b, c) { if (a == Array.prototype || a == Object.prototype) return a; a[b] = c.value; return a }; $jscomp.getGlobal = function (a) { a = ['object' == typeof globalThis && globalThis, a, 'object' == typeof window && window, 'object' == typeof self && self, 'object' == typeof global && global]; for (var b = 0; b < a.length; ++b) { var c = a[b]; if (c && c.Math == Math) return c } throw Error('Cannot find global object'); }; $jscomp.global = $jscomp.getGlobal(this);
+  $jscomp.IS_SYMBOL_NATIVE = 'function' === typeof Symbol && 'symbol' === typeof Symbol('x'); $jscomp.TRUST_ES6_POLYFILLS = !$jscomp.ISOLATE_POLYFILLS || $jscomp.IS_SYMBOL_NATIVE; $jscomp.polyfills = {}; $jscomp.propertyToPolyfillSymbol = {}; $jscomp.POLYFILL_PREFIX = '$jscp$'; var $jscomp$lookupPolyfilledValue = function (a, b) { var c = $jscomp.propertyToPolyfillSymbol[b]; if (null == c) return a[b]; c = a[c]; return void 0 !== c ? c : a[b] };
+  $jscomp.polyfill = function (a, b, c, e) { b && ($jscomp.ISOLATE_POLYFILLS ? $jscomp.polyfillIsolated(a, b, c, e) : $jscomp.polyfillUnisolated(a, b, c, e)) }; $jscomp.polyfillUnisolated = function (a, b, c, e) { c = $jscomp.global; a = a.split('.'); for (e = 0; e < a.length - 1; e++) { var d = a[e]; if (!(d in c)) return; c = c[d] } a = a[a.length - 1]; e = c[a]; b = b(e); b != e && null != b && $jscomp.defineProperty(c, a, { configurable: !0, writable: !0, value: b }) };
+  $jscomp.polyfillIsolated = function (a, b, c, e) {
+      var d = a.split('.'); a = 1 === d.length; e = d[0]; e = !a && e in $jscomp.polyfills ? $jscomp.polyfills : $jscomp.global; for (var f = 0; f < d.length - 1; f++) { var l = d[f]; if (!(l in e)) return; e = e[l] } d = d[d.length - 1]; c = $jscomp.IS_SYMBOL_NATIVE && 'es6' === c ? e[d] : null; b = b(c); null != b && (a ? $jscomp.defineProperty($jscomp.polyfills, d, { configurable: !0, writable: !0, value: b }) : b !== c && ($jscomp.propertyToPolyfillSymbol[d] = $jscomp.IS_SYMBOL_NATIVE ? $jscomp.global.Symbol(d) : $jscomp.POLYFILL_PREFIX + d, d =
+          $jscomp.propertyToPolyfillSymbol[d], $jscomp.defineProperty(e, d, { configurable: !0, writable: !0, value: b })))
+  }; $jscomp.polyfill('Array.prototype.find', function (a) { return a ? a : function (b, c) { return $jscomp.findInternal(this, b, c).v } }, 'es6', 'es3');
+  (function (a) { 'function' === typeof define && define.amd ? define(['jquery', 'datatables.net'], function (b) { return a(b, window, document) }) : 'object' === typeof exports ? module.exports = function (b, c) { b || (b = window); c && c.fn.dataTable || (c = require('datatables.net')(b, c).$); return a(c, b, b.document) } : a(jQuery, window, document) })(function (a, b, c, e) {
+      var d = a.fn.dataTable; a.extend(!0, d.defaults, {
+          dom: "<'row'<'col s12 m6'l><'col s12 m6'f>><'row'<'col s12'tr>><'row'<'col s12 m12'i><'col s12 m12 center'p>>",
+          renderer: "materializecss"
+      }); a.extend(d.ext.classes, { sWrapper: "dataTables_wrapper", sFilterInput: "", sLengthSelect: "", sProcessing: "dataTables_processing", sPageButton: "" }); d.ext.renderer.pageButton.materializecss = function (f, l, A, B, m, t) {
+          var u = new d.Api(f), C = f.oClasses, n = f.oLanguage.oPaginate, D = f.oLanguage.oAria.paginate || {}, h, k, v = 0, y = function (q, w) {
+              var x, E = function (p) {
+                  p.preventDefault();
+                  a(p.currentTarget).hasClass('disabled') || u.page() == p.data.action || u.page(p.data.action).draw('page')
+              }; var r = 0; for (x = w.length; r < x; r++) {
+                  var g = w[r]; if (Array.isArray(g)) y(q, g); else {
+                      k = h = ''; switch (g) { case 'ellipsis': h = '&#x2026;'; k = 'disabled'; break; case 'first': h = n.sFirst; k = g + (0 < m ? '' : ' disabled'); break; case 'previous': h = n.sPrevious; k = g + (0 < m ? '' : ' disabled'); break; case 'next': h = n.sNext; k = g + (m < t - 1 ? '' : ' disabled'); break; case 'last': h = n.sLast; k = g + (m < t - 1 ? '' : ' disabled'); break; default: h = g + 1, k = m === g ? 'active' : '' }if (h) {
+                          var F =
+                              a('<li>', { 'class': C.sPageButton + ' ' + k, id: 0 === A && 'string' === typeof g ? f.sTableId + '_' + g : null }).append(a('<a>', { href: '#', 'aria-controls': f.sTableId, 'aria-label': D[g], 'data-dt-idx': v, tabindex: f.iTabIndex, 'class': '' }).html(h)).appendTo(q); f.oApi._fnBindAction(F, { action: g }, E); v++
+                      }
+                  }
+              }
+          }; try { var z = a(l).find(c.activeElement).data("dt-idx") } catch (q) { } y(a(l).empty().html('<ul class="pagination"/>').children("ul"), B); z !== e && a(l).find("[data-dt-idx=" + z + "]").trigger("focus")
+      }; return d
+  });
+</script>
+<%- include('partials/footer.ejs') %>

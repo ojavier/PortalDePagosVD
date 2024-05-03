@@ -1,46 +1,81 @@
-<%- include('partials/head.ejs', {}) %>
+<%- include('partials/head.ejs', {
+  isLoggedIn: isLoggedIn, 
+  permisos: permisos,
+  usuario: usuario
+}) %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <br>
 <br>
-<div id="flayer">
-    <div id="slayer">
+<div id='flayer'>
+    <div id='slayer'>
 
-<div class="container" id="content">
-  
-  <div class="row">
-    <div class="col l3 m3 s12"></div>
-    <div class="col l6 m6 s12">
-      <form action="/users/login" method="POST">
-           <div class="card-panel z-depth-6">
-            <img src="/images/via.avif" height="70" class="center-image">
-            <h5 class="center"><strong>Inicia Sesión</strong></h5> <br>
-            <div class="row col l9 m8 s12 offset-l1">
-                <div class="input-field">
-                  <i class="material-icons prefix">email</i>
-                  <label class="label" for="Email">Correo Academico</label>
-                  <input class="input text" type="text" id="Email" name="Email">
+<div class='container' id='content'>
+  <div class='row'>
+    <div class='col l3 m3 s12'></div>
+    <div class='col l6 m6 s12'>
+      <% if (error != null) { %>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                M.toast({html: '<%= error %>'})
+            });
+        </script>
+    <% } %>
+      <form action='/users/login' method='POST'>
+           <div class='card-panel z-depth-6'>
+            <img src='/images/via.avif' height='70' class='center-image'>
+            <h5 class='center'><strong>Inicia Sesión</strong></h5> <br>
+            <div class='row col l9 m8 s12 offset-l1'>
+                <p style="margin-left: 45px;"><strong>Email:</strong></p>
+                <div class='input-field'>
+                  <i class='material-icons prefix'>email</i>
+                  <input class='input text' type='text' id='Email' name='Email'>
                 </div>
             </div>
-            <div class="row col l9 m8 s12 offset-l1">
-                <div class="input-field">
-                  <i class="material-icons prefix">enhanced_encryption</i>
-                  <label class="label" for="Password">Contraseña</label>
-                  <input class="input text" type="password" id="Password" name="Password" autocomplete="current-password">
+            <div class='row col l9 m8 s12 offset-l1'>
+                <p style="margin-left: 45px;"><strong>Contraseña:</strong></p>
+                <div class='input-field'>
+                  <i class='material-icons prefix'>enhanced_encryption</i>
+                  <input class='input text' type='password' id='Password' name='Password' autocomplete='current-password'>
                 </div>
             </div>
-            <div class="container">
-                <button class="boton" type="submit" name="submit">
-                    <span class="text">ENTRAR</span>
+            <div class='container'>
+                <button id='LoginBtn' name='LoginBtn' class='boton' type='submit' name='submit'>
+                    <span class='text'>ENTRAR</span>
                 </button>
             </div>
-            <div class="clearfix"></div>
+            <div class='clearfix'></div>
          </div>
       </form>
     </div>
-      <div class="col l3 m3 s12"></div>
   </div>
 </div>
 </div>
 </div>
 
-<%- include('partials/footer.ejs') %>
+<script>
+$(document).ready(function () {
+
+    $('#LoginBtn').click(function (e) {
+        e.preventDefault(); // Prevent the form from automatically submitting
+
+        let Email = $('#Email').val();
+        let Pass = $('#Password').val();
+
+        if ($('#Email').val() == '' || $('#Password').val() == '') {
+            Swal.fire({
+                html: '<b>Porfavor, llena todos los campos</b>',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        // Submit the form
+        $('form').submit();
+    });
+});
+</script>
+
+

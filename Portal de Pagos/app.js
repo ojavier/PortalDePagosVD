@@ -14,13 +14,12 @@ app.use((request, response, next) => {
   next(); 
 });
 
-
-// "body-parser" is a third party midleware that allows you to analyze
+// 'body-parser' is a third party midleware that allows you to analyze
 // requests' bodies
 const bodyParser = require('body-parser');
 
 
-
+// TODO: Needs to be changed to something that supports production
 const session = require('express-session');
 app.use(session({
   secret: 'mySecretKey', 
@@ -31,7 +30,7 @@ app.use(session({
 
 
 // It allows you to analyze requests' bodies with content type
-// "application/x-www-form-urlencoded", meaning, it can give sense to
+// 'application/x-www-form-urlencoded', meaning, it can give sense to
 // the forms' data
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -81,17 +80,14 @@ app.set('views', 'views');
 const DataTable = require( 'datatables.net' );
 
 app.use((request, response, next) => {
-  response.status(404);
-  response.render('article', {
-    pagePrimaryTitle: '404',
-    includeImageSection: false,
-    includeContent: true,
-    content: '<h2>The file you\'re searching for doesn\'t exist</h2>',
+  response.status(404).render('404', {
+    isLoggedIn: request.session.isLoggedIn || false, 
+    permisos: request.session.permisos || [],
+    usuario: request.session.usuario || {}
   });
 });
 
 
-  
 // Definir una ruta POST para '/generar'
 app.post('/generar', (req, res) => {
   // Lógica para procesar la solicitud POST aquí
@@ -126,7 +122,8 @@ app.post('/generar', (req, res) => {
   });
 
 
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
+

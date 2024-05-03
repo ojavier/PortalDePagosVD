@@ -1,31 +1,36 @@
-<%- include('partials/head.ejs') %>
+<%- include('partials/head.ejs', {
+    isLoggedIn: isLoggedIn, 
+    permisos: permisos,
+    usuario: usuario
+  }) %>
 
-<main class="container" style="margin-top: 2rem;">
-    <div class="row">
+
+<main class='container' style='margin-top: 2rem;'>
+    <div class='row'>
         <!-- Columna para Seleccionar Método de Pago -->
-    <div class="col s6">
+    <div class='col s6'>
         <h5>Selecciona metodo de pago:</h5>
-            <div class="row">
-                <div class="col s6">
+            <div class='row'>
+                <div class='col s6'>
                     <p>
                         <label>
-                            <input name="payment_method" type="radio" />
-                                <span style="font-size: large;">
+                            <input name='payment_method' type='radio' />
+                                <span style='font-size: large;'>
                                 <strong>Tarjeta</strong>
-                                <img src="https://w7.pngwing.com/pngs/117/675/png-transparent-visa-and-mastercard-ads-mastercard-credit-card-american-express-visa-debit-card-mastercard-text-payment-logo.png" alt="Tarjeta de crédito" style="width: 50px; height: auto;">
+                                <img src='https://w7.pngwing.com/pngs/117/675/png-transparent-visa-and-mastercard-ads-mastercard-credit-card-american-express-visa-debit-card-mastercard-text-payment-logo.png' alt='Tarjeta de crédito' style='width: 50px; height: auto;'>
                                 </span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="payment_method" type="radio" />
-                            <span style="font-size: large;"><strong>Transferencia</strong></span>
+                            <input name='payment_method' type='radio' />
+                            <span style='font-size: large;'><strong>Transferencia</strong></span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="payment_method" type="radio" />
-                            <span style="font-size: large;"><strong>Efectivo</strong></span>
+                            <input name='payment_method' type='radio' />
+                            <span style='font-size: large;'><strong>Efectivo</strong></span>
                         </label>
                     </p>
                 </div>
@@ -33,33 +38,33 @@
             </div>
         </div>     
         <!-- Columna para los Datos de Pago -->
-        <div class="col s6">
+        <div class='col s6'>
             <h5>Resumen</h5>
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">Plan 5</span>
-                    <div class="row">
-                        <div class="col s6">
+            <div class='card'>
+                <div class='card-content'>
+                    <span class='card-title'>Plan 5</span>
+                    <div class='row'>
+                        <div class='col s6'>
                             <p>Pago inicial 23%</p>
                             <p>Pago mensual</p>
                         </div>
-                        <div class="col s6">
+                        <div class='col s6'>
                             <p>$3,277.5</p>
                             <p>$2,194.5</p>
                         </div>
                     </div>
                     <tr>
-                        <td colspan="3"><hr></td> <!-- Línea para indicar los títulos de las columnas -->
+                        <td colspan='3'><hr></td> <!-- Línea para indicar los títulos de las columnas -->
                     </tr>
-                    <div class="row">
-                        <div class="col s6">
+                    <div class='row'>
+                        <div class='col s6'>
                             <p>Mes 1</p>
                             <p>Mes 2</p>
                             <p>Mes 3</p>
                             <p>Mes 4</p>
                             <p>Mes 5</p>
                         </div>
-                        <div class="col s6">
+                        <div class='col s6'>
                             <p>$5,472</p>
                             <p>$2,194.5</p>
                             <p>$2,194.5</p>
@@ -74,18 +79,18 @@
 </main>
 <!-- Botones de aceptar y rechazar -->
 <% if (typeof includeContent !== 'undefined' && includeContent && typeof content !== 'undefined') { %>
-    <div class="container">
+    <div class='container'>
         <%- content %>
     </div>
 <% } %>
 
-<div class="container section">
-    <div class="row">
-        <div class="col s6">
-            <a href="/home2" class="btn modal-trigger carmin">Regresar</a>
+<div class='container section'>
+    <div class='row'>
+        <div class='col s6'>
+            <a href='/student-home' class='btn modal-trigger carmin'>Regresar</a>
         </div>
-        <div class="col s6 right-align">
-            <a href="https://sandboxpol.mit.com.mx/i/SNDBX01" class="btn modal-trigger carmin">Continuar</a>
+        <div class='col s6 right-align'>
+            <a href='https://sandboxpol.mit.com.mx/i/SNDBX01' class='btn modal-trigger carmin'>Continuar</a>
         </div>
     </div>
 </div>
