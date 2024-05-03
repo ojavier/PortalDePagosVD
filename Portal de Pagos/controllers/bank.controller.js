@@ -2,12 +2,11 @@ const builder = require('xmlbuilder');
 const crypto = require('crypto');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
+const jwt = require('jsonwebtoken'); // Importa la biblioteca para trabajar con JWT
 const { SolicitudDePago } = require('../models/bank.models'); // Importa la función para obtener la solicitud de pago
 
-// Definir algoritmo, clave e iv
-const algorithm = 'aes-128-cbc';
-const key = '5DCC67393750523CD165F17E1EFADD21';
-const iv = crypto.randomBytes(16);
+// Clave secreta para firmar el token JWT
+const jwtSecretKey = 'dH4eHs8#&2jsnD3!qH7Gp';
 
 // Exporta la función generarURL directamente
 exports.generarURL = (req, res) => {
@@ -132,6 +131,27 @@ exports.generarURL = (req, res) => {
       console.error('Error al obtener la solicitud de pago:', error);
       res.status(500).send('Error en el servidor');
     });
+};
+
+// Función para manejar la respuesta del servidor
+exports.handleResponse = (req, res) => {
+  // Verificar el token JWT recibido en la solicitud
+  const token = req.query.token;
+
+  jwt.verify(token, jwtSecretKey, (err, decoded) => {
+    if (err) {
+      console.error('Error al verificar el token:', err);
+      res.status(401).send('Token inválido');
+    } else {
+      // El token es válido, puedes acceder a los datos decodificados
+      const email = decoded.email;
+      const reference = decoded.reference;
+      const cantidad = decoded.cantidad;
+
+      // Aquí puedes realizar las acciones necesarias con los datos decodificados
+      res.send('Token válido. Acceso autorizado.');
+    }
+  });
 };
 
 // Función para manejar la respuesta del servidor

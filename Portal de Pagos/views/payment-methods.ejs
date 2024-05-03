@@ -90,9 +90,21 @@
             <a href='/student-home' class='btn modal-trigger carmin'>Regresar</a>
         </div>
         <div class='col s6 right-align'>
-            <a href='https://sandboxpol.mit.com.mx/i/SNDBX01' class='btn modal-trigger carmin'>Continuar</a>
+            <a id="btnGenerarURL" class='btn modal-trigger carmin'>Generar URL de Pago</a>
         </div>
     </div>
 </div>
+
+
+<script src="/controllers/bank.controller.js"></script>
+
+<script>
+    // Agrega un evento de clic al botón de generar URL de pago
+    document.getElementById('btnGenerarURL').addEventListener('click', function() {
+        // Aquí puedes llamar a la función generarURL del controlador bank
+        bankController.generarURL();
+    });
+</script>
+
 
 <%- include('partials/footer.ejs') %>
