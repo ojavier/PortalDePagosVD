@@ -274,6 +274,7 @@ exports.postImportar = (request, response, next) => {
     console.log(request.file);
     const operations = [];
     let hasError = false; 
+    const results = { rows: [], reference: [] }; 
     const stream = fs.createReadStream(request.file.path)
         .pipe(csvParser({
             columns: ['Referencia', 'Descripcion', 'Importe', 'Fecha']
@@ -308,12 +309,16 @@ exports.postImportar = (request, response, next) => {
                             return importar.save()
                                 .then(([rows,FieldData]) => {
                                     console.log('Saved row:', row);
+
+                                    results.rows.push(row);
                                 })
                                 .catch((error) => {
                                     console.log('Error al Importar Transferencia', error);
                                 });
                         } else {
                             console.log(`No se encontró un alumno con la referencia ${row.Referencia}`);
+
+                            results.reference.push(row.Referencia);
                         }
                     });
                 operations.push(operation);
@@ -324,7 +329,7 @@ exports.postImportar = (request, response, next) => {
             Promise.all(operations)
                 .then(() => {
                     console.log('CSV file successfully processed');
-                    response.redirect('/importar');
+                    response.json(results);
                 })
                 .catch(error => {
                     console.log('Error processing CSV file:', error);
