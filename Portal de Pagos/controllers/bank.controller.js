@@ -79,7 +79,7 @@ exports.generarURL = (request, response) => {
         console.log('Cadena XML:', xmlData.toString());
 
         // Cadena original para cifrado
-        const originalXmlString = xmlData.toString();;
+        const originalXmlString = xmlData.toString();
 
         // Clave para cifrado
         const key = Buffer.from('5DCC67393750523CD165F17E1EFADD21', 'hex');
@@ -116,19 +116,31 @@ exports.generarURL = (request, response) => {
         // Enviar el XML como parte de la respuesta HTTP
         response.status(200).send(xmlData.toString());
 
-        // Agregar el elemento <pgs> a la cadena XML cifrada
-        const originalString = `<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`;
+        // Crear la cadena XML para <pgs>
+        const pgsXmlData = builder.create('pgs')
+        .ele('data0', 'SNBX')
+        .up()
+        .ele('data', encryptedXmlData)
+        .end({ pretty: true });
+
+        // Imprimir la cadena XML cifrada para <pgs>
+        console.log('Cadena XML cifrada para <pgs>:', pgsXmlData.toString());
 
         // Convertir la cadena original a URI
-        const data = encodeURIComponent(originalString);
+        const data = encodeURIComponent(pgsXmlData.toString());
 
-        // Enviar solicitud POST con la cadena XML y el elemento <pgs>
-        axios.post('https://sandboxpo.mit.com.mx/gen', {
-          xml: originalXmlString,
-          pgs: `<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`
-        })
+        axios.post('https://sandboxpo.mit.com.mx/gen', 
+            `xml=${encodeURIComponent(xmlData.toString())}&pgs=${encodeURIComponent(`<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`)}`, 
+            {
+              headers: {
+                'Content-Type': 'application/xml'
+              }
+            }
+          )
         .then(response => {
-          console.log('Respuesta del servidor:', response.data);
+          // Captura la URL de la respuesta
+          const url = response.data[0].url; // Suponiendo que la URL está en el campo 'url' del primer objeto en la respuesta
+          console.log('URL generada:', url);
         })
         .catch(error => {
           console.error('Error al enviar solicitud:', error);
