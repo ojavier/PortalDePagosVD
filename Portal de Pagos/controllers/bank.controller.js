@@ -9,11 +9,11 @@ const { SolicitudDePago } = require('../models/bank.models'); // Importa la func
 const jwtSecretKey = 'dH4eHs8#&2jsnD3!qH7Gp';
 
 // Exporta la función generarURL directamente
-exports.generarURL = (req, res) => {
+exports.generarURL = (request, response) => {
   const reference = uuidv4();
 
   // Obtener datos de la base de datos
-  SolicitudDePago.findByEmail('mail@dominio.com')
+  SolicitudDePago.findByEmail('correo9@example.com')
     .then(solicitudes => {
       if (solicitudes.length > 0) {
         const solicitud = solicitudes[0]; // Suponiendo que solo obtienes una solicitud
@@ -81,7 +81,7 @@ exports.generarURL = (req, res) => {
         console.log('Cadena XML:', xmlData.toString());
 
         // Enviar el XML como parte de la respuesta HTTP
-        res.status(200).send(xmlData.toString());
+        response.status(200).send(xmlData.toString());
 
         // Función para desencriptar
         const desencriptar = (encryptedData, key, iv) => {
@@ -115,33 +115,33 @@ exports.generarURL = (req, res) => {
 
           // Redirigir al cliente a la URL generada
           console.log('Redirigiendo al cliente a la URL:', response.data.url);
-          res.redirect(response.data.url); // Suponiendo que la respuesta del servidor contiene la URL generada
+          response.redirect(response.data.url); // Suponiendo que la respuesta del servidor contiene la URL generada
         })
         .catch(error => {
           console.error('Error al enviar solicitud:', error);
           // Manejo de errores y respuesta al cliente si es necesario
-          res.status(500).send('Error en el servidor');
+          response.status(500).send('Error en el servidor');
         });
       } else {
         console.error('No se encontró ninguna solicitud de pago.');
-        res.status(404).send('No se encontró ninguna solicitud de pago.');
+        response.status(404).send('No se encontró ninguna solicitud de pago.');
       }
     })
     .catch(error => {
       console.error('Error al obtener la solicitud de pago:', error);
-      res.status(500).send('Error en el servidor');
+      response.status(500).send('Error en el servidor');
     });
 };
 
 // Función para manejar la respuesta del servidor
-exports.handleResponse = (req, res) => {
+exports.handleResponse = (req, response) => {
   // Verificar el token JWT recibido en la solicitud
   const token = req.query.token;
 
   jwt.verify(token, jwtSecretKey, (err, decoded) => {
     if (err) {
       console.error('Error al verificar el token:', err);
-      res.status(401).send('Token inválido');
+      response.status(401).send('Token inválido');
     } else {
       // El token es válido, puedes acceder a los datos decodificados
       const email = decoded.email;
@@ -149,13 +149,13 @@ exports.handleResponse = (req, res) => {
       const cantidad = decoded.cantidad;
 
       // Aquí puedes realizar las acciones necesarias con los datos decodificados
-      res.send('Token válido. Acceso autorizado.');
+      response.send('Token válido. Acceso autorizado.');
     }
   });
 };
 
 // Función para manejar la respuesta del servidor
-exports.handleResponse = (req, res) => {
+exports.handleResponse = (req, response) => {
   // Variables para almacenar parámetros de solicitud GET
   let nbResponse = "";
   let idLiga = "";
@@ -193,5 +193,5 @@ exports.handleResponse = (req, res) => {
   // Aquí puedes realizar las acciones necesarias con los datos recibidos
 
   // Responder al navegador
-  res.send('Respuesta recibida correctamente.');
+  response.send('Respuesta recibida correctamente.');
 };
