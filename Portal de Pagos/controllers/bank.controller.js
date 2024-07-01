@@ -2,24 +2,26 @@ const builder = require('xmlbuilder');
 const crypto = require('crypto');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
+const jwt = require('jsonwebtoken'); // Importa la biblioteca para trabajar con JWT
 const { SolicitudDePago } = require('../models/bank.models'); // Importa la función para obtener la solicitud de pago
 
-// Definir algoritmo, clave e iv
-const algorithm = 'aes-128-cbc';
-const key = '5DCC67393750523CD165F17E1EFADD21';
-const iv = crypto.randomBytes(16);
+// Clave secreta para firmar el token JWT
+const jwtSecretKey = 'dH4eHs8#&2jsnD3!qH7Gp';
+
+// Vector de inicialización específico proporcionado por el servidor
+const iv = Buffer.from('0123456789abcdef0123456789abcdef', 'hex');
 
 // Exporta la función generarURL directamente
-exports.generarURL = (req, res) => {
+exports.generarURL = (request, response) => {
   const reference = uuidv4();
 
   // Obtener datos de la base de datos
-  SolicitudDePago.findByEmail('mail@dominio.com')
+  SolicitudDePago.findByEmail('correo9@example.com')
     .then(solicitudes => {
       if (solicitudes.length > 0) {
         const solicitud = solicitudes[0]; // Suponiendo que solo obtienes una solicitud
         const cantidad = solicitud.cantidad;
-
+        
         // Crear la cadena XML con XML Builder
         const xmlData = builder.create('P')
           .ele('business')
@@ -30,112 +32,165 @@ exports.generarURL = (req, res) => {
             .ele('user', 'SNBXUSR0123')
             .up()
             .ele('pwd', 'SECRETO')
+          .up() // Cierre del elemento <business>
+        .up() // Cierre del elemento <P>
+        .ele('nb_fpago', 'COD') // Declaración de nb_fpago fuera de business
+          .up() // Cierre de nb_fpago
+        .ele('url') // Inicio del elemento <url>
+          .ele('reference', reference)
           .up()
-          .ele('nb_fpago', 'COD')
+          .ele('amount', cantidad.toString())
           .up()
-          .ele('url')
-            .ele('reference', reference)
-            .up()
-            .ele('amount', cantidad.toString())
-            .up()
-            .ele('moneda', 'MXN')
-            .up()
-            .ele('canal', 'W')
-            .up()
-            .ele('omitir_notif_default', '1')
-            .up()
-            .ele('promociones', 'C,3,6')
-            .up()
-            .ele('id_promotion', 'SNBX12345678')
-            .up()
-            .ele('st_correo', '1')
-            .up()
-            .ele('fh_vigencia', '09/09/2021')
-            .up()
-            .ele('mail_cliente', solicitud.email.toString()) // Usar el email de la solicitud
-            .up()
-            .ele('data3ds')
-              .ele('ml', 'nospam@gmail.com')
-            .up()
-            .ele('datos_adicionales')
-              .ele('data', {'id': '1', 'display': 'true'})
-                .ele('label', 'Talla')
-                .up()
-                .ele('value', 'Grande')
-              .up()
-              .ele('data', {'id': '2', 'display': 'false'})
-                .ele('label', 'Color')
-                .up()
-                .ele('value', 'Azul')
-              .up()
-            .up()
-          .ele('nb_fpago', 'COD')
+          .ele('moneda', 'MXN')
           .up()
-          .ele('dom', '1')
+          .ele('canal', 'W')
           .up()
-          .ele('version', 'IntegraWPP')
+          .ele('omitir_notif_default', '1')
           .up()
-        .up()
+          .ele('id_promotion', 'SNBX12345678')
+          .up()
+          .ele('st_correo', '1')
+          .up()
+          .ele('fh_vigencia', '09/09/2021')
+          .up()
+          .ele('mail_cliente', solicitud.email.toString()) // Usar el email de la solicitud
+          .up()
+          .ele('data3ds')
+            .ele('ml', 'nospam@gmail.com')
+            .up()
+            .ele('cl', '5515009020')
+            .up()
+            .ele('dir', 'Calle y número exterior')
+            .up()
+            .ele('cd', 'Ciudad')
+            .up()
+            .ele('est', 'CX')
+            .up()
+            .ele('cp', '1234567890')
+            .up()
+            .ele('idc', '484')
+            .up() // Cerrar data3ds
+          .up() // Cerrar url
+        .ele('version', 'IntegraWPP') // <version>IntegraWPP</version>
+        .up() // Cerrar la etiqueta version
         .end({ pretty: true });
-
+        
         // Imprimir la cadena XML
         console.log('Cadena XML:', xmlData.toString());
 
-        // Enviar el XML como parte de la respuesta HTTP
-        res.status(200).send(xmlData.toString());
+        // Cadena original para cifrado
+        const originalXmlString = xmlData.toString();
+
+        // Clave para cifrado
+        const key = Buffer.from('5DCC67393750523CD165F17E1EFADD21', 'hex');
+
+        // Crear un objeto Cipher para cifrado
+        const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
+
+        // Cifrar la cadena original
+        let encryptedXmlData = cipher.update(originalXmlString, 'utf-8', 'hex');
+        encryptedXmlData += cipher.final('hex');
+
+        console.log("Cadena XML cifrada:", encryptedXmlData);
 
         // Función para desencriptar
-        const desencriptar = (encryptedData, key, iv) => {
+        const desencriptar = (encryptedData, key) => {
           // Convertir la clave de hexadecimal a Buffer
           const keyBuffer = Buffer.from(key, 'hex');
-          
-          const decipher = crypto.createDecipheriv(algorithm, keyBuffer, iv);
+  
+          // Crear un objeto Decipher para descifrado
+          const decipher = crypto.createDecipheriv('aes-128-cbc', keyBuffer, iv);
+  
+          // Descifrar los datos en hexadecimal y convertirlos a UTF-8
           let decryptedData = decipher.update(encryptedData, 'hex', 'utf-8');
           decryptedData += decipher.final('utf-8');
+  
           return decryptedData;
         };
-
-        // Encriptar la cadena XML
-        const encryptedXmlData = xmlData.toString();
-
-        // Ejemplo de desencriptación
-        const decryptedXmlData = desencriptar(encryptedXmlData, key, iv);
+  
+        // Desencriptar la cadena XML
+        const decryptedXmlData = desencriptar(encryptedXmlData, key);
+  
         console.log('Cadena XML desencriptada:', decryptedXmlData);
+  
+        // Enviar el XML como parte de la respuesta HTTP
+        response.status(200).send(xmlData.toString());
 
-        // Generar URL y enviar solicitud POST
-        const urlData = `xml=${encodeURIComponent(encryptedXmlData)}`;
+        // Crear la cadena XML para <pgs>
+        const pgsXmlData = builder.create('pgs')
+        .ele('data0', 'SNBX')
+        .up()
+        .ele('data', encryptedXmlData)
+        .end({ pretty: true });
 
-        axios.post('https://sandboxpo.mit.com.mx/gen', urlData, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
+        // Imprimir la cadena XML cifrada para <pgs>
+        console.log('Cadena XML cifrada para <pgs>:', pgsXmlData.toString());
+
+        // Convertir la cadena original a URI
+        const data = encodeURIComponent(pgsXmlData.toString());
+
+        axios.post('https://sandboxpo.mit.com.mx/gen', 
+            `xml=${encodeURIComponent(xmlData.toString())}&pgs=${encodeURIComponent(`<pgs><data0>SNBX</data0><data>${encryptedXmlData}</data></pgs>`)}`, 
+            {
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }
+          )
         .then(response => {
-          console.log('Respuesta del servidor:', response.data);
-          // Aquí podrías enviar la respuesta al cliente si es necesario
-
-          // Redirigir al cliente a la URL generada
-          console.log('Redirigiendo al cliente a la URL:', response.data.url);
-          res.redirect(response.data.url); // Suponiendo que la respuesta del servidor contiene la URL generada
+          // Captura la URL de la respuesta
+          const url = response.data[0].url; // Suponiendo que la URL está en el campo 'url' del primer objeto en la respuesta
+          console.log('URL generada:', url);
         })
         .catch(error => {
           console.error('Error al enviar solicitud:', error);
           // Manejo de errores y respuesta al cliente si es necesario
-          res.status(500).send('Error en el servidor');
         });
+
+        // Crear la cadena XML para la respuesta
+        const xmlResponse = builder.create('P_RESPONSE')
+          .ele('cd_response', 'success')
+          .up()
+          .ele('nb_response', '')
+          .up()
+          .ele('nb_url', 'https://sandboxpol.mit.com.mx/i/Rqmn9c8')
+          .end({ pretty: true });
+
+        // Imprimir la cadena XML de la respuesta
+        console.log('Respuesta XML:', xmlResponse.toString());
+
+
       } else {
         console.error('No se encontró ninguna solicitud de pago.');
-        res.status(404).send('No se encontró ninguna solicitud de pago.');
+        response.status(404).send('No se encontró ninguna solicitud de pago.');
       }
-    })
-    .catch(error => {
-      console.error('Error al obtener la solicitud de pago:', error);
-      res.status(500).send('Error en el servidor');
     });
 };
 
+
 // Función para manejar la respuesta del servidor
-exports.handleResponse = (req, res) => {
+exports.handleResponse = (req, response) => {
+  // Verificar el token JWT recibido en la solicitud
+  const token = req.query.token;
+
+  jwt.verify(token, jwtSecretKey, (err, decoded) => {
+    if (err) {
+      console.error('Error al verificar el token:', err);
+      response.status(401).send('Token inválido');
+    } else {
+      // El token es válido, puedes acceder a los datos decodificados
+      const email = decoded.email;
+      const reference = decoded.reference;
+      const cantidad = decoded.cantidad;
+
+      // Aquí puedes realizar las acciones necesarias con los datos decodificados
+      response.send('Token válido. Acceso autorizado.');
+    }
+  });
+};
+
+// Función para manejar la respuesta del servidor
+exports.handleResponse = (req, response) => {
   // Variables para almacenar parámetros de solicitud GET
   let nbResponse = "";
   let idLiga = "";
@@ -173,5 +228,5 @@ exports.handleResponse = (req, res) => {
   // Aquí puedes realizar las acciones necesarias con los datos recibidos
 
   // Responder al navegador
-  res.send('Respuesta recibida correctamente.');
+  response.send('Respuesta recibida correctamente.');
 };
